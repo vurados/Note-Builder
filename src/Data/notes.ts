@@ -2,8 +2,8 @@ export const notes = [
     {
         id: 1,
         color: 'FFFF',
-        heading: 'Покупки',
-        main: 'Яблолки, апельсины, груши',
+        title: 'Покупки',
+        content: 'Яблолки, апельсины, груши',
         location:{
             x: 1,
             y: 1,
@@ -14,8 +14,8 @@ export const notes = [
     {
         id: 2,
         color: 'FFFF',
-        heading: 'Покупки',
-        main: 'Яблолки, апельсины, груши',
+        title: 'Покупки',
+        content: 'Яблолки, апельсины, груши',
         location:{
             x: 1,
             y: 1,
@@ -26,8 +26,8 @@ export const notes = [
     {
         id: 3,
         color: 'FFFF',
-        heading: 'Покупки',
-        main: 'Яблолки, апельсины, груши',
+        title: 'Покупки',
+        content: 'Яблолки, апельсины, груши',
         location:{
             x: 1,
             y: 1,
@@ -38,8 +38,8 @@ export const notes = [
     {
         id: 4,
         color: 'FFFF',
-        heading: 'Покупки',
-        main: 'Яблолки, апельсины, груши',
+        title: 'Покупки',
+        content: 'Яблолки, апельсины, груши',
         location:{
             x: 1,
             y: 1,
@@ -50,8 +50,8 @@ export const notes = [
     {
         id: 5,
         color: 'FFFF',
-        heading: 'Покупки',
-        main: 'Яблолки, апельсины, груши',
+        title: 'Покупки',
+        content: 'Яблолки, апельсины, груши',
         location:{
             x: 1,
             y: 1,

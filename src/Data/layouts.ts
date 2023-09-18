@@ -1,8 +1,8 @@
-export const notes = [
+export const layouts = [
     {
         id: 1,
         color: 'FFFF',
-        heding: 'Список дел',
-        main: 'покупки, работа, универ',
+        title: 'Список дел',
+        content: 'покупки, работа, универ',
     }
 ]
