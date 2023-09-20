@@ -1,18 +1,17 @@
 export interface INotes{
     id: number
-    color: string
+    layoutId: number
     title: string
     content: string
-    location:{
-        x: number
-        y: number
-        width: number
-        height: number
-    }
+    x: number
+    y: number
+    width: number
+    height: number
 }
 
 export interface ILayouts{
     id: number
+    userId: number
     color: string
     title: string
 }

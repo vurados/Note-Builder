@@ -1,62 +1,52 @@
 export const notes = [
     {
         id: 1,
-        color: 'FFFF',
+        layoutId: 1,
         title: 'Покупки',
         content: 'Яблолки, апельсины, груши',
-        location:{
             x: 1,
             y: 1,
             width: 1,
             height: 1
-        }
     },
     {
         id: 2,
-        color: 'FFFF',
+        layoutId: 1,
         title: 'Покупки',
         content: 'Яблолки, апельсины, груши',
-        location:{
             x: 1,
             y: 1,
-            width: 2,
-            height: 2
-        }
+            width: 1,
+            height: 1
     },
     {
         id: 3,
-        color: 'FFFF',
+        layoutId: 1,
         title: 'Покупки',
         content: 'Яблолки, апельсины, груши',
-        location:{
             x: 1,
             y: 1,
             width: 1,
             height: 1
-        }
     },
     {
         id: 4,
-        color: 'FFFF',
+        layoutId: 1,
         title: 'Покупки',
         content: 'Яблолки, апельсины, груши',
-        location:{
             x: 1,
             y: 1,
             width: 1,
             height: 1
-        }
     },
     {
         id: 5,
-        color: 'FFFF',
+        layoutId: 1,
         title: 'Покупки',
         content: 'Яблолки, апельсины, груши',
-        location:{
             x: 1,
             y: 1,
             width: 1,
             height: 1
-        }
     }
 ]

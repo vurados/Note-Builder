@@ -1,11 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+
+import { Layout } from './components/Layout';
 import { Note } from './components/Note';
-import { notes } from './Data/notes';
 import { TopBar } from './components/TopBar';
 import { Footer } from './components/Footer';
 import { AddNoteTile } from './components/addNote';
 
+import { layouts } from './Data/layouts';
+import { notes } from './Data/notes';
 
 function App() {
 
@@ -25,6 +28,7 @@ function App() {
           {/* {listOfLayouts.map((value, key) => {
             return 
           })} */}
+          <Layout layout={layouts[0]}/>
           <Note note={notes[0]}/>
           <Note note={notes[1]}/>
           <Note note={notes[2]}/>
