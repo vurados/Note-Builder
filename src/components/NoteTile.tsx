@@ -4,8 +4,8 @@ interface NoteProps{
     note: INotes
 }
 
-export function Note({note}: NoteProps){
-    const noteClassName=['relative flex flex-col justify-between justify-center border p-2 rounded col-span-', props.note.location.width, ' row-span-', props.note.location.height]
+export function NoteTile({note}: NoteProps){
+    const noteClassName=['relative flex flex-col justify-between justify-center border p-2 rounded col-span-', note.width, ' row-span-', note.height]
 
     
     return(

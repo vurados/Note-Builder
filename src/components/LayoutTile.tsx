@@ -4,7 +4,7 @@ interface LayoutProps{
     layout: ILayouts
 }
 
-export function Layout({layout}: LayoutProps){
+export function LayoutTile({layout}: LayoutProps){
     const layoutClassName=['relative flex flex-col justify-between justify-center border p-2 rounded']
 
     

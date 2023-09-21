@@ -1,24 +1,35 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import {createBrowserRouter, createRoutesFromElements, Route, Link, Outlet} from 'react-router-dom'
 
-import { Layout } from './components/Layout';
-import { Note } from './components/Note';
+import { LayoutTile } from './components/LayoutTile';
+import { NoteTile } from './components/NoteTile';
 import { TopBar } from './components/TopBar';
 import { Footer } from './components/Footer';
 import { AddNoteTile } from './components/addNote';
+
+import { Root } from './Pages/Root';
+import { Login } from './Pages/Login';
+import { Signin } from './Pages/Signin';
+import { Layouts } from './Pages/Layouts';
+import { Notes } from './Pages/Notes';
+import { EditNote } from './Pages/EditNote';
 
 import { layouts } from './Data/layouts';
 import { notes } from './Data/notes';
 
 function App() {
-
-  const [listOfLayouts, setlistOfLayouts] = useState([])
-
-  useEffect(() => {
-    axios.get("http://localhost:3001/layouts").then((response) =>{
-      setlistOfLayouts(response.data)
-    })
-  }, [])
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path='/' element={<Root />}>
+            <Route path="/login" element={<Login />}/>
+            <Route path="/signin" element={<Signin />}/>
+            <Route path="/layouts" element={<Layouts />}/>
+            <Route path="/notes" element={<Notes />}/>
+            <Route path="/note_edit" element={<EditNote />}/>
+      </Route>
+    )
+  )
 
   return (
     <>
@@ -28,12 +39,12 @@ function App() {
           {/* {listOfLayouts.map((value, key) => {
             return 
           })} */}
-          <Layout layout={layouts[0]}/>
-          <Note note={notes[0]}/>
-          <Note note={notes[1]}/>
-          <Note note={notes[2]}/>
-          <Note note={notes[3]}/>
-          <Note note={notes[4]}/>
+          <LayoutTile layout={layouts[0]}/>
+          <NoteTile note={notes[0]}/>
+          <NoteTile note={notes[1]}/>
+          <NoteTile note={notes[2]}/>
+          <NoteTile note={notes[3]}/>
+          <NoteTile note={notes[4]}/>
           <AddNoteTile />
       </div>
       <Footer />
@@ -42,6 +53,8 @@ function App() {
     </>
   );
 }
+
+
 
 export default App;
 
