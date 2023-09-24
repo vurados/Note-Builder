@@ -17,6 +17,9 @@ app.use('/notes', noteRouter);
 const layoutRouter = require('./routes/Layouts');
 app.use('/layouts', layoutRouter);
 
+const userRouter = require('./routes/Users');
+app.use('/users', userRouter);
+
 
 
 db.sequelize.sync().then(() => {
