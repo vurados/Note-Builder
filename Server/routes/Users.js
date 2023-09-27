@@ -9,16 +9,14 @@ router.get('/', async(req, res) => {
 
 router.post('/', async(req, res) => {
     const user = req.body
-    await User.create(user).catch((e) => {
-        // res.send(e.name)
-        if (e.name === 'SequelizeUniqueConstraintError'){
-            return res.json({
-                succes: false,
-                msg: e.errors.map((er) => er.message)
-            })
-        }
-    })
-    res.status(200)
+    try {
+        const newData = await User.create(user)
+        res.status(200).json({msg:'User successfully signed up', data: newData})
+    }catch(error){
+        console.error(error)
+        res.json({status:500, msg: 'Error creating user entity', error: error.message})
+    }
+
     // res.send('The error ocurred during creating(posting) user entity into the table')
 });
 
