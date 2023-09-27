@@ -6,7 +6,7 @@ import {createBrowserRouter, createRoutesFromElements, Route, Link, Outlet, Rout
 import { Root } from './Pages/Root';
 import { Home } from './Pages/Home';
 import { Login } from './Pages/Login';
-import { Signin } from './Pages/Signin';
+import { Signup } from './Pages/Signup';
 import { Layouts } from './Pages/Layouts';
 import { Notes } from './Pages/Notes';
 import { EditNote } from './Pages/EditNote';
@@ -19,7 +19,7 @@ function App() {
         <Route path='/' element={<Root />} />
         <Route index path="/home" element={<Home />}/>
         <Route path="/login" element={<Login />}/>
-        <Route path="/signin" element={<Signin />}/>
+        <Route path="/signup" element={<Signup />}/>
         <Route path="/layouts" element={<Layouts />}/>
         <Route path="/notes" element={<Notes />}/>
         <Route path="/note_edit" element={<EditNote />}/>
