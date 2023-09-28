@@ -2,12 +2,17 @@ const express = require('express');
 const router = express.Router();
 const {User} = require("../models")
 
-router.get('/', async(req, res) => {
-    const listOfUsers = await User.findAll()
-    res.json(listOfUsers)
+router.post('/checkUser', async(req, res) => {
+    const {username, password} = req.body
+    const user = await User.findOne({where:{username: username, password: password}})
+    if (user){
+        res.json({status:200, userID: user.id, msg:'User exist'})
+    }else{
+        res.json({status:500, msg:'User not found'})
+    }
 });
 
-router.post('/', async(req, res) => {
+router.post('/createUser', async(req, res) => {
     const user = req.body
     try {
         const newData = await User.create(user)

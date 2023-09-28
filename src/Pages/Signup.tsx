@@ -25,20 +25,19 @@ export function Signup(){
     // TODO: change data type to IUser(add interface in models)
     const onSubmit = (data:any) => {
         // console.log(data)
-        setUniqueUsernameError(false)
+        // setUniqueUsernameError(false)
 
-        axios.post('http://localhost:3001/users', data).then((res) => {
+        axios.post('http://localhost:3001/users/createUser', data).then((res) => {
             // this is for debugging
-            console.log(res.data)
-            if (!res.data.error){
+                // console.log(res.data)
+            if (res.data.error){
                 console.log( res.data.msg)
-                setUniqueUsernameError(false)
+                setUniqueUsernameError(true)
             }else {
                 console.log( res.data.msg)
-                setUniqueUsernameError(true)}
+                setUniqueUsernameError(false)
+                }
         })
-        
-                
     }
             
 

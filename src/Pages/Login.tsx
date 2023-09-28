@@ -1,10 +1,14 @@
 import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import * as Yup from 'yup'
 
 
 export function Login(){
+    const [NotExistError, setNotExistError] = useState(false)
+    
+
     const fieldClassName = 'p-2 border-[1px] border-gray-400 rounded-lg outline-blue-200 shadow-lg w-full'
 
     const initialValues = {
@@ -20,17 +24,22 @@ export function Login(){
 
     // TODO: change data type to IUser(add interface in models)
     const onSubmit = (data:any) => {
-        console.log(data)
-        
-        // axios.post('http://localhost:3001/users', data).then((res) => {
-        //     console.log('User signed in')
-        // })
+        // console.log(data)
+        axios.post('http://localhost:3001/users/checkUser', data).then((res) => {
+            if (res.data.status === 200){
+                console.log( res.data)
+                setNotExistError(false)
+            }else{
+                setNotExistError(true)
+            }
+        })
     }
 
     return(<>
         <div>
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
                 <Form className='container flex flex-col gap-3 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm'>
+                    {NotExistError && <div className='text-xs text-red-700'>User not exist</div> }
                     <label className='text-left'>Username:</label>
                     <ErrorMessage name='username' component='span' className='text-xs text-red-700'/>
                     <Field name='username' type='text' placeholder='Vlados' className={fieldClassName}/>

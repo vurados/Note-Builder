@@ -19,6 +19,8 @@ app.use('/layouts', layoutRouter);
 
 const userRouter = require('./routes/Users');
 app.use('/users', userRouter);
+app.use('/users/checkUser', userRouter)
+app.use('/users/createUser', userRouter)
 
 
 
