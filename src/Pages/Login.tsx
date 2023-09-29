@@ -1,13 +1,15 @@
 import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, redirect } from 'react-router-dom'
 import * as Yup from 'yup'
 
+import { AuthData } from '../auth/AuthWrapper'
 
 export function Login(){
     const [NotExistError, setNotExistError] = useState(false)
-    
+
+    const {login} = AuthData()
 
     const fieldClassName = 'p-2 border-[1px] border-gray-400 rounded-lg outline-blue-200 shadow-lg w-full'
 
@@ -18,21 +20,35 @@ export function Login(){
     }
 
     const validationSchema = Yup.object().shape({
-            username: Yup.string().min(3).max(20).required(),
-            password: Yup.string().required()
-        })
+        username: Yup.string().min(3).max(20).required(),
+        password: Yup.string().required()
+    })
 
     // TODO: change data type to IUser(add interface in models)
-    const onSubmit = (data:any) => {
-        // console.log(data)
-        axios.post('http://localhost:3001/users/checkUser', data).then((res) => {
-            if (res.data.status === 200){
-                console.log( res.data)
-                setNotExistError(false)
-            }else{
-                setNotExistError(true)
-            }
-        })
+    // const onSubmit = (data:any) => {
+    //     // console.log(data)
+    //     axios.post('http://localhost:3001/users/checkUser', data).then((res) => {
+    //         if (res.data.success){
+    //             console.log( res.data)
+    //             setNotExistError(false)
+    //         }else{
+    //             setNotExistError(true)
+    //         }
+    //     })
+    // }
+
+    // ---------------------------------------------------------------
+    // TODO: need to change to this variant of onSubmit
+    // TODO: change data type to IUser(add interface in models)
+    // ---------------------------------------------------------------
+    const onSubmit = async (data:any) => {
+        try{
+            await login(data)
+            redirect('/Layouts')
+            // code to do baasicly what happens when user auth on acc
+        }catch (error){
+            setNotExistError(true)
+        }
     }
 
     return(<>

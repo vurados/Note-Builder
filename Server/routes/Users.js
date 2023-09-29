@@ -6,9 +6,9 @@ router.post('/checkUser', async(req, res) => {
     const {username, password} = req.body
     const user = await User.findOne({where:{username: username, password: password}})
     if (user){
-        res.json({status:200, userID: user.id, msg:'User exist'})
+        res.status(200).json({success:true, userID: user.id, user: user, msg:'User exist'})
     }else{
-        res.json({status:500, msg:'User not found'})
+        res.json({success:false, msg:'User not found'})
     }
 });
 

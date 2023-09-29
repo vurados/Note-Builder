@@ -16,8 +16,8 @@ import { EditNote } from './Pages/EditNote';
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(<>
-        <Route path='/' element={<Root />} />
-        <Route index path="/home" element={<Home />}/>
+        {/* <Route path='/' element={<Root />} /> */}
+        <Route index path="/" element={<Home />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/signup" element={<Signup />}/>
         <Route path="/layouts" element={<Layouts />}/>
