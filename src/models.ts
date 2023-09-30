@@ -17,8 +17,8 @@ export interface ILayouts{
 }
 
 export interface IUser{
-    id: number
+    id?: number
     username: string
-    email: string
-    password: string
+    email?: string
+    password?: string
 }

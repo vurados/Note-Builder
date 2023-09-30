@@ -1,19 +1,22 @@
 import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
-import { Link, redirect } from 'react-router-dom'
+import { Link, redirect, useNavigate} from 'react-router-dom'
 import * as Yup from 'yup'
 
 import { AuthData } from '../auth/AuthWrapper'
+import { IUser } from '../models'
 
 export function Login(){
-    const [NotExistError, setNotExistError] = useState(false)
 
-    const {login} = AuthData()
+    const [NotExistError, setNotExistError] = useState<boolean>(false)
+    
+    const navigate = useNavigate()
+    const {user, login} = AuthData()
 
     const fieldClassName = 'p-2 border-[1px] border-gray-400 rounded-lg outline-blue-200 shadow-lg w-full'
 
-    const initialValues = {
+    const initialValues: IUser = {
         username: '', 
         password: ''
 
@@ -41,12 +44,15 @@ export function Login(){
     // TODO: need to change to this variant of onSubmit
     // TODO: change data type to IUser(add interface in models)
     // ---------------------------------------------------------------
-    const onSubmit = async (data:any) => {
+    const onSubmit = async(data: IUser) => {
         try{
+            console.log('on submit 1')
+            // redirect('/layouts')
             await login(data)
-            redirect('/Layouts')
-            // code to do baasicly what happens when user auth on acc
+            // console.log('user data gotten from login', user)
+            navigate("/layouts")
         }catch (error){
+            console.log('error', error)
             setNotExistError(true)
         }
     }
@@ -67,7 +73,7 @@ export function Login(){
                     <div className='block h-4 invisible '></div>
                     <div>
                     <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full">Login</button>
-                    <Link to={'/signin'} ><span className='font-bold text-blue-700'>signup</span></Link>
+                    <Link to={'/signup'} ><span className='font-bold text-blue-700'>signup</span></Link>
                     </div>
                 </Form>
             </Formik>

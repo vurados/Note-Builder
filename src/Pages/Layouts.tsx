@@ -9,8 +9,12 @@ import { AddNoteTile } from "../components/addNote"
 import { Footer } from "../components/Footer"
 
 export function Layouts(){
+    const {user} = AuthData()
+
     const [listOfLayouts, setlistOfLayouts] = useState([])
     const [loading, setloading] = useState(false)
+
+
 
     useEffect(() => {
         axios.get("http://localhost:3001/layouts").then((response) =>{
