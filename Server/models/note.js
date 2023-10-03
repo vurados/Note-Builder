@@ -1,10 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
     const Note = sequelize.define("Note", {
-    layoutId:{
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-            
     title:{
             type: DataTypes.STRING,
             allowNull: false,

@@ -1,7 +1,4 @@
 import { Link } from "react-router-dom"
-import { Footer } from "../components/Footer"
-import { TopBar } from "../components/TopBar"
-import { AddNoteTile } from "../components/addNote"
 
 export const Home = () => {
 
