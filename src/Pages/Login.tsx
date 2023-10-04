@@ -46,7 +46,7 @@ export function Login(){
     // ---------------------------------------------------------------
     const onSubmit = async(data: IUser) => {
         try{
-            console.log('on submit 1')
+            // console.log('on submit 1')
             // redirect('/layouts')
             await login(data)
             // console.log('user data gotten from login', user)
@@ -70,7 +70,7 @@ export function Login(){
                     <ErrorMessage name='password' component='span' className='text-xs text-red-700'/>
                     <Field name='password' type='password' placeholder='Password' className={fieldClassName}/>
                     
-                    <div className='block h-4 invisible '></div>
+                    <div className='h-4 invisible '></div>
                     <div>
                     <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full">Login</button>
                     <Link to={'/signup'} ><span className='font-bold text-blue-700'>signup</span></Link>

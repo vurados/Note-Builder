@@ -1,17 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const {Layout} = require("../models")
+const {User} = require('../models')
 
-router.get('/', async(req, res) => {
-    const listOfLayouts = await Layout.findAll()
-    res.json(listOfLayouts)
-});
 
-router.post('/', async(req, res) => {
-    const layout = req.body
-    await Layout.create(layout)
-    res.json(layout)
-});
+router.post('/getLayouts', async (req, res) => {
+    const userId = req.body.id
+    // res.json(userId)
+    const user = await User.findOne({where: {id: userId}})
+    const listOfLayout = await user.getLayout()
+    res.json(listOfLayout)
+})
+
+router.post('/createLayout', async (req, res) => {
+    const userId = req.body.id
+    const layout = req.body.layout
+    const user = await User.findOne({where: {id: userId}})
+    await user.createLayout(layout)
+    res.status(200).send('layout succefully created')
+})
 
 
 module.exports = router;
