@@ -15,9 +15,10 @@ export function Layouts(){
     const {user} = AuthData()
     
     const [modal, setModal] = useState(false)
-    const [listOfLayouts, setListOfLayouts] = useState([])
+    const [listOfLayouts, setListOfLayouts] = useState<any[]>([])
     // const [loading, setloading] = useState(false)
     
+    // const {} = LayoutModal()
 
     useEffect(() => {
         if(user.isAuthentificated){
@@ -31,14 +32,19 @@ export function Layouts(){
             // const iddd = lastElement[0]['id']
             // console.log('id', iddd);
             // listOfLayouts.slice(-1)[0]['id']
-            
-            
           })
         }
     }, [])
 
+    const createHandler = (layout:any) => {
+      setListOfLayouts(prev=> {
+        return [...prev, layout]
+      })
+    }
+
+    // add onSubmit function in layoutmodal component as onClose that will call function in here that will setListOflayouts
     return(<>
-    {modal && <LayoutModal onClose={() => setModal(false)}/>}
+    {modal && <LayoutModal onCreate={createHandler} onClose={() => setModal(false)}/>}
       <div className='flex flex-col gap-10 min-h-70'>
         <TopBar />
         <div id="main" className='container grid grid-cols-4 gap-x-3 gap-y-3 mx-auto text-center min-h-screen pb-96'>

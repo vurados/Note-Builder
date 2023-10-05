@@ -15,9 +15,10 @@ interface ILayoutModal{
 
 interface LayoutModalProps{
     onClose: () => void
+    onCreate: (layout:ILayoutModal) => void
 }
 
-export function LayoutModal({onClose}: LayoutModalProps){
+export function LayoutModal({onClose, onCreate}: LayoutModalProps){
     const{user} = AuthData()
 
     
@@ -40,8 +41,12 @@ export function LayoutModal({onClose}: LayoutModalProps){
         
         await axios.post('http://localhost:3001/layouts/createLayout', data).then(  (res) => {
             console.log('response data:',res.data);
+            onCreate(res.data)
         })
+
     }
+
+    // const addLayout()
 
     // const closeModal = useCallback(() => setModal(false), [onModalChange])
 
