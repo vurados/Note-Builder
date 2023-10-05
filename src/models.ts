@@ -10,9 +10,9 @@ export interface INotes{
 }
 
 export interface ILayouts{
-    id: number
-    userId: number
-    color: string
+    id?: number
+    userId?: number
+    color?: string
     title: string
 }
 

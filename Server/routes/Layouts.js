@@ -14,7 +14,8 @@ router.post('/getLayouts', async (req, res) => {
 
 router.post('/createLayout', async (req, res) => {
     const userId = req.body.id
-    const layout = req.body.layout
+    // todo : i need to change LayoutModal request
+    const layout = {title: req.body.title}
     const user = await User.findOne({where: {id: userId}})
     await user.createLayout(layout)
     res.status(200).send('layout succefully created')
