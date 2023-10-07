@@ -17,8 +17,6 @@ export function Layouts(){
     const [modal, setModal] = useState(false)
     const [listOfLayouts, setListOfLayouts] = useState<any[]>([])
     // const [loading, setloading] = useState(false)
-    
-    // const {} = LayoutModal()
 
     useEffect(() => {
       fetchLayouts()
