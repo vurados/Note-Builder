@@ -44,9 +44,9 @@ db.User = require('./user')(sequelize, Sequelize.DataTypes);
 db.Layout = require('./layout')(sequelize, Sequelize.DataTypes);
 db.Note = require('./note')(sequelize, Sequelize.DataTypes);
 
-db.User.hasMany(db.Layout, {foreignKey:'UID', as:'Layout'});
-db.Layout.belongsTo(db.User, {foreignKey:'UID', as:'User'});
-db.Layout.hasMany(db.Note, {foreignKey:'LID', as:'Note'});
-db.Note.belongsTo(db.Layout, {foreignKey:'LID', as:'Layout'});
+db.User.hasMany(db.Layout, {foreignKey:'UID', as:'Layout', onDelete: 'CASCADE' });
+db.Layout.belongsTo(db.User, {foreignKey:'UID', as:'User', onDelete: 'CASCADE' });
+db.Layout.hasMany(db.Note, {foreignKey:'LID', as:'Note', onDelete: 'CASCADE' });
+db.Note.belongsTo(db.Layout, {foreignKey:'LID', as:'Layout', onDelete: 'CASCADE' });
 
 module.exports = db;

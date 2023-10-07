@@ -25,4 +25,10 @@ router.post('/createUser', async(req, res) => {
     // res.send('The error ocurred during creating(posting) user entity into the table')
 });
 
+router.delete('/deleteUser/:id', async (req, res) => {
+    const UserId = req.params.id
+    await User.destroy({where: {id: UserId}})
+    res.status(200).send(`User ${UserId} has been deleted`)
+})
+
 module.exports = router;

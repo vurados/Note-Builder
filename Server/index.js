@@ -10,17 +10,23 @@ require("./connectDB");
 
 const db = require('./models');
 
-//Routers
-const noteRouter = require('./routes/Notes');
-app.use('/notes', noteRouter);
+//Routers 
+// TODO: implement this(instead app.use(), use api.use() in routers)
+// const api = express()
+// app.use('/api', api)
+
+const userRouter = require('./routes/Users');
+app.use('/users', userRouter);
 
 const layoutRouter = require('./routes/Layouts');
 app.use('/layouts', layoutRouter);
 
-const userRouter = require('./routes/Users');
-app.use('/users', userRouter);
-app.use('/users/checkUser', userRouter)
-app.use('/users/createUser', userRouter)
+const noteRouter = require('./routes/Notes');
+app.use('/notes', noteRouter);
+
+
+
+
 
 
 
