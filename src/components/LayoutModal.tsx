@@ -39,8 +39,8 @@ export function LayoutModal({onClose, onCreate}: LayoutModalProps){
         data['id'] = user.id
         console.log('on submit data:',data);
         
-        await axios.post('http://localhost:3001/layouts/createLayout', data).then(  (res) => {
-            console.log('response data:',res.data);
+        await axios.post('http://localhost:3001/api/users/layouts/createLayout', data).then(  (res) => {
+            console.log('response data:',res.data, res.headers.cookie);
             onCreate(res.data)
         })
 

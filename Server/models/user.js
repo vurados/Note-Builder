@@ -10,9 +10,14 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             isEmail: true
         },
-    password:{
+    hashedPassword:{
             type: DataTypes.STRING,
             allowNull: false,
+        },
+    salt:{
+            type: DataTypes.STRING,
+            // TRUE FOR NOW THEN SHOULD BE FALSE
+            allowNull: true,
         },
     });
 

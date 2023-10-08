@@ -12,14 +12,14 @@ export function Signup(){
     const initialValues = {
         username: '', 
         email: '',
-        password: ''
+        hashedPassword: ''
 
     }
 
     const validationSchema = Yup.object().shape({
             username: Yup.string().min(3).max(20).required(),
             email: Yup.string().email().required(),
-            password: Yup.string().required()
+            hashedPassword: Yup.string().required()
         })
 
     // TODO: change data type to IUser(add interface in models)
@@ -27,7 +27,7 @@ export function Signup(){
         // console.log(data)
         // setUniqueUsernameError(false)
 
-        axios.post('http://localhost:3001/users/createUser', data).then((res) => {
+        axios.post('http://localhost:3001/api/users/createUser', data).then((res) => {
             // this is for debugging
                 // console.log(res.data)
             if (res.data.error){
@@ -57,7 +57,7 @@ export function Signup(){
 
                     <label>Password:</label>
                     <ErrorMessage name='password' component='span' className='text-xs text-red-700'/>
-                    <Field name='password' type='password' placeholder='Password' className={fieldClassName}/>
+                    <Field name='hashedPassword' type='password' placeholder='Password' className={fieldClassName}/>
                     
                     <div className='block h-4 invisible '></div>
                     <div>

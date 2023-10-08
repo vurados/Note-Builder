@@ -4,7 +4,8 @@ const {User} = require("../models")
 
 router.post('/checkUser', async(req, res) => {
     const {username, password} = req.body
-    const user = await User.findOne({where:{username: username, password: password}})
+    console.log(req.cookies);
+    const user = await User.findOne({where:{username: username, hashedPassword: password}})
     if (user){
         res.status(200).json({success:true, userID: user.id, user: user, msg:'User exist'})
     }else{

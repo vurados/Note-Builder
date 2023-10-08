@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize')
 const sequelize = new Sequelize('noteprojectdb', 'root', '05032001', {
     host: 'localhost', 
     dialect: 'mysql',
-    logging: false
+    logging: false,
 });
 
 const connect = async() => {

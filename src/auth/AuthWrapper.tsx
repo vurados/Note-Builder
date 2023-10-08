@@ -19,7 +19,7 @@ export const AuthWrapper = () => {
     
     // data => {username, password}
     const login = async (data: IUser) => {
-        await axios.post('http://localhost:3001/users/checkUser', data).then((res) => {
+        await axios.post('http://localhost:3001/api/users/checkUser', data).then((res) => {
             return new Promise((resolve, reject) => {
                 if (res.data.success){
                     // console.log('id:', res.data.user.id, 'username:',  res.data.user.username, 'email:', res.data.user.email);
