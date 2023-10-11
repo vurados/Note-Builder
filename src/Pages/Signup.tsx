@@ -2,6 +2,7 @@ import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { IUser } from 'src/models'
 import * as Yup from 'yup'
 
 export function Signup(){
@@ -24,17 +25,35 @@ export function Signup(){
 
     // TODO: change data type to IUser(add interface in models)
     const onSubmit = (data:any) => {
-        // console.log(data)
+        console.log(data)
         // setUniqueUsernameError(false)
+        
+        // let req = new Request('http://localhost:3001/api/users/createUser', {
+        //     mode: 'cors', //just a safe-guard indicating our intentions of what to allow
+        //     credentials: 'include',//when will the cookies and authorization header be sent
+        //     method: 'POST',
+        //     body: data
+        // });
+        // fetch(req).then((res) => {
+        //     console.log(res.body);
+        // })
+
 
         axios.post('http://localhost:3001/api/users/createUser', data).then((res) => {
             // this is for debugging
                 // console.log(res.data)
+            console.log(res);
+            console.log(res.data.user.id);
+            
             if (res.data.error){
                 console.log( res.data.msg)
                 setUniqueUsernameError(true)
             }else {
                 console.log( res.data.msg)
+                console.log('token =====>','jwt=', res.data.token);
+                document.cookie = 'jwt=' + res.data.token
+                console.log('document cookie ==============>',document.cookie);
+                
                 setUniqueUsernameError(false)
                 }
         })

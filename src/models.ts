@@ -21,4 +21,7 @@ export interface IUser{
     username: string
     email?: string
     password?: string
+    isAuthentificated?: boolean
+    hashedPassword?: string
+    salt?: string
 }

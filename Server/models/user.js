@@ -16,8 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         },
     salt:{
             type: DataTypes.STRING,
-            // TRUE FOR NOW THEN SHOULD BE FALSE
-            allowNull: true,
+            allowNull: false,
         },
     });
 

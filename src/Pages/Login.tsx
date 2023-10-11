@@ -57,6 +57,21 @@ export function Login(){
         }
     }
 
+    const checkCookie = async () => {
+        let req = new Request('http://localhost:3001/api/users/checkToken', {
+            mode: 'cors', //just a safe-guard indicating our intentions of what to allow
+            credentials: 'include', //when will the cookies and authorization header be sent
+        });
+        fetch(req).then((res) => {
+            console.log(res.body);
+        })
+
+
+        // axios.get('http://localhost:3001/api/users/checkToken').then((res) => {
+        //         console.log(res.data)
+        //     })
+    }
+
     return(<>
         <div>
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
@@ -77,6 +92,10 @@ export function Login(){
                     </div>
                 </Form>
             </Formik>
+        </div>
+        <div>
+            <button onClick={checkCookie} className='border-2 px-3 py-2 hover:border-blue-400'>CHECK COOOOOOKIE</button>
+            <p>cookie:{document.cookie||"None"}</p>
         </div>
 
         {/* <div className="container flex flex-col items-center gap-6 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm">

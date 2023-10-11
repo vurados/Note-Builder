@@ -23,7 +23,7 @@ export const AuthWrapper = () => {
             return new Promise((resolve, reject) => {
                 if (res.data.success){
                     // console.log('id:', res.data.user.id, 'username:',  res.data.user.username, 'email:', res.data.user.email);
-                    
+                    document.cookie = 'jwt=' + res.data.token
                     setUser({id: res.data.user.id, username: res.data.user.username, email: res.data.user.email, isAuthentificated: true})
                     // setUser({id: 69, username: 'jopa', email: 'jopemail', isAuthentificated: true})
                     // console.log('user in the login function', user, 'response from api', res.data.user)
