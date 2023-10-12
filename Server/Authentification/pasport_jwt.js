@@ -10,6 +10,7 @@ const pathToKey = path.join(__dirname, '..', 'Authentification/id_rsa_pub.pem') 
 const PUB_KEY = fs.readFileSync(pathToKey, 'utf8')
 
 var cookieExtractor = function(req) {
+    console.log(req.cookies);
     var token = null;
     if (req && req.cookies) {
         token = req.cookies['jwt'];
@@ -24,6 +25,7 @@ const options = {
 }
 
 const strategy = new Strategy(options, (payload, done) => {
+    // console.log('payload========>',JSON.stringify(payload));
     User.findByPk(payload.sub).then((user) => {
         if(user){
             return done(null, user)

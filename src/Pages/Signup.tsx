@@ -2,6 +2,7 @@ import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { apiRequest } from 'src/helper_methods/api_request'
 import { IUser } from 'src/models'
 import * as Yup from 'yup'
 
@@ -24,21 +25,30 @@ export function Signup(){
         })
 
     // TODO: change data type to IUser(add interface in models)
-    const onSubmit = (data:any) => {
+    const onSubmit = async (data :any) => {
         console.log(data)
+        // console.log(JSON.stringify(data));
+        
         // setUniqueUsernameError(false)
         
         // let req = new Request('http://localhost:3001/api/users/createUser', {
         //     mode: 'cors', //just a safe-guard indicating our intentions of what to allow
         //     credentials: 'include',//when will the cookies and authorization header be sent
         //     method: 'POST',
-        //     body: data
+        //     body: JSON.stringify(data),
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //     },
         // });
-        // fetch(req).then((res) => {
-        //     console.log(res.body);
+        // await fetch(req).then((res) => {
+        //     console.log(res.json());
         // })
-
-
+        // -----------------------------------------------------------------------
+        // const res = await apiRequest('/users/createUser', data, 'POST')
+        // console.log(res)
+        // ------------------------------------------------------------------------
+        axios.defaults.withCredentials = true
         axios.post('http://localhost:3001/api/users/createUser', data).then((res) => {
             // this is for debugging
                 // console.log(res.data)

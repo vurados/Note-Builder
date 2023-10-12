@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 
 import { AuthData } from '../auth/AuthWrapper'
 import { IUser } from '../models'
+import { apiRequest } from 'src/helper_methods/api_request'
 
 export function Login(){
 
@@ -58,18 +59,8 @@ export function Login(){
     }
 
     const checkCookie = async () => {
-        let req = new Request('http://localhost:3001/api/users/checkToken', {
-            mode: 'cors', //just a safe-guard indicating our intentions of what to allow
-            credentials: 'include', //when will the cookies and authorization header be sent
-        });
-        fetch(req).then((res) => {
-            console.log(res.body);
-        })
-
-
-        // axios.get('http://localhost:3001/api/users/checkToken').then((res) => {
-        //         console.log(res.data)
-        //     })
+        const res = await apiRequest('/users/checkToken')
+        console.log(res);
     }
 
     return(<>

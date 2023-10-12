@@ -1,6 +1,6 @@
 const express = require("express");
 // const session = require("express-session");
-// const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 // const sessionStore = require("express-session-sequelize")(session.Store)
 const cors = require("cors")
 const passport = require('passport')
@@ -11,11 +11,13 @@ require("./connectDB");
 const db = require('./models');
 
 const app = express();
+app.use(cookieParser())
+
 require( './Authentification/pasport_jwt')(passport)
 app.use(passport.initialize())
-// app.use(cookieParser())
+
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+// app.use(express.urlencoded({extended: true}))
 app.use(cors())
 
 // initialize store with db.sequelize from ./models/index
