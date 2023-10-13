@@ -10,10 +10,11 @@ const pathToKey = path.join(__dirname, '..', 'Authentification/id_rsa_pub.pem') 
 const PUB_KEY = fs.readFileSync(pathToKey, 'utf8')
 
 var cookieExtractor = function(req) {
-    console.log(req.cookies);
+    console.log('req.cookie from cookie extractor:  ',req.cookies);
     var token = null;
     if (req && req.cookies) {
         token = req.cookies['jwt'];
+        console.log('token from cookieextractor:  ', token);
     }
     return token;
 };
@@ -25,7 +26,7 @@ const options = {
 }
 
 const strategy = new Strategy(options, (payload, done) => {
-    // console.log('payload========>',JSON.stringify(payload));
+    console.log('payload========>',JSON.stringify(payload));
     User.findByPk(payload.sub).then((user) => {
         if(user){
             return done(null, user)

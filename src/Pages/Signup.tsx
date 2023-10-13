@@ -1,12 +1,13 @@
 import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
 import { apiRequest } from 'src/helper_methods/api_request'
 import { IUser } from 'src/models'
 import * as Yup from 'yup'
 
 export function Signup(){
+    const navigate = useNavigate()
     const [UniqueUsernameError, setUniqueUsernameError] = useState(false)
 
     const fieldClassName = 'p-2 border-[1px] border-gray-400 rounded-lg outline-blue-200 shadow-lg w-full'
@@ -48,23 +49,21 @@ export function Signup(){
         // const res = await apiRequest('/users/createUser', data, 'POST')
         // console.log(res)
         // ------------------------------------------------------------------------
-        axios.defaults.withCredentials = true
-        axios.post('http://localhost:3001/api/users/createUser', data).then((res) => {
+    
+        axios.post('api/users/createUser', data).then((res) => {
             // this is for debugging
                 // console.log(res.data)
             console.log(res);
             console.log(res.data.user.id);
             
-            if (res.data.error){
+            if (res.data.success){
                 console.log( res.data.msg)
-                setUniqueUsernameError(true)
+                setUniqueUsernameError(false)
+                navigate("/login")
             }else {
                 console.log( res.data.msg)
-                console.log('token =====>','jwt=', res.data.token);
-                document.cookie = 'jwt=' + res.data.token
-                console.log('document cookie ==============>',document.cookie);
+                setUniqueUsernameError(true)
                 
-                setUniqueUsernameError(false)
                 }
         })
     }

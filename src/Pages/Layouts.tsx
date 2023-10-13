@@ -24,7 +24,7 @@ export function Layouts(){
 
     const fetchLayouts = async () => {
       if(user.isAuthentificated){
-          await axios.post("http://localhost:3001/api/users/layouts/getLayouts", user).then((res) =>{
+          await axios.post("api/users/layouts/getLayouts", user).then((res) =>{
             setListOfLayouts(res.data)
             console.log('set list of layouts', listOfLayouts);
           })

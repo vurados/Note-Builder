@@ -1,12 +1,12 @@
 import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
-import { Link, redirect, useNavigate} from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
 import * as Yup from 'yup'
 
 import { AuthData } from '../auth/AuthWrapper'
 import { IUser } from '../models'
-import { apiRequest } from 'src/helper_methods/api_request'
+
 
 export function Login(){
 
@@ -49,8 +49,11 @@ export function Login(){
         try{
             // console.log('on submit 1')
             // redirect('/layouts')
+            console.log();
+            
             await login(data)
-            // console.log('user data gotten from login', user)
+            console.log('user loged in successfully');
+            console.log('user data gotten from login', user)
             navigate("/layouts")
         }catch (error){
             console.log('error', error)
@@ -59,8 +62,10 @@ export function Login(){
     }
 
     const checkCookie = async () => {
-        const res = await apiRequest('/users/checkToken')
-        console.log(res);
+        // const res = await apiRequest('/users/checkToken')
+        // console.log(res);
+        await axios.get('api/users/checkToken').then((res) => {console.log(res.data);
+        })
     }
 
     return(<>

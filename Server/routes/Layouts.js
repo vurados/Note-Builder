@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const {Layout} = require("../models")
 const {User} = require('../models');
+const passport = require('passport');
 // const layout = require('../models/layout');
 
 
-router.post('/getLayouts', async (req, res) => {
+router.post('/getLayouts', passport.authenticate('jwt', {session: false}),async (req, res) => {
     const userId = req.body.id
     // res.json(userId)
     const user = await User.findOne({where: {id: userId}})
@@ -13,7 +14,7 @@ router.post('/getLayouts', async (req, res) => {
     res.json(listOfLayout)
 })
 
-router.post('/createLayout', async (req, res) => {
+router.post('/createLayout', passport.authenticate('jwt', {session: false}),async (req, res) => {
     const userId = req.body.id
     // todo : i need to change LayoutModal request
     const layout = {title: req.body.title}
@@ -22,7 +23,7 @@ router.post('/createLayout', async (req, res) => {
     res.status(200).json(newLayout)
 })
 
-router.delete('/deleteLayout/:id', async (req, res) => {
+router.delete('/deleteLayout/:id', passport.authenticate('jwt', {session: false}),async (req, res) => {
     const LayoutId = req.params.id
     await Layout.destroy({where: {id: LayoutId}})
     res.status(200).send(`Layout ${LayoutId} has been deleted`)

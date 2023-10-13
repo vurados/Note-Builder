@@ -19,12 +19,16 @@ export const AuthWrapper = () => {
     
     // data => {username, password}
     const login = async (data: IUser) => {
-        await axios.post('http://localhost:3001/api/users/checkUser', data).then((res) => {
+        await axios.post('api/users/checkUser', data).then((res) => {
             return new Promise((resolve, reject) => {
+                console.log('one more from login()',res.data, res.data.user.id);
+                
                 if (res.data.success){
                     // console.log('id:', res.data.user.id, 'username:',  res.data.user.username, 'email:', res.data.user.email);
-                    document.cookie = 'jwt=' + res.data.token
-                    setUser({id: res.data.user.id, username: res.data.user.username, email: res.data.user.email, isAuthentificated: true})
+                    // document.cookie = 'jwt=' + res.data.token
+                    console.log('response data from login()', res.data);
+                    const newUser = { id: res.data.user.id, username: res.data.user.username, email: res.data.user.email, isAuthentificated: true}
+                    setUser((user) => ({...user, ...newUser}))
                     // setUser({id: 69, username: 'jopa', email: 'jopemail', isAuthentificated: true})
                     // console.log('user in the login function', user, 'response from api', res.data.user)
                     resolve('success')

@@ -1,5 +1,5 @@
 export async function apiRequest(path:string, data=null, method='GET'){
-    const input = 'http://localhost:3001/api' + path
+    const input = 'api' + path
     let req = new Request(input, {
             method: method,
             mode: 'cors', 
