@@ -20,7 +20,7 @@ const verifyPassword = (password, hash, salt) => {
 
 const issueJWT = (user) => {
     const id = user.id;
-  
+
     const expiresIn = '1d';
   
     const payload = {

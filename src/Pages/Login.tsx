@@ -53,7 +53,7 @@ export function Login(){
             
             await login(data)
             console.log('user loged in successfully');
-            console.log('user data gotten from login', user)
+            console.log('user data gotten from login', localStorage.getItem('user'))
             navigate("/layouts")
         }catch (error){
             console.log('error', error)
@@ -64,8 +64,10 @@ export function Login(){
     const checkCookie = async () => {
         // const res = await apiRequest('/users/checkToken')
         // console.log(res);
-        await axios.get('api/users/checkToken').then((res) => {console.log(res.data);
-        })
+        const res = await axios.get('api/users/getUserFromJwt')
+        console.log(res.data.user);
+        console.log(localStorage.getItem('user'));
+        // await axios.get('api/users/checkToken').then((res) => {console.log(res.data);})
     }
 
     return(<>

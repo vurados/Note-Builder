@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 
-import { AuthData } from "../auth/AuthWrapper"
+// import { AuthData } from "../auth/AuthWrapper"
 
 import { LayoutTile } from "../components/LayoutTile"
 import { TopBar } from "../components/TopBar"
@@ -10,9 +10,11 @@ import { Footer } from "../components/Footer"
 import { LayoutModal } from "../components/LayoutModal"
 
 import { ILayouts } from "src/models"
+import Cookies from "js-cookie"
+import { redirect } from "react-router-dom"
 
 export function Layouts(){
-    const {user} = AuthData()
+    // const {user} = AuthData()
     
     const [modal, setModal] = useState(false)
     const [listOfLayouts, setListOfLayouts] = useState<any[]>([])
@@ -23,12 +25,21 @@ export function Layouts(){
     }, [])
 
     const fetchLayouts = async () => {
-      if(user.isAuthentificated){
-          await axios.post("api/users/layouts/getLayouts", user).then((res) =>{
-            setListOfLayouts(res.data)
-            console.log('set list of layouts', listOfLayouts);
-          })
+      // console.log(getJwtID());
+      const jwt = Cookies.get('jwt')
+      const rawuser =  localStorage.getItem('user')
+      if (rawuser && jwt){
+        const user = JSON.parse(rawuser)
+        const isAuthed = user.isAuthentificated
+        if(isAuthed){
+            await axios.get("api/users/layouts/getLayouts").then((res) =>{
+              setListOfLayouts(res.data)
+              console.log('set list of layouts', listOfLayouts);
+            })
         }
+      }else{
+        redirect("/login")
+      }
     }
     
     const createHandler = (layout:any) => {

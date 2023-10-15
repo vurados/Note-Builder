@@ -9,11 +9,11 @@ const path = require('path')
 const pathToKey = path.join(__dirname, '..', 'Authentification/id_rsa_pub.pem') //im hardcoded this because it gives Serever/id_rsa_pub path TODO
 const PUB_KEY = fs.readFileSync(pathToKey, 'utf8')
 
-var cookieExtractor = function(req) {
-    console.log('req.cookie from cookie extractor:  ',req.cookies);
-    var token = null;
+const cookieExtractor = function(req) {
+    // console.log('req.cookie from cookie extractor:  ',req.cookies);
+    let token = null;
     if (req && req.cookies) {
-        token = req.cookies['jwt'];
+        token = req.cookies['jwt'].token;
         console.log('token from cookieextractor:  ', token);
     }
     return token;
@@ -22,18 +22,22 @@ var cookieExtractor = function(req) {
 const options = {
     jwtFromRequest: cookieExtractor,
     secretOrKey: PUB_KEY,
-    algorithms: ['RS256']
+    algorithms: ['RS256'],
+    passReqToCallback: true
 }
 
-const strategy = new Strategy(options, (payload, done) => {
+const strategy = new Strategy(options, (req, payload, done) => {
     console.log('payload========>',JSON.stringify(payload));
     User.findByPk(payload.sub).then((user) => {
         if(user){
+            req.user = user
             return done(null, user)
         }else{
             return done(null, false)
         }
-    }).catch((err) => done(err, null))
+    }).catch((err) => {
+        console.log(err);
+        done(err, null)})
 })
 
 

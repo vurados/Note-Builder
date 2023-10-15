@@ -1,9 +1,8 @@
-import {useCallback} from 'react'
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from 'yup'
 
-import { AuthData } from "../auth/AuthWrapper"
+// import { AuthData } from "../auth/AuthWrapper"
 
 interface ILayoutModal{
         id?: number
@@ -19,10 +18,6 @@ interface LayoutModalProps{
 }
 
 export function LayoutModal({onClose, onCreate}: LayoutModalProps){
-    const{user} = AuthData()
-
-    
-
     const initialValues = {
         width:0,
         layout:{
@@ -36,11 +31,10 @@ export function LayoutModal({onClose, onCreate}: LayoutModalProps){
     })
 
     const onSubmit = async (data:ILayoutModal) => {
-        data['id'] = user.id
         console.log('on submit data:',data);
         
         await axios.post('api/users/layouts/createLayout', data).then(  (res) => {
-            console.log('response data:',res.data, res.headers.cookie);
+            console.log('response data:',res.data);
             onCreate(res.data)
         })
 
