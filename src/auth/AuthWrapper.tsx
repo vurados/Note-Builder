@@ -8,13 +8,7 @@ const AuthContext = createContext<any | null>(null)
 export const AuthData = () => useContext(AuthContext)
 
 export const AuthWrapper = () => {
-    console.log('we are in authwrapper');
-    
-    // const [user, setUser] = useState({})
-    
-    // data => {username, password}
     const login = async (data: IUser) => {
-
         await axios.post('api/users/checkUser', data).then((res) => {
             return new Promise((resolve, reject) => {
                 console.log('one more from login()',res.data, res.data.user.id);
@@ -34,11 +28,7 @@ export const AuthWrapper = () => {
     }
 
     const logout = () => {
-        const rawprofile = localStorage.getItem('profile')
-        if (rawprofile){
-            const profile = JSON.parse(rawprofile)
-            profile.isAuthentificated = false
-        }
+        localStorage.clear()
     }
 
     return(

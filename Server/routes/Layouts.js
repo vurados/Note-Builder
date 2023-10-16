@@ -9,7 +9,7 @@ const passport = require('passport');
 router.get('/getLayouts', passport.authenticate('jwt', {session: false}),async (req, res) => {
     const userId = req.user.dataValues.id
     // res.json(userId)
-    console.log('we are in getLayouts');
+    // console.log('we are in getLayouts');
     const user = await User.findOne({where: {id: userId}})
     const listOfLayout = await user.getLayout()
     res.json(listOfLayout)
@@ -18,7 +18,7 @@ router.get('/getLayouts', passport.authenticate('jwt', {session: false}),async (
 router.post('/createLayout', passport.authenticate('jwt', {session: false}),async (req, res) => {
     const userId = req.user.dataValues.id
     // todo : i need to change LayoutModal request
-    const layout = {title: req.body.title}
+    const layout = {title: req.body.title, width: req.body.width}
     const user = await User.findOne({where: {id: userId}})
     const newLayout = await user.createLayout(layout)
     res.status(200).json(newLayout)

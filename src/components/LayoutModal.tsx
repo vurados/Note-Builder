@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useState } from "react";
 import * as Yup from 'yup'
 
 // import { AuthData } from "../auth/AuthWrapper"
@@ -43,6 +44,7 @@ export function LayoutModal({onClose, onCreate}: LayoutModalProps){
     // const addLayout()
 
     // const closeModal = useCallback(() => setModal(false), [onModalChange])
+    const [color, setcolor] = useState({})
 
     return(
         <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm z-10">
@@ -51,11 +53,16 @@ export function LayoutModal({onClose, onCreate}: LayoutModalProps){
                         <label>Title</label>
                         <ErrorMessage name='title' component='span' className='text-xs text-red-700' />
                         <Field name='title' type='text' placeholder='Titile' />
+                        
+                        <label>Color</label>
+                        <Field name='color' type='color' />
 
                         <label>Width</label>
                         <ErrorMessage name='width' component='span' className='text-xs text-red-700' />
                         <Field name='width' type='number' placeholder='{1-10}'/>
+                        
                         <div className="invisible h-10"></div>
+                        
                         <div className=""><button type='submit' className="mx-10 w-2/4 p-2 bg-blue-500 rounded-full hover:text-white hover:bg-blue-700">Submit</button><button type='button' onClick={onClose} className="font-bold hover:text-blue-700">close</button></div>
                     </Form>
                 </Formik>

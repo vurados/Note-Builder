@@ -13,7 +13,7 @@ export function Login(){
     const [NotExistError, setNotExistError] = useState<boolean>(false)
     
     const navigate = useNavigate()
-    const {user, login} = AuthData()
+    const {login} = AuthData()
 
     const fieldClassName = 'p-2 border-[1px] border-gray-400 rounded-lg outline-blue-200 shadow-lg w-full'
 
@@ -28,22 +28,8 @@ export function Login(){
         password: Yup.string().required()
     })
 
-    // TODO: change data type to IUser(add interface in models)
-    // const onSubmit = (data:any) => {
-    //     // console.log(data)
-    //     axios.post('http://localhost:3001/users/checkUser', data).then((res) => {
-    //         if (res.data.success){
-    //             console.log( res.data)
-    //             setNotExistError(false)
-    //         }else{
-    //             setNotExistError(true)
-    //         }
-    //     })
-    // }
-
     // ---------------------------------------------------------------
     // TODO: need to change to this variant of onSubmit
-    // TODO: change data type to IUser(add interface in models)
     // ---------------------------------------------------------------
     const onSubmit = async(data: IUser) => {
         try{
@@ -62,12 +48,9 @@ export function Login(){
     }
 
     const checkCookie = async () => {
-        // const res = await apiRequest('/users/checkToken')
-        // console.log(res);
         const res = await axios.get('api/users/getUserFromJwt')
         console.log(res.data.user);
         console.log(localStorage.getItem('user'));
-        // await axios.get('api/users/checkToken').then((res) => {console.log(res.data);})
     }
 
     return(<>
@@ -85,7 +68,7 @@ export function Login(){
                     
                     <div className='h-4 invisible '></div>
                     <div>
-                    <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full">Login</button>
+                    <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">Login</button>
                     <Link to={'/signup'} ><span className='font-bold text-blue-700'>signup</span></Link>
                     </div>
                 </Form>

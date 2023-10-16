@@ -2,7 +2,6 @@ import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
 import { Link, useNavigate} from 'react-router-dom'
-import { apiRequest } from 'src/helper_methods/api_request'
 import { IUser } from 'src/models'
 import * as Yup from 'yup'
 
@@ -28,31 +27,8 @@ export function Signup(){
     // TODO: change data type to IUser(add interface in models)
     const onSubmit = async (data :any) => {
         console.log(data)
-        // console.log(JSON.stringify(data));
-        
-        // setUniqueUsernameError(false)
-        
-        // let req = new Request('http://localhost:3001/api/users/createUser', {
-        //     mode: 'cors', //just a safe-guard indicating our intentions of what to allow
-        //     credentials: 'include',//when will the cookies and authorization header be sent
-        //     method: 'POST',
-        //     body: JSON.stringify(data),
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        // });
-        // await fetch(req).then((res) => {
-        //     console.log(res.json());
-        // })
-        // -----------------------------------------------------------------------
-        // const res = await apiRequest('/users/createUser', data, 'POST')
-        // console.log(res)
-        // ------------------------------------------------------------------------
-    
+
         axios.post('api/users/createUser', data).then((res) => {
-            // this is for debugging
-                // console.log(res.data)
             console.log(res);
             console.log(res.data.user.id);
             
@@ -63,8 +39,7 @@ export function Signup(){
             }else {
                 console.log( res.data.msg)
                 setUniqueUsernameError(true)
-                
-                }
+            }
         })
     }
             
@@ -89,7 +64,7 @@ export function Signup(){
                     
                     <div className='block h-4 invisible '></div>
                     <div>
-                    <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full">Signup</button>
+                    <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">Signup</button>
                     <Link to={'/login'} ><span className='font-bold text-blue-700'>login</span></Link>
                     </div>
                 </Form>

@@ -24,6 +24,8 @@ export function Layouts(){
       fetchLayouts()
     }, [])
 
+    
+
     const fetchLayouts = async () => {
       // console.log(getJwtID());
       const jwt = Cookies.get('jwt')
@@ -59,7 +61,7 @@ export function Layouts(){
     {modal && <LayoutModal onCreate={createHandler} onClose={() => setModal(false)}/>}
       <div className='flex flex-col gap-10 min-h-70'>
         <TopBar />
-        <div id="main" className='container grid grid-cols-4 gap-x-3 gap-y-3 mx-auto text-center min-h-screen pb-96'>
+        <div id="main" className='items-stretch grid grid-cols-4 gap-3 mx-auto text-center min-h-screen mb-96 w-[80vw]'>
           {listOfLayouts.map((layout: ILayouts) => <LayoutTile onDelete={deleteHandler} layout={layout} key={layout.id} />)}
           <div onClick={() => setModal(true)}><AddNoteTile /></div>
         </div>
