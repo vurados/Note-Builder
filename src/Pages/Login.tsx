@@ -1,18 +1,19 @@
 import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
-import { Link, redirect, useNavigate} from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
 import * as Yup from 'yup'
 
 import { AuthData } from '../auth/AuthWrapper'
 import { IUser } from '../models'
+
 
 export function Login(){
 
     const [NotExistError, setNotExistError] = useState<boolean>(false)
     
     const navigate = useNavigate()
-    const {user, login} = AuthData()
+    const {login} = AuthData()
 
     const fieldClassName = 'p-2 border-[1px] border-gray-400 rounded-lg outline-blue-200 shadow-lg w-full'
 
@@ -27,34 +28,27 @@ export function Login(){
         password: Yup.string().required()
     })
 
-    // TODO: change data type to IUser(add interface in models)
-    // const onSubmit = (data:any) => {
-    //     // console.log(data)
-    //     axios.post('http://localhost:3001/users/checkUser', data).then((res) => {
-    //         if (res.data.success){
-    //             console.log( res.data)
-    //             setNotExistError(false)
-    //         }else{
-    //             setNotExistError(true)
-    //         }
-    //     })
-    // }
 
-    // ---------------------------------------------------------------
-    // TODO: need to change to this variant of onSubmit
-    // TODO: change data type to IUser(add interface in models)
-    // ---------------------------------------------------------------
     const onSubmit = async(data: IUser) => {
         try{
             // console.log('on submit 1')
             // redirect('/layouts')
+            console.log();
+            
             await login(data)
-            // console.log('user data gotten from login', user)
+            console.log('user loged in successfully');
+            console.log('user data gotten from login', localStorage.getItem('user'))
             navigate("/layouts")
         }catch (error){
             console.log('error', error)
             setNotExistError(true)
         }
+    }
+
+    const checkCookie = async () => {
+        const res = await axios.get('api/users/getUserFromJwt')
+        console.log(res.data.user);
+        console.log(localStorage.getItem('user'));
     }
 
     return(<>
@@ -72,11 +66,15 @@ export function Login(){
                     
                     <div className='h-4 invisible '></div>
                     <div>
-                    <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full">Login</button>
+                    <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">Login</button>
                     <Link to={'/signup'} ><span className='font-bold text-blue-700'>signup</span></Link>
                     </div>
                 </Form>
             </Formik>
+        </div>
+        <div>
+            <button onClick={checkCookie} className='border-2 px-3 py-2 hover:border-blue-400'>CHECK COOOOOOKIE</button>
+            <p>cookie:{document.cookie||"None"}</p>
         </div>
 
         {/* <div className="container flex flex-col items-center gap-6 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm">

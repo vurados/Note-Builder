@@ -1,10 +1,12 @@
 import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
+import { IUser } from 'src/models'
 import * as Yup from 'yup'
 
 export function Signup(){
+    const navigate = useNavigate()
     const [UniqueUsernameError, setUniqueUsernameError] = useState(false)
 
     const fieldClassName = 'p-2 border-[1px] border-gray-400 rounded-lg outline-blue-200 shadow-lg w-full'
@@ -12,31 +14,32 @@ export function Signup(){
     const initialValues = {
         username: '', 
         email: '',
-        password: ''
+        hashedPassword: ''
 
     }
 
     const validationSchema = Yup.object().shape({
             username: Yup.string().min(3).max(20).required(),
             email: Yup.string().email().required(),
-            password: Yup.string().required()
+            hashedPassword: Yup.string().required()
         })
 
     // TODO: change data type to IUser(add interface in models)
-    const onSubmit = (data:any) => {
-        // console.log(data)
-        // setUniqueUsernameError(false)
+    const onSubmit = async (data :any) => {
+        console.log(data)
 
-        axios.post('http://localhost:3001/users/createUser', data).then((res) => {
-            // this is for debugging
-                // console.log(res.data)
-            if (res.data.error){
-                console.log( res.data.msg)
-                setUniqueUsernameError(true)
-            }else {
+        axios.post('api/users/createUser', data).then((res) => {
+            console.log(res);
+            console.log(res.data.user.id);
+            
+            if (res.data.success){
                 console.log( res.data.msg)
                 setUniqueUsernameError(false)
-                }
+                navigate("/login")
+            }else {
+                console.log( res.data.msg)
+                setUniqueUsernameError(true)
+            }
         })
     }
             
@@ -57,11 +60,11 @@ export function Signup(){
 
                     <label>Password:</label>
                     <ErrorMessage name='password' component='span' className='text-xs text-red-700'/>
-                    <Field name='password' type='password' placeholder='Password' className={fieldClassName}/>
+                    <Field name='hashedPassword' type='password' placeholder='Password' className={fieldClassName}/>
                     
                     <div className='block h-4 invisible '></div>
                     <div>
-                    <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full">Signup</button>
+                    <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">Signup</button>
                     <Link to={'/login'} ><span className='font-bold text-blue-700'>login</span></Link>
                     </div>
                 </Form>

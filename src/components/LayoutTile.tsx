@@ -11,7 +11,7 @@ export function LayoutTile({onDelete, layout}: LayoutProps){
     
     const deleteLayout = async (LID:number|undefined) => {
         console.log('delete button pressed', LID);
-        await axios.delete('http://localhost:3001/layouts/deleteLayout/'+LID).catch((err) => {console.log(err);})
+        await axios.delete('api/users/layouts/deleteLayout/'+LID).catch((err) => {console.log(err);})
         onDelete()
     }
     
