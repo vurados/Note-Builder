@@ -19,44 +19,10 @@ app.use(passport.initialize())
 app.use(express.urlencoded({extended: true}))
 
 
-// initialize store with db.sequelize from ./models/index
-// const sequelizeSessionStore = new sessionStore({
-//     db: db.sequelize,
-// })
-
-// app.use(session({
-//     // --------------------------------------------------------
-//     // IMPORTANT!!!!!!!!!!!!!!!! YOU NEED TO CREATE AND MOVE SECRET VALUE TO .env
-//     secret:'Thats ma little secret',
-//     // ------------------------------------------------------------
-//     store: sequelizeSessionStore,
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie:{
-//         maxAge: 1000 * 60 * 60 * 24,  //thats 1 day in seconds
-//         // sameSite: 'None',
-//         // secure: true
-//     },
-// }))
-
-// const checkAuth = (req, res, next) => {
-//     const token = req.header()
-
-//     if(!token){
-//         return res.status(401).json({message:'Not Authorized'})
-//     }
-
-
-// }
-
-
 //Routers 
-// TODO: implement this(instead app.use(), use api.use() in routers)
-// const api = express()
-// app.use('/api', api)
 
 // app.use(require('./routes'))
-const userRouter = require('./routes/NewJWTUsers');
+const userRouter = require('./routes/Users');
 app.use('/api/users', userRouter);
 
 const layoutRouter = require('./routes/Layouts');

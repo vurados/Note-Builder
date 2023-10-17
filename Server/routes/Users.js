@@ -24,7 +24,7 @@ router.post('/checkUser', async(req, res) => {
         const isValid = verifyPassword(password, user.hashedPassword, user.salt)
         if (isValid){
             const jwt = issueJWT(user)
-            res.cookie('jwt', jwt)
+            res.cookie('jwt', jwt, {maxAge:86400000, httpOnly: true})
             res.status(200).json({success: true, msg:'User successfully signed up', user: user})
         } else {
             res.status(401).json({success: false, msg:'password is incorrect'})
@@ -42,7 +42,7 @@ router.post('/createUser', async(req, res) => {
     try {
         const newUser = await User.create(user)
         const jwt = issueJWT(newUser)
-        res.cookie('jwt', jwt)
+        res.cookie('jwt', jwt, {maxAge:86400000, httpOnly: true})
         res.status(200).json({success: true, msg:'User successfully signed up', user: newUser})
     }catch(error){
         console.error(error)

@@ -19,6 +19,7 @@ interface LayoutModalProps{
 }
 
 export function LayoutModal({onClose, onCreate}: LayoutModalProps){
+
     const initialValues = {
         width:0,
         layout:{
@@ -42,9 +43,10 @@ export function LayoutModal({onClose, onCreate}: LayoutModalProps){
     }
 
     // const addLayout()
+    
 
-    // const closeModal = useCallback(() => setModal(false), [onModalChange])
-    const [color, setcolor] = useState({})
+
+
 
     return(
         <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm z-10">

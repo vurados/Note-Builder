@@ -17,7 +17,7 @@ router.get('/getLayouts', passport.authenticate('jwt', {session: false}),async (
 
 router.post('/createLayout', passport.authenticate('jwt', {session: false}),async (req, res) => {
     const userId = req.user.dataValues.id
-    // todo : i need to change LayoutModal request
+    // TODO : i need to change LayoutModal request
     const layout = {title: req.body.title, width: req.body.width}
     const user = await User.findOne({where: {id: userId}})
     const newLayout = await user.createLayout(layout)

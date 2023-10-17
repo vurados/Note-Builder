@@ -17,6 +17,7 @@ export function Layouts(){
     // const {user} = AuthData()
     
     const [modal, setModal] = useState(false)
+    // TODO: add type of ILAYOUT
     const [listOfLayouts, setListOfLayouts] = useState<any[]>([])
     // const [loading, setloading] = useState(false)
 
@@ -27,12 +28,13 @@ export function Layouts(){
     
 
     const fetchLayouts = async () => {
-      // console.log(getJwtID());
-      const jwt = Cookies.get('jwt')
+      // console.log(getJwtID())
       const rawuser =  localStorage.getItem('user')
-      if (rawuser && jwt){
+      if (rawuser){
         const user = JSON.parse(rawuser)
         const isAuthed = user.isAuthentificated
+        console.log("🚀 ~ file: Layouts.tsx:37 ~ fetchLayouts ~ isAuthed:", isAuthed)
+        
         if(isAuthed){
             await axios.get("api/users/layouts/getLayouts").then((res) =>{
               setListOfLayouts(res.data)
@@ -50,8 +52,7 @@ export function Layouts(){
       })
     }
 
-    // TODO:
-    // i need function {onDeleteHandler} that will not request server data through fetchLayouts and just delete the entry using setListLayouts
+    // TODO:i need function {onDeleteHandler} that will not request server data through fetchLayouts and just delete the entry using setListLayouts
     const deleteHandler = () => {
       fetchLayouts()
     }
