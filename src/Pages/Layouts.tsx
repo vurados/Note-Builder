@@ -59,7 +59,7 @@ export function Layouts(){
 
     // add onSubmit function in layoutmodal component as onClose that will call function in here that will setListOflayouts
     return(<>
-    {modal && <LayoutModal onCreate={createHandler} onClose={() => setModal(false)}/>}
+    {modal && <LayoutModal onCreate={createHandler} onClose={() => setModal(false)}><button className="absolute container p-0 m-0 border-[2px] rounded-full" type="button" onClick={() => setModal(false)}>x</button></LayoutModal>}
       <div className='flex flex-col gap-10 min-h-70'>
         <TopBar />
         <div id="main" className='items-stretch grid grid-cols-4 gap-3 mx-auto text-center min-h-screen mb-96 w-[80vw]'>

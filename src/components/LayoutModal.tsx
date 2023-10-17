@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
+import { Outlet } from "react-router";
 import * as Yup from 'yup'
 
 // import { AuthData } from "../auth/AuthWrapper"
@@ -15,10 +16,11 @@ interface ILayoutModal{
 
 interface LayoutModalProps{
     onClose: () => void
-    onCreate: (layout:ILayoutModal) => void
+    onCreate: (layout:ILayoutModal) => void 
+    children: JSX.Element
 }
 
-export function LayoutModal({onClose, onCreate}: LayoutModalProps){
+export function LayoutModal({onClose, onCreate, children}: LayoutModalProps, ){
 
     const initialValues = {
         width:0,
@@ -42,17 +44,30 @@ export function LayoutModal({onClose, onCreate}: LayoutModalProps){
 
     }
 
-    // const addLayout()
-    
+
+    // const tgdk = true
+    // // const addLayout()
+    // const Lmodal = () => {
+    //     return(<>
+    //         <label>Title</label>
+    //         <ErrorMessage name='title' component='span' className='text-xs text-red-700' />
+    //         <Field name='title' type='text' placeholder='Titile' />
+    //     </>)
+    // }
+
+
 
     return(
         <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm z-10">
+                {children}
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                     <Form className="absolute container flex flex-col gap-3 w-1/4 left-1/2 -translate-x-1/2 top-1/3 p-6 rounded-lg border-2 border-blue-400 bg-white">
                         <label>Title</label>
                         <ErrorMessage name='title' component='span' className='text-xs text-red-700' />
                         <Field name='title' type='text' placeholder='Titile' />
                         
+                        {/* {tgdk && <Lmodal />} */}
+
                         <label>Color</label>
                         <Field name='color' type='color' />
 
