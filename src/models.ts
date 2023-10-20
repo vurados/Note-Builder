@@ -14,6 +14,7 @@ export interface ILayouts{
     userId?: number
     color?: string
     title: string
+    width: number
 }
 
 export interface IUser{

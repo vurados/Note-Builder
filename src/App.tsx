@@ -22,8 +22,8 @@ function App() {
         <Route element={<AuthWrapper/>}>
           <Route path="/login" element={<Login />}/>
           <Route path="/layouts" element={<Layouts />}/>
-          <Route path="/notes" element={<Notes />}/>
-          <Route path="/note_edit" element={<EditNote />}/>
+          <Route path="/notes/:lid" element={<Notes />}/>
+          <Route path="/note_edit/:nid" element={<EditNote />}/>
         </Route>
       </>
     )

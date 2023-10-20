@@ -16,7 +16,7 @@ import { redirect } from "react-router-dom"
 export function Layouts(){
     // const {user} = AuthData()
     
-    const [modal, setModal] = useState(false)
+    const [modal, setModal] = useState<boolean>(false)
     // TODO: add type of ILAYOUT
     const [listOfLayouts, setListOfLayouts] = useState<any[]>([])
     // const [loading, setloading] = useState(false)

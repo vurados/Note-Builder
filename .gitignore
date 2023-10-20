@@ -27,6 +27,7 @@ public/colorScheme.png
 node_modules
 Server/node_modules
 Server/config/config.json
+usefull
 Server/routes/NewLocalUsers.js
 Server/routes/index.js
 Server/Authentification/id_rsa_priv.pem
