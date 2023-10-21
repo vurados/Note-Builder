@@ -20,7 +20,6 @@ export function Login(){
     const initialValues: IUser = {
         username: '', 
         password: ''
-
     }
 
     const validationSchema = Yup.object().shape({
@@ -45,6 +44,7 @@ export function Login(){
         }
     }
 
+    // just debug function(to remove) with button
     const checkCookie = async () => {
         const res = await axios.get('api/users/getUserFromJwt')
         console.log(res.data.user);
@@ -72,6 +72,8 @@ export function Login(){
                 </Form>
             </Formik>
         </div>
+
+        {/* button for debug (delete on prod) */}
         <div>
             <button onClick={checkCookie} className='border-2 px-3 py-2 hover:border-blue-400'>CHECK COOOOOOKIE</button>
             <p>cookie:{document.cookie||"None"}</p>

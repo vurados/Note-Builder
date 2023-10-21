@@ -23,7 +23,7 @@ export function Notes(){
 
     useEffect(() => {
       fetchNotes()
-    })
+    }, [])
 
     const fetchNotes = async () => {
         // console.log(getJwtID())
@@ -34,7 +34,7 @@ export function Notes(){
             console.log("🚀 ~ file: Layouts.tsx:37 ~ fetchLayouts ~ isAuthed:", isAuthed)
             
             if(isAuthed){
-                await axios.post("api/users/layouts/getNotes", lid).then((res) =>{
+                await axios.post('http://localhost:3000/api/users/layouts/notes/getNotesByLayoutId/'+lid).then((res) =>{
                     setListOfNotes(res.data)
                     console.log('set list of notes', listOfNotes);
                 })
@@ -51,7 +51,7 @@ export function Notes(){
             <TopBar />
             <div id="main" className='items-stretch grid grid-cols-4 gap-3 mx-auto text-center min-h-screen mb-96 w-[80vw]'>
                 {listOfNotes.map((note: INotes) => <NoteTile note={note} key={note.id} />)}
-                <div onClick={() => navigate('/editNote')}><AddNoteTile /></div>
+                <div onClick={() => setModal(true)}><AddNoteTile /></div>
             </div>
             <Footer />
         </div>
