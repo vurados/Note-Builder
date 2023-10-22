@@ -14,7 +14,7 @@ const cookieExtractor = function(req) {
     let token = null;
     if (req && req.cookies) {
         token = req.cookies['jwt'].token;
-        console.log('token from cookieextractor:  ', token);
+        // console.log('token from cookieextractor:  ', token);
     }
     return token;
 };
@@ -27,7 +27,7 @@ const options = {
 }
 
 const strategy = new Strategy(options, (req, payload, done) => {
-    console.log('payload========>',JSON.stringify(payload));
+    console.log("🚀 ~ file: pasport_jwt.js:31 ~ strategy ~ payload:", JSON.stringify(payload))
     User.findByPk(payload.sub).then((user) => {
         if(user){
             req.user = user

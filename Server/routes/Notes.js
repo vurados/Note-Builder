@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const {Note, User, Layout} = require("../models")
 const passport = require('passport');
+const {checkOwner} = require('../Authentification/checkOwner')
+
+
 
 router.post('/getNotesByLayoutId/:id', passport.authenticate('jwt', {session: false}), async(req, res) => {
     const userId = req.user.dataValues.id
@@ -22,10 +25,24 @@ router.post('/getNotesByLayoutId/:id', passport.authenticate('jwt', {session: fa
     res.json(notes)
 });
 
-router.post('/createNote', passport.authenticate('jwt', {session: false}), async(req, res) => {
+router.post('/createNote/:id', passport.authenticate('jwt', {session: false}), async(req, res) => {
     const note = req.body
-    await Note.create(note)
-    res.json(note)
+    const userId = req.user.dataValues.id
+    const lid = req.params.id
+    const layout = await Layout.findByPk(lid)
+    if(layout.dataValues.UID === userId){
+        const newNote = await layout.createNote(note)
+        res.json(newNote)
+    }else{
+        res.status(401).send('Erro ocurred creating note')
+    }
 });
+
+router.delete('/deleteNote/:id', passport.authenticate('jwt', {session: false}), checkOwner(Note), async(req, res) => {
+    const NoteId = req.params.id
+    const record = req.record
+    // console.log("🚀 ~ file: Notes.js:45 ~ router.delete ~ record:", record)
+    await record.destroy().then(() => res.send(`Note ${NoteId} was deleted successfully`)).catch((err) => res.status(418).send(`Error: ${err}`))
+})
 
 module.exports = router;
