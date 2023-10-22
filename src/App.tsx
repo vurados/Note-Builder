@@ -10,8 +10,10 @@ import { Signup } from './Pages/Signup';
 import { Layouts } from './Pages/Layouts';
 import { Notes } from './Pages/Notes';
 import { EditNote } from './Pages/EditNote';
+import { Profile } from './Pages/Profile';
 
 import { AuthWrapper } from './auth/AuthWrapper';
+
 
 
 function App() {
@@ -23,7 +25,8 @@ function App() {
           <Route path="/login" element={<Login />}/>
           <Route path="/layouts" element={<Layouts />}/>
           <Route path="/notes/:lid" element={<Notes />}/>
-          <Route path="/note_edit/:nid" element={<EditNote />}/>
+          <Route path="/note_edit/?:nid" element={<EditNote />}/>
+          <Route path="/profile" element={<Profile />}/>
         </Route>
       </>
     )

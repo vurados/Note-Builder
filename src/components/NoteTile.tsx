@@ -9,7 +9,7 @@ export function NoteTile({note}: NoteProps){
 
     
     return(
-        <div className={noteClassName.join('')}>
+        <div className={noteClassName.join('')} ref={'/editNote/'+note.id}>
             <button className="absolute border bg-red-300 rounded-full right-0 top-0 m-1 p-1">Del</button>
             <h2 className="font-bold">{note.title}</h2>
             <div className="grow"><p>{note.content}</p></div>

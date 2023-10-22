@@ -51,7 +51,9 @@ export function Notes(){
             <TopBar />
             <div id="main" className='items-stretch grid grid-cols-4 gap-3 mx-auto text-center min-h-screen mb-96 w-[80vw]'>
                 {listOfNotes.map((note: INotes) => <NoteTile note={note} key={note.id} />)}
-                <div onClick={() => setModal(true)}><AddNoteTile /></div>
+                {/* модалка нужна но токо для настройки внешнего вида и может быть тайтла */}
+                <div onClick={() => setModal(true)}>Options</div>
+                <div onClick={() => navigate('/editNote')}><AddNoteTile /></div>
             </div>
             <Footer />
         </div>
