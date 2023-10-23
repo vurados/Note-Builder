@@ -1,7 +1,7 @@
 export function Footer(){
 
     return(
-    <div className="absolute bottom-0 w-full bg-blue-200 p-[20px] translate-y-full">
+    <div className="relative bottom-0 w-full bg-blue-200 p-[20px] translate-y-full">
         <div>
             <div>Links</div>
             <hr />
