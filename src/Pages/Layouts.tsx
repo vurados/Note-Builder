@@ -5,7 +5,7 @@ import axios from "axios"
 
 import { LayoutTile } from "../components/LayoutTile"
 import { TopBar } from "../components/TopBar"
-import { AddNoteTile } from "../components/addNote"
+import { AddTile } from "../components/addTile"
 import { Footer } from "../components/Footer"
 import { LayoutModal } from "../components/LayoutModal"
 
@@ -62,9 +62,9 @@ export function Layouts(){
     {modal && <LayoutModal onCreate={createHandler} onClose={() => setModal(false)}><button className="absolute container p-0 m-0 border-[2px] rounded-full" type="button" onClick={() => setModal(false)}>x</button></LayoutModal>}
       <div className='flex flex-col gap-10 min-h-70'>
         <TopBar />
-        <div id="main" className='items-stretch grid grid-cols-4 gap-3 mx-auto text-center min-h-screen mb-96 w-[80vw]'>
+        <div id="main" className='items-stretch lg:grid grid-cols-4 gap-3 mx-auto text-center mb-96 w-[80vw]'>
           {listOfLayouts.map((layout: ILayouts) => <LayoutTile onDelete={deleteHandler} layout={layout} key={layout.id} />)}
-          <div onClick={() => setModal(true)}><AddNoteTile /></div>
+          <div onClick={() => setModal(true)}><AddTile /></div>
         </div>
         <Footer />
       </div>

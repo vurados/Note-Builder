@@ -2,6 +2,7 @@ import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
 import { Link, useNavigate} from 'react-router-dom'
+import { Footer } from '../components/Footer'
 import { IUser } from 'src/models'
 import * as Yup from 'yup'
 
@@ -70,7 +71,7 @@ export function Signup(){
                 </Form>
             </Formik>
         </div>
-
+        <Footer />
         {/* <div className="container flex flex-col items-center gap-6 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm">
             <span className="">Signin</span>
             <input type="email" name="" id="" placeholder="Username" className=""/>

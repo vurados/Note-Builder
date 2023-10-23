@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 
 import { AuthData } from '../auth/AuthWrapper'
 import { IUser } from '../models'
+import { Footer } from '../components/Footer'
 
 
 export function Login(){
@@ -15,7 +16,7 @@ export function Login(){
     const navigate = useNavigate()
     const {login} = AuthData()
 
-    const fieldClassName = 'p-2 border-[1px] border-gray-400 rounded-lg outline-blue-200 shadow-lg w-full'
+    const fieldClassName = 'p-2 border-[1px] border-gray-400 rounded-lg outline-blue-200 shadow-lg w-full valid:border-blue-900 invalid:border-red-400'
 
     const initialValues: IUser = {
         username: '', 
@@ -72,13 +73,13 @@ export function Login(){
                 </Form>
             </Formik>
         </div>
-
+        <Footer />
         {/* button for debug (delete on prod) */}
-        <div>
+        {/* <div>
             <button onClick={checkCookie} className='border-2 px-3 py-2 hover:border-blue-400'>CHECK COOOOOOKIE</button>
             <p>cookie:{document.cookie||"None"}</p>
-        </div>
-
+        </div> */}
+        
         {/* <div className="container flex flex-col items-center gap-6 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm">
             <span>Login</span>
             <input type="email" name="" id="" placeholder="Username" className=""/>

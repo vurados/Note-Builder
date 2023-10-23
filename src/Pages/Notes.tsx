@@ -5,7 +5,7 @@ import axios from "axios"
 import { Footer } from "../components/Footer"
 import { NoteTile } from "../components/NoteTile"
 import { TopBar } from "../components/TopBar"
-import { AddNoteTile } from "../components/addNote"
+import { AddTile } from "../components/addTile"
 import { INotes } from "src/models"
 
 
@@ -32,17 +32,14 @@ export function Notes(){
             const user = JSON.parse(rawuser)
             const isAuthed = user.isAuthentificated
             console.log("🚀 ~ file: Layouts.tsx:37 ~ fetchLayouts ~ isAuthed:", isAuthed)
-            
-            if(isAuthed){
-                await axios.post('http://localhost:3000/api/users/layouts/notes/getNotesByLayoutId/'+lid).then((res) =>{
-                    setListOfNotes(res.data)
-                    console.log('set list of notes', listOfNotes);
-                })
-            }
+            await axios.post('http://localhost:3000/api/users/layouts/notes/getNotesByLayoutId/'+lid).then((res) =>{
+                setListOfNotes(res.data)
+                console.log('set list of notes', listOfNotes);
+            })
         }else{
             navigate("/login")
         }
-      }
+    }
 
     
 
@@ -53,7 +50,7 @@ export function Notes(){
                 {listOfNotes.map((note: INotes) => <NoteTile note={note} key={note.id} />)}
                 {/* модалка нужна но токо для настройки внешнего вида и может быть тайтла */}
                 <div onClick={() => setModal(true)}>Options</div>
-                <div onClick={() => navigate('/editNote')}><AddNoteTile /></div>
+                <div onClick={() => navigate('/editNote')}><AddTile /></div>
             </div>
             <Footer />
         </div>

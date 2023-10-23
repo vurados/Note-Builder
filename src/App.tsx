@@ -25,7 +25,7 @@ function App() {
           <Route path="/login" element={<Login />}/>
           <Route path="/layouts" element={<Layouts />}/>
           <Route path="/notes/:lid" element={<Notes />}/>
-          <Route path="/note_edit/?:nid" element={<EditNote />}/>
+          <Route path="/editNote/:nid" element={<EditNote />}/>
           <Route path="/profile" element={<Profile />}/>
         </Route>
       </>

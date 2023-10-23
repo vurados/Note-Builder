@@ -20,7 +20,7 @@ router.post('/checkUser', async(req, res) => {
         if (!user){
             res.status(401).json({success: false, msg: 'user with this username not found'})
         }
-
+        
         const isValid = verifyPassword(password, user.hashedPassword, user.salt)
         if (isValid){
             const jwt = issueJWT(user)

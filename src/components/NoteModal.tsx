@@ -19,9 +19,6 @@ interface LayoutModalProps{
 }
 
 export function NoteModal({onClose, onCreate, children}: LayoutModalProps, ){
-
-
-
     const initialValues = {
         width:0,
         note:{
@@ -51,6 +48,7 @@ export function NoteModal({onClose, onCreate, children}: LayoutModalProps, ){
         return(<>
             <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm z-10">
                 {children}
+                <button className="m-0 p-0" onClick={() => setModal(false)}>x</button>
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                     <Form className="absolute container flex flex-col gap-3 w-1/4 left-1/2 -translate-x-1/2 top-1/3 p-6 rounded-lg border-2 border-blue-400 bg-white">
                         <label>Title</label>
@@ -74,7 +72,6 @@ export function NoteModal({onClose, onCreate, children}: LayoutModalProps, ){
         </div>
         </>)
     }
-
 
 
     return(<>
