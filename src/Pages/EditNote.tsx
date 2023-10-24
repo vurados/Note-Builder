@@ -14,7 +14,7 @@ export function EditNote(){
 
     const textAreaField = () => {
         return(<>
-            <textarea defaultValue={'trun trun'} className="p-3 m-1 w-full h-[90%] resize-none border-2 border-gray-300 outline-blue-400 rounded-lg" />
+            <textarea placeholder="write here...." defaultValue={'trun trun'} className="p-3 m-1 w-full h-[90%] resize-none border-2 border-gray-300 outline-blue-400 rounded-lg" />
         </>)
     }
 
