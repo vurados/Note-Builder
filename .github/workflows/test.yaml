@@ -1,11 +1,11 @@
-name: Test Client Side App
+name: Test&Build&Deploy Client Side App
 on: workflow_dispatch
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       -name: Get repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       -name: caching
         uses: actions/cache@v3
         with:
@@ -20,7 +20,7 @@ jobs:
     needs: test
     steps:
       -name: Get repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       -name: caching
         uses: actions/cache@v3
           path: ~/.npm
@@ -34,12 +34,12 @@ jobs:
         with: 
           path: build
           name: build_Note-Builder
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      -name: download artifact
-        ses: actions/download-artifact@v3
-        with: 
-          name: build_Note-Builder
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #     -name: download artifact
+  #       ses: actions/download-artifact@v3
+  #       with: 
+  #         name: build_Note-Builder
 

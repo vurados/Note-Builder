@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 
-// import { AuthData } from "../auth/AuthWrapper"
-
 import { LayoutTile } from "../components/LayoutTile"
 import { TopBar } from "../components/TopBar"
 import { AddTile } from "../components/addTile"

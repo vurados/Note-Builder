@@ -2,3 +2,5 @@ node_modules
 .git
 .vscode
 .env
+README.md
+Server

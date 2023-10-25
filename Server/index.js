@@ -1,3 +1,7 @@
+require('dotenv').config()
+console.log(process.env.DB_HOST);
+
+
 const express = require("express");
 // const session = require("express-session");
 const cookieParser = require("cookie-parser");
@@ -20,7 +24,7 @@ app.use(express.urlencoded({extended: true}))
 
 
 //Routers 
-
+// TODO: you know what you should do
 // app.use(require('./routes'))
 const userRouter = require('./routes/Users');
 app.use('/api/users', userRouter);
@@ -31,6 +35,12 @@ userRouter.use('/layouts', layoutRouter);
 const noteRouter = require('./routes/Notes');
 layoutRouter.use('/notes', noteRouter);
 
+if(process.env.NODE_ENV === 'production'){
+    console.log('production static serve of build');
+    app.use(express.static('../build'))
+}
+
 db.sequelize.sync().then(() => {
-    app.listen(3001, () => console.log('server running on port 3001'))
+    const port = process.env.DB_PORT
+    app.listen(port, () => console.log(`server running on port ${port}`))
 })

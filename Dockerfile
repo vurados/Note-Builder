@@ -1,13 +1,9 @@
 FROM node:18
 
-WORKDIR /app/client
+WORKDIR /apps/NoteBuilder/client
 
 COPY . .
 
 RUN npm run install
 
 RUN npm run build
-
-EXPOSE 3000
-
-CMD [ "npm", "start" ]
