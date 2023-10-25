@@ -4,37 +4,37 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      -name: Get repo
-      uses: actions/checkout@v4
-      -name: caching
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: node-modules-${{ hashFiles('**/package-lock.json')}}
-      -name: Install deps
-      uses: npm ci
-      -name: Test
-      uses: npm test
+      - name: Get repo
+        uses: actions/checkout@v4
+      - name: caching
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/package-lock.json')}}
+      - name: Install deps
+        uses: npm ci
+      - name: Test
+        uses: npm test
   build:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      -name: Get repo
-      uses: actions/checkout@v4
-      -name: caching
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: node-modules-${{ hashFiles('**/package-lock.json')}}
-      -name: Install deps
-      uses: npm ci
-      -name: build
-      uses: npm build
-      -name: upload artifct
-      uses: actions/upload-artifact@v3
-      with: 
-        path: build
-        name: build_Note-Builder
+      - name: Get repo
+        uses: actions/checkout@v4
+      - name: caching
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/package-lock.json')}}
+      - name: Install deps
+        uses: npm ci
+      - name: build
+        uses: npm build
+      - name: upload artifct
+        uses: actions/upload-artifact@v3
+        with: 
+          path: build
+          name: build_Note-Builder
   # deploy:
   #   runs-on: ubuntu-latest
   #   needs: build
