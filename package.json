@@ -33,7 +33,7 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "test": "vite test",
+    "test": "jest --passWithNoTests",
     "serve": "vite preview"
   },
   "eslintConfig": {
