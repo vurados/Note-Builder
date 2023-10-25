@@ -12,10 +12,10 @@ jobs:
           path: ~/.npm
           key: node-modules-${{ hashFiles('**/package-lock.json')}}
       - name: Install deps
-        uses: npm ci
+        run: npm ci
       - name: Test
-        uses: npm test
-  build:
+        run: npm run test
+  build_and_deply:
     runs-on: ubuntu-latest
     needs: test
     steps:
@@ -27,14 +27,27 @@ jobs:
           path: ~/.npm
           key: node-modules-${{ hashFiles('**/package-lock.json')}}
       - name: Install deps
-        uses: npm ci
+        run: npm ci
       - name: build
-        uses: npm build
-      - name: upload artifct
-        uses: actions/upload-artifact@v3
-        with: 
-          path: build
-          name: build_Note-Builder
+        run: npm run build
+      - name: Copy build to server folder
+        run: cp -r /build Server
+        working-directory: ./Server
+      - name: Install server deps
+        run: npm ci
+        working-directory: ./Server
+      - name: Zip Server Build
+        run: zip -r server-build.zip .
+        working-directory: ./server
+
+      - name: Upload Server Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: server-build
+          path: server-build.zip
+      
+      
+      
   # deploy:
   #   runs-on: ubuntu-latest
   #   needs: build
