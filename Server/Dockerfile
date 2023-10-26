@@ -6,7 +6,7 @@ COPY . .
 
 RUN npm run install
 
-RUN npm run build
+RUN npm run start:prod
 
 EXPOSE 3000
 
