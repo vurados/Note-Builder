@@ -39,12 +39,12 @@ jobs:
       - name: Zip Server Build
         run: zip -r server-build.zip .
         working-directory: ./Server
-
       - name: Upload Server Build
         uses: actions/upload-artifact@v2
         with:
           name: server-build
           path: server-build.zip
+          working-directory: ./Server
       
       
       
