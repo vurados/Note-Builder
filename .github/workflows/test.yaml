@@ -43,8 +43,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: server-build
-          path: server-build.zip
-          working-directory: ./Server
+          path: Server/server-build.zip
       
       
       

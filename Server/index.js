@@ -37,7 +37,7 @@ layoutRouter.use('/notes', noteRouter);
 
 if(process.env.NODE_ENV === 'production'){
     console.log('production static serve of build');
-    app.use(express.static('../build'))
+    app.use(express.static('./build'))
 }
 
 db.sequelize.sync().then(() => {
