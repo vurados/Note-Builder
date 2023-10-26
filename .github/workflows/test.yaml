@@ -31,8 +31,8 @@ jobs:
       - name: build
         run: npm run build
       - name: Copy build to server folder
-        run: cp -r ./build Server
-        working-directory: ./Server
+        run: cp -r build Server
+        working-directory: .
       - name: Install server deps
         run: npm ci
         working-directory: ./Server
