@@ -6,10 +6,6 @@ ENV NODE_ENV='production'
 
 COPY . .
 
-RUN npm install
-
-RUN npm run build
-
 WORKDIR /Server
 
 RUN npm run install

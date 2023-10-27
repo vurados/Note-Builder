@@ -7,6 +7,6 @@ LICENSE
 README.md
 Server\Authentification\Not_used
 Server\routes\Not_used
-Server\build
+Server\node_modules
 graphic
 .github

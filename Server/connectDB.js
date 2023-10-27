@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize')
 
 // TODO: before deployment need to change it to .env variables
 const sequelize = new Sequelize('noteprojectdb', 'root', '05032001', {
-    host: process.env.DB_HOST, 
+    host: process.env.DB_HOST || 'localhost', 
     dialect: 'mysql',
     logging: false,
 });
