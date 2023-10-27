@@ -26,7 +26,7 @@ yarn-error.log*
 usefull
 src/components/test
 public/colorScheme.png
-node_modules
+Server\node_modules
 /Server/node_modules
 Server/config/config.json
 Server/routes/NewLocalUsers.js
