@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:20.9
 
 WORKDIR /usr/apps/NoteBuilder
 

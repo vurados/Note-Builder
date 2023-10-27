@@ -41,7 +41,15 @@ jobs:
         with:
           name: server-build
           path: Server/server-build.zip
-      
+      - name: Build
+        uses: cloudposse/github-action-docker-build-push@main
+        with:
+          registry: docker.io
+          organization: "${{ github.event.repository.owner.login }}"
+          repository: "${{ github.event.repository.name }}"
+          login: "${{ secrets.DOCKER_USERNAME }}"
+          password: "${{ secrets.DOCKER_PASSWORD }}"
+        
       
       
   # deploy:
