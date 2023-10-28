@@ -1,6 +1,7 @@
+import React from "react"
 import { Link, Outlet } from "react-router-dom"
-import { Footer } from "../components/Footer"
-import { TopBar } from "../components/TopBar"
+// import { Footer } from "../components/Footer"
+// import { TopBar } from "../components/TopBar"
 
 export const Root = () => {
     return(<> 

@@ -1,6 +1,7 @@
+import React from 'react';
 // import axios from 'axios';
 // import { useEffect, useState } from 'react';
-import {createBrowserRouter, createRoutesFromElements, Route, Link, Outlet, RouterProvider} from 'react-router-dom'
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from 'react-router-dom'
 
 
 // import { Root } from './Pages/Root';
@@ -13,6 +14,7 @@ import { EditNote } from './Pages/EditNote';
 import { Profile } from './Pages/Profile';
 
 import { AuthWrapper } from './auth/AuthWrapper';
+
 
 
 

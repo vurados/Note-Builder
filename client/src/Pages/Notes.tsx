@@ -1,3 +1,4 @@
+import React from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
@@ -6,7 +7,8 @@ import { Footer } from "../components/Footer"
 import { NoteTile } from "../components/NoteTile"
 import { TopBar } from "../components/TopBar"
 import { AddTile } from "../components/addTile"
-import { INotes } from "src/models"
+import { INotes } from "../models"
+
 
 
 
@@ -18,7 +20,7 @@ export function Notes(){
     const navigate = useNavigate()
 
     const [listOfNotes, setListOfNotes] = useState([])
-    const [modal, setModal] = useState<boolean>(false)
+    // const [modal, setModal] = useState<boolean>(false)
 
 
     useEffect(() => {

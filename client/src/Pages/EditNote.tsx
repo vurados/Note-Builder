@@ -1,12 +1,14 @@
-import { Field, Form, Formik, FormikHelpers, FormikValues } from "formik";
+import React from "react";
+import { Field, Form, Formik } from "formik";
 import { Footer } from "../components/Footer";
 import { TopBar } from "../components/TopBar";
 import axios from "axios";
 
 
+
 export function EditNote(){
 
-    const onSubmit = async (data:any) => {
+    const onSubmit = async (data: string) => {
         await axios.post('api/users/layouts/createLayout', data).then(  (res) => {
             console.log('response data:',res.data);
         })

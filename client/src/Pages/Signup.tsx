@@ -3,7 +3,7 @@ import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
 import { Link, useNavigate} from 'react-router-dom'
 import { Footer } from '../components/Footer'
-import { IUser } from 'src/models'
+import { IUser } from '../models'
 import * as Yup from 'yup'
 
 export function Signup(){
@@ -26,7 +26,7 @@ export function Signup(){
         })
 
     // TODO: change data type to IUser(add interface in models)
-    const onSubmit = async (data :any) => {
+    const onSubmit = async (data : IUser) => {
         console.log(data)
 
         axios.post('api/users/createUser', data).then((res) => {

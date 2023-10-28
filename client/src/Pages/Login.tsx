@@ -1,4 +1,5 @@
-import axios from 'axios'
+import React from 'react'
+// import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
 import { Link, useNavigate} from 'react-router-dom'
@@ -7,6 +8,7 @@ import * as Yup from 'yup'
 import { AuthData } from '../auth/AuthWrapper'
 import { IUser } from '../models'
 import { Footer } from '../components/Footer'
+
 
 
 export function Login(){
@@ -46,11 +48,11 @@ export function Login(){
     }
 
     // just debug function(to remove) with button
-    const checkCookie = async () => {
-        const res = await axios.get('api/users/getUserFromJwt')
-        console.log(res.data.user);
-        console.log(localStorage.getItem('user'));
-    }
+    // const checkCookie = async () => {
+    //     const res = await axios.get('api/users/getUserFromJwt')
+    //     console.log(res.data.user);
+    //     console.log(localStorage.getItem('user'));
+    // }
 
     return(<>
         <div>

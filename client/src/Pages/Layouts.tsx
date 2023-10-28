@@ -1,3 +1,4 @@
+import React from "react"
 import { useEffect, useState } from "react"
 import axios from "axios"
 
@@ -7,16 +8,17 @@ import { AddTile } from "../components/addTile"
 import { Footer } from "../components/Footer"
 import { LayoutModal } from "../components/LayoutModal"
 
-import { ILayouts } from "src/models"
-import Cookies from "js-cookie"
+import { ILayouts } from "../models"
+// import Cookies from "js-cookie"
 import { redirect } from "react-router-dom"
+
 
 export function Layouts(){
     // const {user} = AuthData()
     
     const [modal, setModal] = useState<boolean>(false)
     // TODO: add type of ILAYOUT
-    const [listOfLayouts, setListOfLayouts] = useState<any[]>([])
+    const [listOfLayouts, setListOfLayouts] = useState<ILayouts[]>([])
     // const [loading, setloading] = useState(false)
 
     useEffect(() => {
