@@ -1,22 +1,16 @@
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useState } from "react";
-import { Outlet } from "react-router";
+// import { useState } from "react";
+// import { Outlet } from "react-router";
 import * as Yup from 'yup'
+import { ILayouts } from "../models";
 
 // import { AuthData } from "../auth/AuthWrapper"
 
-interface ILayoutModal{
-        id?: number
-        width: number
-        layout:{
-            title: string
-        }
-    }
 
 interface LayoutModalProps{
     onClose: () => void
-    onCreate: (layout:ILayoutModal) => void 
+    onCreate: (layout:ILayouts) => void 
     children: JSX.Element
 }
 
@@ -24,9 +18,7 @@ export function LayoutModal({onClose, onCreate, children}: LayoutModalProps, ){
 
     const initialValues = {
         width:0,
-        layout:{
-            title:""
-        }
+        title:""
     }
 
     const validationSchema = Yup.object().shape({
@@ -34,7 +26,7 @@ export function LayoutModal({onClose, onCreate, children}: LayoutModalProps, ){
         width: Yup.number().required()
     })
 
-    const onSubmit = async (data:ILayoutModal) => {
+    const onSubmit = async (data:ILayouts) => {
         console.log('on submit data:',data);
         
         await axios.post('api/users/layouts/createLayout', data).then(  (res) => {
@@ -64,7 +56,7 @@ export function LayoutModal({onClose, onCreate, children}: LayoutModalProps, ){
                     <Form className="absolute container flex flex-col gap-3 w-1/4 left-1/2 -translate-x-1/2 top-1/3 p-6 rounded-lg border-2 border-blue-400 bg-white">
                         <label>Title</label>
                         <ErrorMessage name='title' component='span' className='text-xs text-red-700' />
-                        <Field name='title' type='text' placeholder='Titile' />
+                        <Field name='title' type='text' placeholder='Title' />
                         
                         {/* {tgdk && <Lmodal />} */}
 

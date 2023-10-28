@@ -5,10 +5,14 @@ import { TopBar } from "../components/TopBar";
 import axios from "axios";
 
 
+interface FormValues {
+    text: string
+}
+
 
 export function EditNote(){
 
-    const onSubmit = async (data: string) => {
+    const onSubmit = async (data: FormValues) => {
         await axios.post('api/users/layouts/createLayout', data).then(  (res) => {
             console.log('response data:',res.data);
         })

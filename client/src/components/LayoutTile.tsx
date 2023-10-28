@@ -21,7 +21,7 @@ export function LayoutTile({layout, onDelete}: LayoutProps){
     return(
         <div className={layoutTileClassName} onClick={() => navigate(`/notes/${layout.id}`)}>
             <button onClick={() => deleteLayout(layout.id)} className="absolute border bg-red-300 rounded-full right-0 top-0 m-1 p-1 text-black font-bold">Del</button>
-            <h2 className="font-bold">{layout.title}</h2>
+            <h2 className="font-bold">{layout.layout?.title}</h2>
             <div className="mx-7 px-10 py-1 min-h-[120px] h-[10vw] overflow-hidden text-left border-2 rounded-lg text-black">
                 <ul>
                     <li>раз</li>

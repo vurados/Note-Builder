@@ -1,4 +1,3 @@
-import React from "react"
 import { useEffect, useState } from "react"
 import axios from "axios"
 
@@ -46,7 +45,7 @@ export function Layouts(){
       }
     }
     
-    const createHandler = (layout:any) => {
+    const createHandler = (layout:ILayouts) => {
       setListOfLayouts(prev=> {
         return [...prev, layout]
       })
