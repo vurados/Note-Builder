@@ -1,0 +1,62 @@
+name: Test&Build&Deploy Client Side App
+on: workflow_dispatch
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get repo
+        uses: actions/checkout@v4
+      - name: caching
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/package-lock.json')}}
+      - name: Install deps
+        run: npm ci
+      - name: Test
+        run: npm run test
+  build_and_deply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get repo
+        uses: actions/checkout@v4
+      - name: caching
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/package-lock.json')}}
+      - name: Install deps
+        run: npm ci
+      - name: build
+        run: npm run build
+      - name: Install server deps
+        run: npm ci
+        working-directory: ./Server
+      - name: Zip Server Build
+        run: zip -r server-build.zip .
+        working-directory: ./Server
+      - name: Upload Server Build
+        uses: actions/upload-artifact@v2
+        with:
+          name: server-build
+          path: Server/server-build.zip
+      - name: Build
+        uses: cloudposse/github-action-docker-build-push@main
+        with:
+          registry: docker.io
+          organization: "${{ github.event.repository.owner.login }}"
+          repository: "${{ github.event.repository.name }}"
+          login: "${{ secrets.DOCKER_USERNAME }}"
+          password: "${{ secrets.DOCKER_PASSWORD }}"
+        
+      
+      
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #     -name: download artifact
+  #       ses: actions/download-artifact@v3
+  #       with: 
+  #         name: build_Note-Builder
+

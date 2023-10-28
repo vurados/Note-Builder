@@ -1,0 +1,11 @@
+{
+  "name": "new_notes",
+  "version": "1.0.0",
+  "description": "new notes project",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "@me",
+  "license": "MIT"
+}

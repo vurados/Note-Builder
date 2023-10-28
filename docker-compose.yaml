@@ -1,0 +1,34 @@
+services:
+# MySQL
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: process.env.DB_PASSWORD
+      MYSQL_DATABASE: process.env.DB_DATABASE
+      MYSQL_USER: process.env.DB_USERNAME
+      MYSQL_PASSWORD: process.env.DB_PASSWORD
+    ports:
+      - 8080:8080
+    networks:
+      - shared-network
+    volumes:
+      - 
+
+  # Building client to server folder and run it
+  client&api:
+      container_name: client&api_server
+      restart: unless-stopped
+      image: client&api-prod
+      build:
+        context: .
+        dockerfile: Dockerfile
+      ports:
+        - 3000:3000
+      networks:
+        - shared-network
+      depends_on:
+        - db
+
+networks:
+  shared-network:

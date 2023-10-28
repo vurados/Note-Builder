@@ -1,0 +1,12 @@
+node_modules
+.git
+.gitignore
+LICENSE
+.vscode
+.env
+README.md
+Server\Authentification\Not_used
+Server\routes\Not_used
+Server\node_modules
+graphic
+.github
