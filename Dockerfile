@@ -6,17 +6,19 @@ ENV NODE_ENV='production'
 
 COPY . .
 
+WORKDIR /client
+
 RUN npm install
 
 RUN npm run build
 
-WORKDIR /Server
+WORKDIR /server
 
 RUN npm run install
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "npm run start:dev"]
+CMD ["sh", "-c", "npm run start:prod"]
 
 
 

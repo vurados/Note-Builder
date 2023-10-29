@@ -4,8 +4,11 @@
   "description": "new notes project",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start:produciton": "test"
   },
   "author": "@me",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "3.0.3"
+  }
 }

@@ -1,8 +1,9 @@
-import React from "react";
-import { Field, Form, Formik } from "formik";
+import React, { useEffect } from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Footer } from "../components/Footer";
 import { TopBar } from "../components/TopBar";
 import axios from "axios";
+import { ModalInput } from "../components/ModalInput";
 
 
 interface FormValues {
@@ -11,9 +12,21 @@ interface FormValues {
 
 
 export function EditNote(){
+    
+    useEffect(() => {
+        const NID = window.location.href.split('/').slice(-1)[0]
+        console.log("🚀 ~ file: EditNote.tsx:16 ~ useEffect ~ NID:", NID)
+        if (NID !== '0'){
+            fetchNote(NID)
+        }
+    }, [])
+
+    const fetchNote = async (NID:string) => {
+        await axios.get("api/users/layouts/notes/getNote/"+NID).then()
+    }
 
     const onSubmit = async (data: FormValues) => {
-        await axios.post('api/users/layouts/createLayout', data).then(  (res) => {
+        await axios.post('api/users/layouts/createNote', data).then(  (res) => {
             console.log('response data:',res.data);
         })
     }
@@ -24,13 +37,24 @@ export function EditNote(){
         </>)
     }
 
+    const initialValues = {
+        title:'', 
+        text:''
+    }
+
     return(<>
         <div className='flex flex-col gap-10 min-h-70'>
         <TopBar />
-        <Formik initialValues={{text:''}} onSubmit={onSubmit}>
+        <Formik initialValues={initialValues} onSubmit={onSubmit}>
         <Form id="text-editing-area" onSubmit={() => console.log('submitted')} className='relative mx-auto min-h-[40vw] h-[90vh] min-w-[370px] w-[60vw] rounded-lg'>
-          <Field name='text' value={'rtum trum'} component={textAreaField} />
-          <button type='submit' className="absolute px-3 py-1 right-0 border border-gray-500 rounded-lg">submit</button>
+
+            <ErrorMessage name='title' component='span' className='text-xs text-red-700'/>
+            <Field name='title'  type='text' component={ModalInput} />
+
+            <ErrorMessage name='text' component='span' className='text-xs text-red-700'/>
+            <Field name='text' value={'rtum trum'} component={textAreaField} />
+         
+            <button type='submit' className="absolute px-3 py-1 right-0 border border-gray-500 rounded-lg">submit</button>
         </Form>
         </Formik>
         <Footer />

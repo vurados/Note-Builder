@@ -18,6 +18,7 @@ export function LayoutModal({onClose, onCreate, children}: LayoutModalProps, ){
 
     const initialValues = {
         width:0,
+        color: "#000000",
         title:""
     }
 
@@ -33,7 +34,6 @@ export function LayoutModal({onClose, onCreate, children}: LayoutModalProps, ){
             console.log('response data:',res.data);
             onCreate(res.data)
         })
-
     }
 
 
@@ -46,11 +46,9 @@ export function LayoutModal({onClose, onCreate, children}: LayoutModalProps, ){
     //         <Field name='title' type='text' placeholder='Titile' />
     //     </>)
     // }
-
-
-
-    return(
-        <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm z-10">
+    const LModal = () => {
+        return(<>
+            <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm z-10">
                 {children}
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                     <Form className="absolute container flex flex-col gap-3 w-1/4 left-1/2 -translate-x-1/2 top-1/3 p-6 rounded-lg border-2 border-blue-400 bg-white">
@@ -72,6 +70,12 @@ export function LayoutModal({onClose, onCreate, children}: LayoutModalProps, ){
                         <div className=""><button type='submit' className="mx-10 w-2/4 p-2 bg-blue-500 rounded-full hover:text-white hover:bg-blue-700">Submit</button><button type='button' onClick={onClose} className="font-bold hover:text-blue-700">close</button></div>
                     </Form>
                 </Formik>
-        </div>
+            </div>
+        </>)
+    }
+
+
+    return(
+        <LModal />
     )
 }

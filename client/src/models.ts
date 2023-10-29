@@ -12,7 +12,7 @@ export interface INotes{
 export interface ILayouts{
     id?: number
     userId?: number
-    width?: number
+    width?: number | null
     color?: string
     title?: string    
 }
