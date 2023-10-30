@@ -13,11 +13,13 @@ jobs:
           key: node-modules-${{ hashFiles('**/package-lock.json')}}
       - name: Install deps
         run: npm ci
+        working-directory: ./client
       - name: build
         run: npm run build
+        working-directory: ./client
       - name: Install server deps
         run: npm ci
-        working-directory: ./Server
+        working-directory: ./server
       - name: Build image
         uses: cloudposse/github-action-docker-build-push@main
         with:

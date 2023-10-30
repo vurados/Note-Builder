@@ -125,7 +125,8 @@ export function Layouts(){
         <TopBar />
         <div id="main" className='items-stretch lg:grid grid-cols-4 gap-3 mx-auto text-center mb-96 w-[80vw]'>
                                                          {/*   TODO: react router Link state gl future me */}
-          {listOfLayouts.map((layout: ILayouts) => <Link to={"/notes/"+layout.id}  state={layout.width} ><LayoutTile onDelete={deleteHandler} layout={layout} key={layout.id} /></Link>)}
+          {/* {listOfLayouts.map((layout: ILayouts) => <Link to={"/notes/"+layout.id}  state={layout.width} ><LayoutTile onDelete={deleteHandler} layout={layout} key={layout.id} /></Link>)} */}
+          {listOfLayouts.map((layout: ILayouts) => <LayoutTile onDelete={deleteHandler} layout={layout} key={layout.id} />)}
           <div onClick={() => setModal(true)}><AddTile /></div>
         </div>
         <Footer />

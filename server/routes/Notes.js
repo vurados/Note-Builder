@@ -7,7 +7,7 @@ const {checkOwner} = require('../Authentification/checkOwner')
 
 
 router.post('/getNotesByLayoutId/:id', passport.authenticate('jwt', {session: false}), async(req, res) => {
-    const userId = req.user.dataValues.id
+    const userId = req.user.id
     console.log("🚀 ~ file: Notes.js:8 ~ router.get ~ userId:", userId)
     const lid = req.params.id
     console.log("🚀 ~ file: Notes.js:10 ~ router.post ~ lid:", lid)
@@ -25,9 +25,15 @@ router.post('/getNotesByLayoutId/:id', passport.authenticate('jwt', {session: fa
     res.json(notes)
 });
 
+router.post('/getNote/:id', passport.authenticate('jwt', {session: false}), checkOwner(Note), async(req, res) => {
+    const note = req.record
+    res.json(note)
+})
+
+
 router.post('/createNote/:id', passport.authenticate('jwt', {session: false}), async(req, res) => {
     const note = req.body
-    const userId = req.user.dataValues.id
+    const userId = req.user.id
     const lid = req.params.id
     const layout = await Layout.findByPk(lid)
     if(layout.dataValues.UID === userId){

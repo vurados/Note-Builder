@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Footer } from "../components/Footer";
 import { TopBar } from "../components/TopBar";
 import axios from "axios";
-import { ModalInput } from "../components/ModalInput";
+import { useParams } from "react-router-dom";
 
 
 interface FormValues {
@@ -12,17 +12,35 @@ interface FormValues {
 
 
 export function EditNote(){
+    const {nid} = useParams()
+    const [note, setNote] = useState({id: 0, title: '', content: ''})
+    
+    
     
     useEffect(() => {
-        const NID = window.location.href.split('/').slice(-1)[0]
-        console.log("🚀 ~ file: EditNote.tsx:16 ~ useEffect ~ NID:", NID)
-        if (NID !== '0'){
-            fetchNote(NID)
+        console.log("🚀 ~ file: EditNote.tsx:17 ~ EditNote ~ NID:", nid)
+        console.log('note.title ===>',note.title);
+        
+        // console.log(axios.defaults.baseURL);
+        // axios.defaults.baseURL = 'http://localhost:3000'
+        // console.log(axios.defaults.baseURL);
+        // const NID = checkNID()
+        if (nid !== '0' || nid !== undefined){
+            fetchNote(nid)
         }
     }, [])
 
-    const fetchNote = async (NID:string) => {
-        await axios.get("api/users/layouts/notes/getNote/"+NID).then()
+    // const checkNID = () => {
+    //     // eslint-disable-next-line react-hooks/rules-of-hooks
+        
+    //     return NID
+    // }
+
+    const fetchNote = async (NID:string | undefined) => {
+        await axios.post('/api/users/layouts/notes/getNote/'+NID).then((res) => {
+            setNote(res.data)
+            console.log('TTTHEEE NOTE', note);
+        })
     }
 
     const onSubmit = async (data: FormValues) => {
@@ -33,13 +51,19 @@ export function EditNote(){
 
     const textAreaField = () => {
         return(<>
-            <textarea placeholder="write here...." defaultValue={'trun trun'} className="p-3 m-1 w-full h-[90%] resize-none border-2 border-gray-300 outline-blue-400 rounded-lg" />
+            <textarea placeholder="write here...." defaultValue={note.content} className="p-3 m-1 w-full h-[90%] resize-none border-2 border-gray-300 outline-blue-400 rounded-lg" />
+        </>)
+    }
+
+    const ModalInput = () => {
+        return(<>
+            <input className="px-4 py-1 mb-2 w-full rounded-full border-2 border-gray-300 outline-blue-400 bg-white" defaultValue={note.title} type='text' placeholder="Title" />
         </>)
     }
 
     const initialValues = {
-        title:'', 
-        text:''
+        title: '' , 
+        text: note.content
     }
 
     return(<>
