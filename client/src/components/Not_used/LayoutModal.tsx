@@ -3,7 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 // import { useState } from "react";
 // import { Outlet } from "react-router";
 import * as Yup from 'yup'
-import { ILayouts } from "../models";
+import { ILayouts } from "../../models";
 
 // import { AuthData } from "../auth/AuthWrapper"
 
@@ -11,10 +11,11 @@ import { ILayouts } from "../models";
 interface LayoutModalProps{
     onClose: () => void
     onCreate: (layout:ILayouts) => void 
-    children: JSX.Element
+    newFlag: boolean
+    // children: JSX.Element
 }
 
-export function LayoutModal({onClose, onCreate, children}: LayoutModalProps, ){
+export function LayoutModal({onClose, onCreate, newFlag}: LayoutModalProps, ){
 
     const initialValues = {
         width:0,
@@ -29,11 +30,14 @@ export function LayoutModal({onClose, onCreate, children}: LayoutModalProps, ){
 
     const onSubmit = async (data:ILayouts) => {
         console.log('on submit data:',data);
-        
-        await axios.post('api/users/layouts/createLayout', data).then(  (res) => {
-            console.log('response data:',res.data);
-            onCreate(res.data)
-        })
+        if(newFlag){
+            await axios.post('api/users/layouts/createLayout', data).then(  (res) => {
+                console.log('response data:',res.data)
+                onCreate(res.data)
+        })}else{
+            await axios.put('api/users/layouts/changeLayout', data).then(  (res) => {
+                console.log('response data:',res.data)
+        })}
     }
 
 
@@ -49,7 +53,6 @@ export function LayoutModal({onClose, onCreate, children}: LayoutModalProps, ){
     const LModal = () => {
         return(<>
             <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm z-10">
-                {children}
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                     <Form className="absolute container flex flex-col gap-3 w-1/4 left-1/2 -translate-x-1/2 top-1/3 p-6 rounded-lg border-2 border-blue-400 bg-white">
                         <label>Title</label>
@@ -76,6 +79,6 @@ export function LayoutModal({onClose, onCreate, children}: LayoutModalProps, ){
 
 
     return(
-        <LModal />
+        <LModal newFlag={true}/>
     )
 }

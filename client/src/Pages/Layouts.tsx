@@ -12,6 +12,7 @@ import { ILayouts } from "../models"
 // import Cookies from "js-cookie"
 import { Link, redirect } from "react-router-dom"
 import { Formik, Form, ErrorMessage, Field } from "formik"
+import { Spinner } from "../components/spinner"
 
 
 export function Layouts(){
@@ -20,8 +21,10 @@ export function Layouts(){
 
     // const layoutModalContext = createContext<boolean>(false)
     const [modal, setModal] = useState<boolean>(false)
+    const [onChangeLayout, setOnChangeLayout] = useState<ILayouts>()
     const [listOfLayouts, setListOfLayouts] = useState<ILayouts[]>([])
-    // const [loading, setloading] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [newFlag, setNewFlag] = useState(true)
 
     useEffect(() => {
       const rawuser =  localStorage.getItem('user')
@@ -35,10 +38,13 @@ export function Layouts(){
 
     const fetchLayouts = async () => {
       // console.log(getJwtID())
+      setLoading(true)
       await axios.get("api/users/layouts/getLayouts").then((res) =>{
         setListOfLayouts(res.data)
+        setLoading(false)
         console.log('set list of layouts', listOfLayouts);
       })
+      
     }
     
     const createHandler = (layout:ILayouts) => {
@@ -52,14 +58,41 @@ export function Layouts(){
       fetchLayouts()
     }
 
-   
+    const changeHandler = async (layout:ILayouts) => {
+      console.log('hello we are in changge handler');
+      setNewFlag(false)
+      setOnChangeLayout(layout)
+      
+    }
+
+    useEffect(() => {
+      if (onChangeLayout){
+        console.log('useeffect onchange hadndler');
+        
+        setModal(true)
+      }
+    }, [onChangeLayout])
+    
+
     const LModal = () => {
 
-        const initialValues:ILayouts = {
-            width: undefined,
-            color: "#FFFFFF",
-            title:""
+      const getInitialValues = () => {
+        if(newFlag){
+          const initialValues:ILayouts = {
+              width: undefined,
+              color: "#FFFFFF",
+              title: ""
+          }
+          return initialValues
+        }else{
+          const initialValues:ILayouts = {
+              title: onChangeLayout?.title,
+              color: "#462138",
+              width: onChangeLayout?.width
+          }
+          return initialValues
         }
+      }
 
         const validationSchema = Yup.object().shape({
             title: Yup.string().min(3).max(20).required("Title required"),
@@ -67,24 +100,29 @@ export function Layouts(){
             width: Yup.number().integer().nullable().min(1).max(10).required("Width required")
         })
 
-        const onSubmit = async (data:ILayouts, ) => {
+        const onSubmit = async (data:ILayouts) => {
             console.log('on submit data:',data);
-            
-            await axios.post('api/users/layouts/createLayout', data).then(  (res) => {
-                console.log('response data:',res.data);
-                createHandler(res.data)
-            })
+            if(newFlag){
+              await axios.post('api/users/layouts/createLayout', data).then(  (res) => {
+                  console.log('response data:',res.data)
+                  createHandler(res.data)
+              })
+            }else{
+              await axios.put('api/users/layouts/changeLayout', data).then(  (res) => {
+                  console.log('response data:',res.data)
+                  setNewFlag(false)
+          })}
         }
 
         return(<>
             <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm z-10">
-                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                <Formik initialValues={getInitialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                     <Form className="absolute container flex flex-col gap-3 w-1/4 left-1/2 -translate-x-1/2 top-1/3 p-6 rounded-lg border-2 border-blue-400 bg-white">
                         <button className="absolute py-0 px-2 m-0 -right-8 -top-3 border-[2px] rounded-full font-bold hover:text-red-700" type="button" onClick={() => setModal(false)}>x</button>
 
                         <label>Title</label>
                         <ErrorMessage name='title' component='span' className='text-xs text-red-700' />
-                        <Field name='title' type='text' placeholder='Title' />
+                        <Field name='title' type='text' defaultValue={onChangeLayout?.title} placeholder='Title' />
 
                         <label>Color</label>
                         <ErrorMessage name='color' component='span' className='text-xs text-red-700' />
@@ -123,10 +161,12 @@ export function Layouts(){
     {modal && <LModal />}
       <div className='flex flex-col gap-10 min-h-70'>
         <TopBar />
+        {loading && <div className="flex mx-auto"><Spinner className='mx-2' width='20'/><p className="w-fit text-blue-400">Syncing existing layouts</p></div>}
         <div id="main" className='items-stretch lg:grid grid-cols-4 gap-3 mx-auto text-center mb-96 w-[80vw]'>
+          
                                                          {/*   TODO: react router Link state gl future me */}
           {/* {listOfLayouts.map((layout: ILayouts) => <Link to={"/notes/"+layout.id}  state={layout.width} ><LayoutTile onDelete={deleteHandler} layout={layout} key={layout.id} /></Link>)} */}
-          {listOfLayouts.map((layout: ILayouts) => <LayoutTile onDelete={deleteHandler} layout={layout} key={layout.id} />)}
+          {listOfLayouts.map((layout: ILayouts) => <LayoutTile onChange={(layout) => changeHandler(layout)} onDelete={deleteHandler} layout={layout} key={layout.id} />)}
           <div onClick={() => setModal(true)}><AddTile /></div>
         </div>
         <Footer />

@@ -5,21 +5,27 @@ import { useNavigate } from "react-router-dom"
 interface LayoutProps{
     layout: ILayouts
     onDelete: () => void
+    onChange: (layout:ILayouts) => void
 }
 
-export function LayoutTile({layout, onDelete}: LayoutProps){
+export function LayoutTile({layout, onDelete, onChange}: LayoutProps){
     const navigate = useNavigate()
     
     const layoutTileClassName = 'relative flex flex-col gap-3 justify-between justify-center border p-2 rounded hover:cursor-pointer hover:border-blue-400 hover:shadow-lg hover:text-blue-500 '
 
-    const deleteLayout = async ( event: React.MouseEvent) => {
-        const LID = layout.id
+    const deleteLayout = async (event: React.MouseEvent) => {
         event.stopPropagation()
+        const LID = layout.id
         if(LID !== undefined){
             console.log('delete button pressed', LID);
             await axios.delete('api/users/layouts/deleteLayout/'+LID).catch((err) => {console.log(err);})
             onDelete()
         }
+    }
+
+    const changeLayout = (event: React.MouseEvent) => {
+        event.stopPropagation()
+        onChange(layout)
     }
     
     return(
@@ -39,7 +45,7 @@ export function LayoutTile({layout, onDelete}: LayoutProps){
                     <li>nine</li>
                     <li>ten</li>
             </ul></div>
-            <button className="border-2 border-blue-200 mx-auto rounded-full p-2 font-bold text-blue-100 bg-blue-500">Edit</button>
+            <button onClick={changeLayout} className="border-2 border-blue-200 mx-auto rounded-full p-2 font-bold text-blue-100 bg-blue-500 hover:bg-blue-700">Edit</button>
         </div>
     )
 }

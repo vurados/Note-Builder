@@ -11,9 +11,11 @@ dist-ssr
 *.local
 .env
 
+Not_used
 server/Authentification/id_rsa_priv.pem
 server/Authentification/Not_used
 server/routes/Not_used
+client/components/Not_used
 
 # Editor directories and files
 .vscode/*

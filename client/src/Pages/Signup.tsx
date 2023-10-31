@@ -49,6 +49,8 @@ export function Signup(){
         <div>
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
                 <Form className='container flex flex-col gap-3 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm'>
+                    <p className='font-bold text-2xl'>Login</p>
+                    <hr />
                     <label className='text-left'>Username:</label>
                     {UniqueUsernameError && <div className='text-xs text-red-700'>Username already exist</div>}
                     <ErrorMessage name='username' component='span' className='text-xs text-red-700'/>
