@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useEffect, useLayoutEffect, useState } from "react"
 import axios from "axios"
 import * as Yup from 'yup'
 
@@ -26,7 +26,13 @@ export function Layouts(){
     const [loading, setLoading] = useState(false)
     const [newFlag, setNewFlag] = useState(true)
 
+    useLayoutEffect(() => {
+      setOnChangeLayout(undefined)
+      setNewFlag(true)
+    }, [])
+
     useEffect(() => {
+      // TODO: change it jwtexist check
       const rawuser =  localStorage.getItem('user')
       if (rawuser){
         fetchLayouts()
@@ -44,7 +50,6 @@ export function Layouts(){
         setLoading(false)
         console.log('set list of layouts', listOfLayouts);
       })
-      
     }
     
     const createHandler = (layout:ILayouts) => {
@@ -53,7 +58,7 @@ export function Layouts(){
       })
     }
 
-    // TODO:i need function {onDeleteHandler} that will not request server data through fetchLayouts and just delete the entry using setListLayouts
+    // TODO:need function {onDeleteHandler} that will not request server data through fetchLayouts and just delete the entry using setListLayouts
     const deleteHandler = () => {
       fetchLayouts()
     }
@@ -67,7 +72,7 @@ export function Layouts(){
 
     useEffect(() => {
       if (onChangeLayout){
-        console.log('useeffect onchange hadndler');
+        console.log('useeffect onchange hadndler', onChangeLayout);
         
         setModal(true)
       }
@@ -76,23 +81,12 @@ export function Layouts(){
 
     const LModal = () => {
 
-      const getInitialValues = () => {
-        if(newFlag){
           const initialValues:ILayouts = {
-              width: undefined,
-              color: "#FFFFFF",
-              title: ""
+              title: onChangeLayout?.title || '',
+              color: "#000000",
+              width: onChangeLayout?.width || undefined
           }
-          return initialValues
-        }else{
-          const initialValues:ILayouts = {
-              title: onChangeLayout?.title,
-              color: "#462138",
-              width: onChangeLayout?.width
-          }
-          return initialValues
-        }
-      }
+      
 
         const validationSchema = Yup.object().shape({
             title: Yup.string().min(3).max(20).required("Title required"),
@@ -108,27 +102,31 @@ export function Layouts(){
                   createHandler(res.data)
               })
             }else{
-              await axios.put('api/users/layouts/changeLayout', data).then(  (res) => {
+              console.log('changing Layout');
+              
+              await axios.put(`api/users/layouts/changeLayout/${onChangeLayout?.id}`, data).then(  (res) => {
                   console.log('response data:',res.data)
                   setNewFlag(false)
+                  // TODO: change fetch to something else
+                  fetchLayouts()
           })}
         }
 
         return(<>
             <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm z-10">
-                <Formik initialValues={getInitialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                     <Form className="absolute container flex flex-col gap-3 w-1/4 left-1/2 -translate-x-1/2 top-1/3 p-6 rounded-lg border-2 border-blue-400 bg-white">
                         <button className="absolute py-0 px-2 m-0 -right-8 -top-3 border-[2px] rounded-full font-bold hover:text-red-700" type="button" onClick={() => setModal(false)}>x</button>
 
-                        <label>Title</label>
+                        <label className="font-bold">Title</label>
                         <ErrorMessage name='title' component='span' className='text-xs text-red-700' />
                         <Field name='title' type='text' defaultValue={onChangeLayout?.title} placeholder='Title' />
 
-                        <label>Color</label>
+                        <label className="font-bold">Color</label>
                         <ErrorMessage name='color' component='span' className='text-xs text-red-700' />
                         <Field name='color' type='color' />
 
-                        <label>Width</label>
+                        <label className="font-bold">Width</label>
                         <ErrorMessage name='width' component='span' className='text-xs text-red-700' />
                         <Field name='width' type='number' placeholder='{1-10}'/>
                         
@@ -156,16 +154,12 @@ export function Layouts(){
     }
 
 
-    // add onSubmit function in layoutmodal component as onClose that will call function in here that will setListOflayouts
     return(<>
-    {modal && <LModal />}
+      {modal && <LModal />}
       <div className='flex flex-col gap-10 min-h-70'>
         <TopBar />
         {loading && <div className="flex mx-auto"><Spinner className='mx-2' width='20'/><p className="w-fit text-blue-400">Syncing existing layouts</p></div>}
         <div id="main" className='items-stretch lg:grid grid-cols-4 gap-3 mx-auto text-center mb-96 w-[80vw]'>
-          
-                                                         {/*   TODO: react router Link state gl future me */}
-          {/* {listOfLayouts.map((layout: ILayouts) => <Link to={"/notes/"+layout.id}  state={layout.width} ><LayoutTile onDelete={deleteHandler} layout={layout} key={layout.id} /></Link>)} */}
           {listOfLayouts.map((layout: ILayouts) => <LayoutTile onChange={(layout) => changeHandler(layout)} onDelete={deleteHandler} layout={layout} key={layout.id} />)}
           <div onClick={() => setModal(true)}><AddTile /></div>
         </div>

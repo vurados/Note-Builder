@@ -91,7 +91,7 @@ export function Login(){
     const LoginPrompt = () => {
         return(
             <div  className='flex flex-col gap-3 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm'>
-                <p className='font-bold text-2xl'>Login</p>
+                <p className='font-bold text-2xl'>Log in</p>
                 <hr />
                 <div onClick={() => navigate("/layouts")} className='p-3 border-2 border-blue-300 rounded hover:bg-slate-200 hover:cursor-pointer'>
                     <p className='font-bold text-xl'>{user?.username}</p>
@@ -102,31 +102,10 @@ export function Login(){
         )
     }
 
-    // just debug function(to remove) with button
-    // const checkCookie = async () => {
-    //     const res = await axios.get('api/users/getUserFromJwt')
-    //     console.log(res.data.user);
-    //     // console.log(localStorage.getItem('user'));
-    // }
-
     return(<>
-        {/* <button onClick={checkCookie}>button</button> */}
         <div>
             {user ? <LoginPrompt /> : <LoginForm />}
         </div>
         <Footer />
-        {/* button for debug (delete on prod) */}
-        {/* <div>
-            <button onClick={checkCookie} className='border-2 px-3 py-2 hover:border-blue-400'>CHECK COOOOOOKIE</button>
-            <p>cookie:{document.cookie||"None"}</p>
-        </div> */}
-        
-        {/* <div className="container flex flex-col items-center gap-6 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm">
-            <span>Login</span>
-            <input type="email" name="" id="" placeholder="Username" className=""/>
-            <input type="password" name="" id="" placeholder="Password" className=""/>
-            <button className="p-2 bg-blue-500 rounded-full">Login</button>
-        </div> */}
-    
     </>)
 }
