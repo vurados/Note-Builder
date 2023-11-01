@@ -20,6 +20,8 @@ RUN npm ci
 
 EXPOSE 3000
 
+RUN echo $(ls /bin/sh )
+
 CMD ["sh", "-c", "npm run start:prod"]
 
 
