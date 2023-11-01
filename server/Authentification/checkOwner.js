@@ -2,6 +2,7 @@ const {Layout, User} = require('../models')
 
 const checkOwner = (Model) => async (req, res, next) => {
     try {
+        //TODO: if(Model === Note)
         const record = await Model.findByPk(req.params.id, {
             include:[
                 {
@@ -14,6 +15,7 @@ const checkOwner = (Model) => async (req, res, next) => {
                 }
             ]
         })
+        // TODO: if(Model === Layout)
 
         if(!record){
             return res.status(401).send('resource not found')
