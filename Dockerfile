@@ -4,6 +4,8 @@ FROM node:20.9
 
 COPY . .
 
+RUN echo $(ls /bin/sh )
+
 WORKDIR /client
 
 RUN echo $(ls)
@@ -19,8 +21,6 @@ WORKDIR /server
 RUN npm ci
 
 EXPOSE 3000
-
-RUN echo $(ls /bin/sh )
 
 CMD ["sh", "-c", "npm run start:prod"]
 
