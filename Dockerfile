@@ -10,13 +10,13 @@ WORKDIR /client
 
 RUN echo $(ls)
 
-RUN npm install
+RUN npm ci
 
 RUN npm run build
 
 WORKDIR /server
 
-RUN npm run install
+RUN npm ci
 
 EXPOSE 3000
 
