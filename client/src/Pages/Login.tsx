@@ -103,7 +103,7 @@ export function Login(){
     }
 
     return(<>
-        <div>
+        <div className='h-[100vh]'>
             {user ? <LoginPrompt /> : <LoginForm />}
         </div>
         <Footer />

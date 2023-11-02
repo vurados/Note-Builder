@@ -1,5 +1,6 @@
 import { createContext, useEffect, useLayoutEffect, useState } from "react"
 import axios from "axios"
+import Cookies from "js-cookie"
 import * as Yup from 'yup'
 
 import { LayoutTile } from "../components/LayoutTile"
@@ -9,8 +10,7 @@ import { Footer } from "../components/Footer"
 // import { LayoutModal } from "../components/LayoutModal"
 
 import { ILayouts } from "../models"
-// import Cookies from "js-cookie"
-import { Link, redirect } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Formik, Form, ErrorMessage, Field } from "formik"
 import { Spinner } from "../components/spinner"
 
@@ -18,6 +18,7 @@ import { Spinner } from "../components/spinner"
 export function Layouts(){
     // const {user} = AuthData()
     // const user = useContext(AuthContext)
+    const navigation = useNavigate()
 
     // const layoutModalContext = createContext<boolean>(false)
     const [modal, setModal] = useState<boolean>(false)
@@ -26,18 +27,21 @@ export function Layouts(){
     const [loading, setLoading] = useState(false)
     const [newFlag, setNewFlag] = useState(true)
 
+    // On start setting flags and onChangeLAyout state 
+    // so modal did not fire when reloading page
     useLayoutEffect(() => {
       setOnChangeLayout(undefined)
       setNewFlag(true)
     }, [])
 
+    // On loading we are checking if there is a jwt token exist
+    // If not redirect to login page
     useEffect(() => {
-      // TODO: change it jwtexist check
-      const rawuser =  localStorage.getItem('user')
-      if (rawuser){
+      const JwtExist =  Cookies.get('jwtExist')
+      if (JwtExist){
         fetchLayouts()
-      }else{
-        redirect("/login")
+      }else{  
+        navigation("/login")
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(listOfLayouts)])
@@ -63,17 +67,17 @@ export function Layouts(){
       fetchLayouts()
     }
 
+    // after clicking "edit" on LAyout tile we change newFlag to false and set onChangeLayout to layout we clicking on
     const changeHandler = async (layout:ILayouts) => {
-      console.log('hello we are in changge handler');
       setNewFlag(false)
       setOnChangeLayout(layout)
-      
     }
 
+    // when we setting onChangeLayout use effect fires and opens modal
+    // we need useEffect to wait for onChangeLAyout to set and put Layout information in modal for edit
     useEffect(() => {
       if (onChangeLayout){
         console.log('useeffect onchange hadndler', onChangeLayout);
-        
         setModal(true)
       }
     }, [onChangeLayout])
@@ -94,6 +98,7 @@ export function Layouts(){
             width: Yup.number().integer().nullable().min(1).max(10).required("Width required")
         })
 
+        // In on submit function we checking flag newFlag and depend on it sending post or put request
         const onSubmit = async (data:ILayouts) => {
             console.log('on submit data:',data);
             if(newFlag){
@@ -163,7 +168,8 @@ export function Layouts(){
           {listOfLayouts.map((layout: ILayouts) => <LayoutTile onChange={(layout) => changeHandler(layout)} onDelete={deleteHandler} layout={layout} key={layout.id} />)}
           <div onClick={() => setModal(true)}><AddTile /></div>
         </div>
-        <Footer />
+        
       </div>
+      <Footer />
     </>)
 }

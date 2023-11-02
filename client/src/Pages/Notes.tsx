@@ -2,12 +2,14 @@ import { createContext } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import Cookies from "js-cookie"
 
 import { Footer } from "../components/Footer"
 import { NoteTile } from "../components/NoteTile"
 import { TopBar } from "../components/TopBar"
 import { AddTile } from "../components/addTile"
 import { INotes } from "../models"
+
 
 
 export function Notes(){
@@ -20,8 +22,8 @@ export function Notes(){
 
 
     useEffect(() => {
-        const rawuser =  localStorage.getItem('user')
-        if (rawuser){
+        const JwtExist =  Cookies.get('jwtExist')
+        if (JwtExist){
             fetchNotes()
         }else{
             navigate("/login")
