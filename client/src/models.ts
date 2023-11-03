@@ -1,20 +1,20 @@
 export interface INotes{
-    id: number
-    layoutId: number
-    title: string
-    content: string
-    x: number
-    y: number
-    width: number
-    height: number
+    id?: number
+    layoutId?: number
+    title?: string
+    content?: string
+    x?: number
+    y?: number
+    width?: number
+    height?: number
 }
 
 export interface ILayouts{
     id?: number
     userId?: number
+    width?: number | null
     color?: string
-    title: string
-    width: number
+    title?: string    
 }
 
 export interface IUser{

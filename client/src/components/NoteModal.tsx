@@ -2,28 +2,22 @@ import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
 import * as Yup from 'yup'
+import { INotes } from "../models";
 
 
-interface INoteModal{
-        id?: number
-        width: number
-        note:{
-            title: string
-        }
-    }
+
 
 interface LayoutModalProps{
     onClose: () => void
-    onCreate: (note:INoteModal) => void 
+    onCreate: (note:INotes) => void 
     children: JSX.Element
 }
 
 export function NoteModal({onClose, onCreate, children}: LayoutModalProps, ){
+    
     const initialValues = {
         width:0,
-        note:{
-            title:""
-        }
+        title:""
     }
 
     const validationSchema = Yup.object().shape({
@@ -31,16 +25,14 @@ export function NoteModal({onClose, onCreate, children}: LayoutModalProps, ){
         width: Yup.number().required()
     })
 
-    const onSubmit = async (data:INoteModal) => {
+    const onSubmit = async (data:INotes) => {
         console.log('on submit data:',data);
         
         await axios.post('api/users/layouts/createLayout', data).then(  (res) => {
             console.log('response data:',res.data);
             onCreate(res.data)
         })
-
     }
-
 
     const [modal, setModal] = useState(false)
     // // const addLayout()
@@ -53,7 +45,7 @@ export function NoteModal({onClose, onCreate, children}: LayoutModalProps, ){
                     <Form className="absolute container flex flex-col gap-3 w-1/4 left-1/2 -translate-x-1/2 top-1/3 p-6 rounded-lg border-2 border-blue-400 bg-white">
                         <label>Title</label>
                         <ErrorMessage name='title' component='span' className='text-xs text-red-700' />
-                        <Field name='title' type='text' placeholder='Titile' />
+                        <Field name='title' type='text' placeholder='Title' />
                         
                         {/* {tgdk && <Lmodal />} */}
 
@@ -69,7 +61,7 @@ export function NoteModal({onClose, onCreate, children}: LayoutModalProps, ){
                         <div className=""><button type='submit' className="mx-10 w-2/4 p-2 bg-blue-500 rounded-full hover:text-white hover:bg-blue-700">Submit</button><button type='button' onClick={onClose} className="font-bold hover:text-blue-700">close</button></div>
                     </Form>
                 </Formik>
-        </div>
+            </div>
         </>)
     }
 

@@ -1,6 +1,7 @@
+import React from 'react';
 // import axios from 'axios';
 // import { useEffect, useState } from 'react';
-import {createBrowserRouter, createRoutesFromElements, Route, Link, Outlet, RouterProvider} from 'react-router-dom'
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from 'react-router-dom'
 
 
 // import { Root } from './Pages/Root';
@@ -16,12 +17,16 @@ import { AuthWrapper } from './auth/AuthWrapper';
 
 
 
+
 function App() {
+
+  
+
   const router = createBrowserRouter(
     createRoutesFromElements(<>
         <Route index path="/" element={<Home />}/>
-        <Route path="/signup" element={<Signup />}/>
         <Route element={<AuthWrapper/>}>
+          <Route path="/signup" element={<Signup />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/layouts" element={<Layouts />}/>
           <Route path="/notes/:lid" element={<Notes />}/>

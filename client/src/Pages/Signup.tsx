@@ -3,7 +3,7 @@ import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
 import { Link, useNavigate} from 'react-router-dom'
 import { Footer } from '../components/Footer'
-import { IUser } from 'src/models'
+import { IUser } from '../models'
 import * as Yup from 'yup'
 
 export function Signup(){
@@ -26,7 +26,7 @@ export function Signup(){
         })
 
     // TODO: change data type to IUser(add interface in models)
-    const onSubmit = async (data :any) => {
+    const onSubmit = async (data : IUser) => {
         console.log(data)
 
         axios.post('api/users/createUser', data).then((res) => {
@@ -49,6 +49,8 @@ export function Signup(){
         <div>
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
                 <Form className='container flex flex-col gap-3 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm'>
+                    <p className='font-bold text-2xl'>Login</p>
+                    <hr />
                     <label className='text-left'>Username:</label>
                     {UniqueUsernameError && <div className='text-xs text-red-700'>Username already exist</div>}
                     <ErrorMessage name='username' component='span' className='text-xs text-red-700'/>

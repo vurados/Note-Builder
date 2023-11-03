@@ -1,32 +1,53 @@
-const {Layout, User} = require('../models')
+const {Layout, User, Note} = require('../models')
 
 const checkOwner = (Model) => async (req, res, next) => {
     try {
-        const record = await Model.findByPk(req.params.id, {
-            include:[
-                {
-                    model:Layout,
-                    as: 'Layout',
-                    include: {
+        //TODO: if(Model === Note)
+        let record
+        if(Model === Note){
+            record = await Model.findByPk(req.params.id, {
+                include:[
+                    {
+                        model:Layout,
+                        as: 'Layout',
+                        include: {
+                            model: User,
+                            as: 'User',
+                        },
+                    }
+                ]
+            })
+        }
+        if (Model === Layout){
+            record = await Model.findByPk(req.params.id, {
+                include:[
+                    {
                         model: User,
                         as: 'User',
                     },
-                }
-            ]
-        })
+                    
+                ]
+            })
+            
+        }
+        // TODO: if(Model === Layout)
 
         if(!record){
             return res.status(401).send('resource not found')
         }
 
-        const layout = record.Layout
-        const user = layout.User
+        let user = record.User
+        if(Model === Note){
+            const layout = record.Layout
+            user = layout.User
+        }
 
         if(user.id !== req.user.id){
             return res.status(403).send('Access denied, you dont own a record')
         }
 
         req.record = record
+        
         next()
     } catch (error) {
         console.log(error);

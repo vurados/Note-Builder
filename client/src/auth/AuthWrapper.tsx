@@ -16,9 +16,7 @@ export const AuthWrapper = () => {
                 if (res.data.success){
                     // console.log('id:', res.data.user.id, 'username:',  res.data.user.username, 'email:', res.data.user.email);
                     // document.cookie = 'jwt=' + res.data.token
-                    console.log('response data from login()', res.data);
-                    const newUser = { id: res.data.user.id, username: res.data.user.username, email: res.data.user.email, isAuthentificated: true}
-                    console.log('newUser in login function', newUser);
+                    const newUser = { id: res.data.user.id, username: res.data.user.username, email: res.data.user.email}
                     localStorage.setItem('user', JSON.stringify(newUser))
                     resolve('success')
                 }else{

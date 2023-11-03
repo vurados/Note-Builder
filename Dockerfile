@@ -1,27 +1,23 @@
 FROM node:20.9
 
-WORKDIR /usr/apps/NoteBuilder
-
-ENV NODE_ENV='production'
+#WORKDIR /usr/apps/NoteBuilder
 
 COPY . .
 
-RUN npm install
+WORKDIR /client
+
+RUN echo $(ls)
+
+RUN npm ci
+
+ENV NODE_ENV='production'
 
 RUN npm run build
 
-WORKDIR /Server
+WORKDIR /server
 
-RUN npm run install
+RUN npm ci
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "npm run start:dev"]
-
-
-
-
-
-
-
-
+CMD npm run start:prod
