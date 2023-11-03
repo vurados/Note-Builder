@@ -173,7 +173,7 @@ export function Layouts(){
 
     return(<>
       {modal && <LModal />}
-      <div className='flex flex-col min-h-70'>
+      <div className='flex flex-col min-h-70 bg-blue-200'>
         <TopBar />
         <button onClick={exportJson} className="relative ml-auto mr-5 my-3 py-2 px-4 w-fit bg-red-400 rounded-lg hover:text-white hover:bg-red-500 hover:shadow-md ">Export as Json</button>
         {loading && <div className="flex mx-auto"><Spinner className='mx-2' width='20'/><p className="w-fit text-blue-400">Syncing existing layouts</p></div>}
