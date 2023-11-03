@@ -81,6 +81,18 @@ export function Layouts(){
         setModal(true)
       }
     }, [onChangeLayout])
+
+    const exportJson = async () => {
+      const data = await axios.get('api/users/layouts/exportAll').then((res) => {return res.data}).catch((err) => {console.error(err)})
+      const strData = JSON.stringify(data)
+      const file = new Blob([strData], {type: 'text/plain'})
+      const element = document.createElement("a");
+      element.href = URL.createObjectURL(file);
+      element.download = "Layouts-" + Date.now() + ".txt";
+      // simulate link click
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
+    }
     
 
     const LModal = () => {
@@ -161,15 +173,16 @@ export function Layouts(){
 
     return(<>
       {modal && <LModal />}
-      <div className='flex flex-col gap-10 min-h-70'>
+      <div className='flex flex-col min-h-70'>
         <TopBar />
+        <button onClick={exportJson} className="relative ml-auto mr-5 my-3 py-2 px-4 w-fit bg-red-400 rounded-lg hover:text-white hover:bg-red-500 hover:shadow-md ">Export as Json</button>
         {loading && <div className="flex mx-auto"><Spinner className='mx-2' width='20'/><p className="w-fit text-blue-400">Syncing existing layouts</p></div>}
         <div id="main" className='items-stretch lg:grid grid-cols-4 gap-3 mx-auto text-center mb-96 w-[80vw]'>
           {listOfLayouts.map((layout: ILayouts) => <LayoutTile onChange={(layout) => changeHandler(layout)} onDelete={deleteHandler} layout={layout} key={layout.id} />)}
           <div onClick={() => setModal(true)}><AddTile /></div>
         </div>
-        
+        <Footer />
       </div>
-      <Footer />
+      
     </>)
 }

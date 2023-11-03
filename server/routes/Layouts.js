@@ -1,11 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const {Layout} = require("../models")
-const {User} = require('../models');
+const {Layout, User, Note} = require("../models");
 const passport = require('passport');
 const { checkOwner } = require('../Authentification/checkOwner');
 // const layout = require('../models/layout');
 
+
+router.get('/exportAll', passport.authenticate('jwt', {session: false}), async(req, res) => {
+    const userId = req.user.id
+    const user = await User.findByPk(userId)
+    const LayoutsWithNotes = await user.getLayout({
+        include:{
+            model: Note,
+            as: 'Note',
+            attributes: {
+            exclude: ["id", "UID", "LID", "createdAt", "updatedAt", ]
+        }
+        },
+        attributes: {
+            exclude: ["id", "LID", "createdAt", "updatedAt", ]
+        }
+    })
+    res.json(LayoutsWithNotes)
+})
 
 router.get('/getLayouts', passport.authenticate('jwt', {session: false}),async (req, res) => {
     const userId = req.user.id
