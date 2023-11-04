@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Markdown from 'react-markdown'
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Footer } from "../components/Footer";
 import { TopBar } from "../components/TopBar";
@@ -14,6 +15,7 @@ interface FormValues {
 export function EditNote(){
     const {nid} = useParams()
     const [note, setNote] = useState({id: 0, title: '', content: ''})
+    const [edit, setEdit] = useState(true)
     
     
     
@@ -21,10 +23,6 @@ export function EditNote(){
         console.log("🚀 ~ file: EditNote.tsx:17 ~ EditNote ~ NID:", nid)
         console.log('note.title ===>',note.title);
         
-        // console.log(axios.defaults.baseURL);
-        // axios.defaults.baseURL = 'http://localhost:3000'
-        // console.log(axios.defaults.baseURL);
-        // const NID = checkNID()
         if (nid !== '0' || nid !== undefined){
             fetchNote(nid)
         }
@@ -42,6 +40,7 @@ export function EditNote(){
             console.log('TTTHEEE NOTE', note);
         })
     }
+
 
     const onSubmit = async (data: FormValues) => {
         await axios.post('api/users/layouts/createNote', data).then(  (res) => {
@@ -66,22 +65,35 @@ export function EditNote(){
         text: note.content
     }
 
+    const RedactNote = () => {
+        return(
+            <Formik initialValues={initialValues} onSubmit={onSubmit}>
+            <Form id="text-editing-area" onSubmit={() => console.log('submitted')} className='relative mx-auto min-h-[40vw] h-[90vh] min-w-[370px] w-[60vw] rounded-lg'>
+
+                <ErrorMessage name='title' component='span' className='text-xs text-red-700'/>
+                <Field name='title'  type='text' component={ModalInput} />
+
+                <ErrorMessage name='text' component='span' className='text-xs text-red-700'/>
+                <Field name='text' value={'rtum trum'} component={textAreaField} />
+                
+                <button type='button' onClick={() => setEdit(false)} className="absolute px-3 py-1 right-0 border border-gray-500 rounded-lg">render</button>
+                <button type='submit' className="absolute px-3 py-1 right-0 border border-gray-500 rounded-lg">submit</button>
+            </Form>
+            </Formik>
+        )
+    }
+
+    const RenderedMarkdown = () => {
+        return(
+            <Markdown>{note.content}</Markdown>
+        )
+    }
+
     return(<>
         <div className='flex flex-col gap-10 min-h-70'>
-        <TopBar />
-        <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        <Form id="text-editing-area" onSubmit={() => console.log('submitted')} className='relative mx-auto min-h-[40vw] h-[90vh] min-w-[370px] w-[60vw] rounded-lg'>
-
-            <ErrorMessage name='title' component='span' className='text-xs text-red-700'/>
-            <Field name='title'  type='text' component={ModalInput} />
-
-            <ErrorMessage name='text' component='span' className='text-xs text-red-700'/>
-            <Field name='text' value={'rtum trum'} component={textAreaField} />
-         
-            <button type='submit' className="absolute px-3 py-1 right-0 border border-gray-500 rounded-lg">submit</button>
-        </Form>
-        </Formik>
-        <Footer />
-      </div>
+            <TopBar />
+            {edit ? <RedactNote /> : <RenderedMarkdown />}
+            <Footer />
+        </div>
     </>)
 }
