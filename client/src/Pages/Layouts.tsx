@@ -7,7 +7,6 @@ import { LayoutTile } from "../components/LayoutTile"
 import { TopBar } from "../components/TopBar"
 import { AddTile } from "../components/addTile"
 // import { LayoutModal } from "../components/LayoutModal"
-import { AuthData } from "../auth/AuthWrapper"
 import { ILayouts } from "../models"
 import { Link, useNavigate } from "react-router-dom"
 import { Formik, Form, ErrorMessage, Field } from "formik"
@@ -15,7 +14,7 @@ import { Spinner } from "../components/spinner"
 
 
 export function Layouts(){
-    let {lid} = AuthData()
+    // let {lid} = AuthData()
     // let {lid} = useContext(AuthContext)
     const navigation = useNavigate()
 

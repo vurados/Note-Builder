@@ -48,7 +48,7 @@ export function Notes(){
                 {listOfNotes.map((note: INotes) => <NoteTile note={note} lid={lid} key={note.id} />)}
                 {/* модалка нужна но токо для настройки внешнего вида и может быть тайтла */}
                 {/* <div onClick={() => setModal(true)}>Options</div> */}
-                <div onClick={() => navigate('/editNote/0')}><AddTile /></div>
+                <div onClick={() => navigate(`/editNote/${lid}/0`)}><AddTile /></div>
             </div>
         </div>
     </>)
