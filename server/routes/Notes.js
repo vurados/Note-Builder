@@ -30,7 +30,6 @@ router.post('/getNote/:id', passport.authenticate('jwt', {session: false}), chec
     res.json(note)
 })
 
-
 router.post('/createNote/:id', passport.authenticate('jwt', {session: false}), async(req, res) => {
     const note = req.body
     const userId = req.user.id
@@ -44,11 +43,20 @@ router.post('/createNote/:id', passport.authenticate('jwt', {session: false}), a
     }
 });
 
+router.put('/changeNote/:id', passport.authenticate('jwt', {session: false}), async(req, res) => {
+    const nid = req.params.id
+    const newNote = req.body
+    const note = Note.findByPk(nid)
+    await note.update(newNote).
+        then((data) => {res.status(200).json(data)}).
+            catch((err) => res.status(418).send(err))
+});
+
 router.delete('/deleteNote/:id', passport.authenticate('jwt', {session: false}), checkOwner(Note), async(req, res) => {
     const NoteId = req.params.id
-    const record = req.record
+    const note = req.record
     // console.log("🚀 ~ file: Notes.js:45 ~ router.delete ~ record:", record)
-    await record.destroy().then(() => res.send(`Note ${NoteId} was deleted successfully`)).catch((err) => res.status(418).send(`Error: ${err}`))
+    await note.destroy().then(() => res.send(`Note ${NoteId} was deleted successfully`)).catch((err) => res.status(418).send(`Error: ${err}`))
 })
 
 module.exports = router;

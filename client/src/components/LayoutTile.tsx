@@ -11,7 +11,7 @@ interface LayoutProps{
 export function LayoutTile({layout, onDelete, onChange}: LayoutProps){
     const navigate = useNavigate()
     
-    const layoutTileClassName = 'relative flex flex-col gap-3 justify-between justify-center border p-2 rounded hover:cursor-pointer hover:border-blue-400 hover:shadow-lg hover:text-blue-500 '
+    const layoutTileClassName = 'relative flex flex-col z-10 gap-3 justify-between justify-center border p-2 rounded hover:cursor-pointer hover:border-blue-400 hover:bg-white/20 hover:shadow-lg hover:text-blue-500 '
 
     const deleteLayout = async (event: React.MouseEvent) => {
         event.stopPropagation()
@@ -32,7 +32,7 @@ export function LayoutTile({layout, onDelete, onChange}: LayoutProps){
         <div className={layoutTileClassName} onClick={() => navigate(`/notes/${layout.id}`)}>
             <button onClick={deleteLayout} className="absolute border bg-red-300 rounded-full right-0 top-0 m-1 p-1 text-black font-bold hover:text-blue-500">Del</button>
             <h2 className="font-bold">{layout.title}</h2>
-            <div className="mx-7 px-10 py-1 min-h-[120px] h-[10vw] overflow-hidden text-left border-2 rounded-lg truncate text-black hover:bg-white">
+            <div className="mx-7 px-10 py-1 min-h-[120px] h-[10vw] overflow-hidden text-left border-2 rounded-lg truncate text-black hover:bg-white/50">
                 <ul className="list-disc">
                     <li>раз</li>
                     <li>два</li>

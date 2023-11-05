@@ -7,9 +7,9 @@ import * as Yup from 'yup'
 
 import { AuthData } from '../auth/AuthWrapper'
 import { IUser } from '../models'
-import { Footer } from '../components/Footer'
 import { Spinner } from '../components/spinner'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 
 
@@ -26,9 +26,12 @@ export function Login(){
     const fieldClassName = 'p-2 border-[1px] border-gray-400 rounded-lg outline-blue-200 shadow-lg w-full valid:border-blue-900 invalid:border-red-400'
 
     useEffect(() => {
-        axios.get('/api/users/getUserFromJwt').then((res) => {
-            setUser(res.data.user)
-        })
+        const JwtExist =  Cookies.get('jwtExist')
+        if (JwtExist){
+            axios.get('/api/users/getUserFromJwt').then((res) => {
+                setUser(res.data.user)
+            })
+        }
     }, [])
     
 
@@ -65,7 +68,7 @@ export function Login(){
         return(
            <div>
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
-                <Form className='container flex flex-col gap-3 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm'>
+                <Form className='container flex flex-col gap-3 w-3/12 min-w-fit mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 backdrop-blur-sm drop-shadow-sm'>
                     <p className='font-bold text-2xl'>Login</p>
                     <hr />
                     {NotExistError && <div className='text-xs text-red-700'>User not exist</div> }
@@ -90,7 +93,7 @@ export function Login(){
 
     const LoginPrompt = () => {
         return(
-            <div  className='flex flex-col gap-3 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm'>
+            <div  className='flex flex-col gap-3 w-3/12 min-w-fit mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 backdrop-blur-sm drop-shadow-sm'>
                 <p className='font-bold text-2xl'>Log in</p>
                 <hr />
                 <div onClick={() => navigate("/layouts")} className='p-3 border-2 border-blue-300 rounded hover:bg-slate-200 hover:cursor-pointer'>
@@ -103,9 +106,8 @@ export function Login(){
     }
 
     return(<>
-        <div className='h-[100vh]'>
+        <div className='min-h-[100vh]'>
             {user ? <LoginPrompt /> : <LoginForm />}
         </div>
-        <Footer />
     </>)
 }

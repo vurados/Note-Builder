@@ -8,6 +8,7 @@ const AuthContext = createContext<any | null>(null)
 export const AuthData = () => useContext(AuthContext)
 
 export const AuthWrapper = () => {
+
     const login = async (data: IUser) => {
         await axios.post('api/users/checkUser', data).then((res) => {
             return new Promise((resolve, reject) => {
@@ -26,6 +27,7 @@ export const AuthWrapper = () => {
     }
 
     const logout = () => {
+        // TODO: change it to clear cookie jwtExist
         localStorage.clear()
     }
 

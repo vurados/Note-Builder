@@ -2,7 +2,6 @@ import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
 import { Link, useNavigate} from 'react-router-dom'
-import { Footer } from '../components/Footer'
 import { IUser } from '../models'
 import * as Yup from 'yup'
 
@@ -65,7 +64,7 @@ export function Signup(){
                     <ErrorMessage name='password' component='span' className='text-xs text-red-700'/>
                     <Field name='hashedPassword' type='password' placeholder='Password' className={fieldClassName}/>
                     
-                    <div className='block h-4 invisible '></div>
+                    <div className='block h-4 invisible'></div>
                     <div>
                     <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">Signup</button>
                     <Link to={'/login'} ><span className='font-bold text-blue-700'>login</span></Link>
@@ -73,12 +72,5 @@ export function Signup(){
                 </Form>
             </Formik>
         </div>
-        <Footer />
-        {/* <div className="container flex flex-col items-center gap-6 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm">
-            <span className="">Signin</span>
-            <input type="email" name="" id="" placeholder="Username" className=""/>
-            <input type="password" name="" id="" placeholder="Password" className=""/>
-            <button className="p-2 bg-blue-500 rounded-full">Signin</button>
-        </div> */}
     </>)
 }
