@@ -78,7 +78,7 @@ export function EditNote(){
     const RedactNote = () => {
         return(
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
-            <Form id="text-editing-area" onSubmit={() => console.log('submitted')} className='relative z-10 mx-auto min-h-[100vh] h-[90vh] min-w-[370px] w-[60vw] rounded-lg'>
+            <Form id="text-editing-area" className='relative z-10 mx-auto min-h-[100vh] h-[90vh] min-w-[370px] w-[60vw] rounded-lg'>
 
                 <ErrorMessage name='title' component='span' className='text-xs text-red-700'/>
                 <Field name='title'  type='text' component={ModalInput} />
