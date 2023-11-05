@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Markdown from 'react-markdown'
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Footer } from "../components/Footer";
 import { TopBar } from "../components/TopBar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
 
 interface FormValues {
+    title: string
     text: string
 }
 
@@ -42,7 +42,9 @@ export function EditNote(){
     }
 
     const onSubmit = async (data: FormValues) => {
+        console.log("🚀 ~ file: EditNote.tsx:44 ~ onSubmit ~ data:", data)
         // setNote({title:data.title, content:data.text})
+        
         if (note.id === 0){
             await axios.post(`/api/users/layouts/notes/createNote/${lid}`, data).then(  (res) => {
                 setNote(res.data)
@@ -82,9 +84,9 @@ export function EditNote(){
                 <Field name='title'  type='text' component={ModalInput} />
 
                 <ErrorMessage name='text' component='span' className='text-xs text-red-700'/>
-                <Field name='text' value={'rtum trum'} component={textAreaField} />
+                <Field name='text' component={textAreaField} />
                 
-                <div className="ml-auto">
+                <div className="">
                     <button type='button' onClick={() => setEdit(false)} className="relative mx-2 px-3 py-1 right-0 border border-gray-500 rounded-lg hover:cursor-pointer">render</button>
                     <button type='submit' className="relative mx-2 px-3 py-1 right-0 border border-gray-500 rounded-lg hover:cursor-pointer">submit</button>
                 </div>
