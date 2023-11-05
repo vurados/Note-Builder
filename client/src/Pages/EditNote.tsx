@@ -83,7 +83,7 @@ export function EditNote(){
         }
 
         const validationSchema = Yup.object().shape({
-            title: Yup.string().min(1).max(50).required("Title required"),
+            title: Yup.string().min(1).max(50lazy).required("Title required"),
             text: Yup.string().min(1).required("Text area couldn't be empty")
         })
 
