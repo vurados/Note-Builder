@@ -63,15 +63,15 @@ export function EditNote(){
             }
         }
 
-        const textAreaField = () => {
+        const textAreaField = ({field, form, ...props}) => {
             return(<>
-                <textarea placeholder="write here...." defaultValue={note.content} className="p-3 m-1 w-full h-[90%] resize-none border-2 border-gray-300 outline-blue-400 bg-white/80 rounded-lg" />
+                <textarea {...field} {...props} placeholder="write here...." defaultValue={note.content} className="p-3 m-1 w-full h-[90%] resize-none border-2 border-gray-300 outline-blue-400 bg-white/80 rounded-lg" />
             </>)
         }
 
-        const ModalInput = () => {
+        const ModalInput = ({field, form, ...props}) => {
             return(<>
-                <input className="px-4 py-1 mb-2 w-full rounded-full border-2 border-gray-300 outline-blue-400 bg-white/80" defaultValue={note.title} type='text' placeholder="Title" />
+                <input {...field} {...props} className="px-4 py-1 mb-2 w-full rounded-full border-2 border-gray-300 outline-blue-400 bg-white/80" defaultValue={note.title} type='text' placeholder="Title" />
             </>)
         }
 
@@ -83,7 +83,7 @@ export function EditNote(){
         }
 
         const validationSchema = Yup.object().shape({
-            title: Yup.string().min(1).max(50lazy).required("Title required"),
+            title: Yup.string().min(1).max(50).required("Title required"),
             text: Yup.string().min(1).required("Text area couldn't be empty")
         })
 

@@ -9,15 +9,13 @@ export function TopBar(){
 
 
     return(
-        <div className='flex flex-row justify-end flex-wrap gap-10 bg-gray-300 mx-auto h-12 py-1 w-full'>
+        <div className='flex flex-row py-1 min-h-fit w-full justify-end flex-wrap gap-x-10 bg-gray-300  '>
             <SearchBar/>
             <nav className="font-bald">
                 <ul className='flex flex-row flex-nowrap gap-5 text-lgs'>
                     <TopBarElement>menu</TopBarElement>
                     <li className='basis-[6%] font-bold hover:text-blue-900 px-4 py-2'>
-                        <a  href='/login'>
-                            login
-                        </a>
+                        <a  href='/login'>login</a>
                     </li>
                 </ul>
             </nav>
