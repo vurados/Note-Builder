@@ -46,7 +46,8 @@ router.post('/createNote/:id', passport.authenticate('jwt', {session: false}), a
 router.put('/changeNote/:id', passport.authenticate('jwt', {session: false}), async(req, res) => {
     const nid = req.params.id
     const newNote = req.body
-    const note = Note.findByPk(nid)
+    console.log("🚀 ~ file: Notes.js:49 ~ router.put ~ newNote:", newNote)
+    const note = await Note.findByPk(nid)
     await note.update(newNote).
         then((data) => {res.status(200).json(data)}).
             catch((err) => res.status(418).send(err))

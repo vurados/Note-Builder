@@ -68,7 +68,7 @@ export function Login(){
         return(
            <div>
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
-                <Form className='container flex flex-col gap-3 w-3/12 min-w-fit mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 backdrop-blur-sm drop-shadow-sm '>
+                <Form className='container flex flex-col gap-3 w-3/12 min-w-fit mx-auto p-6 rounded-lg border-2 border-blue-400 backdrop-blur-sm drop-shadow-sm '>
                     <p className='font-bold text-2xl '>Login</p>
                     <hr />
                     {NotExistError && <div className='text-xs text-red-700'>User not exist</div> }
@@ -93,7 +93,7 @@ export function Login(){
 
     const LoginPrompt = () => {
         return(
-            <div  className='relative flex flex-col gap-3 w-3/12 min-w-fit mx-auto top-36 p-6 rounded-lg border-2 border-blue-400 backdrop-blur-sm drop-shadow-sm'>
+            <div  className='flex flex-col gap-3 w-3/12 min-w-[350px] mx-auto p-6 rounded-lg border-2 border-blue-400 backdrop-blur-sm drop-shadow-sm'>
                 <p className='font-bold text-2xl'>Log in</p>
                 <hr />
                 <div onClick={() => navigate("/layouts")} className='p-3 border-2 border-blue-300 rounded hover:bg-slate-200 hover:cursor-pointer'>
@@ -106,7 +106,7 @@ export function Login(){
     }
 
     return(<>
-        <div className='min-h-[100vh]'>
+        <div className='relative min-h-[100vh] top-60'>
             {user ? <LoginPrompt /> : <LoginForm />}
         </div>
     </>)
