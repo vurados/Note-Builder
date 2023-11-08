@@ -17,12 +17,10 @@ router.post('/getNotesByLayoutId/:id', passport.authenticate('jwt', {session: fa
     // const noteees = user[0].Layout[0].Note
     
     const layout = await Layout.findByPk(lid)
-    let notes = []
     if(layout.dataValues.UID === userId){
-        notes = await layout.getNote()
+        await layout.getNote().then((notes) => res.json(notes)).catch((err) => res.status(402).json(err))
         // console.log("🚀 ~ file: Notes.js:17 ~ router.post ~ notes:", notes.dataValues)
     }
-    res.json(notes)
 });
 
 router.post('/getNote/:id', passport.authenticate('jwt', {session: false}), checkOwner(Note), async(req, res) => {
