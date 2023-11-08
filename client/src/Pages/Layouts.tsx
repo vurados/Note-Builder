@@ -128,7 +128,7 @@ export function Layouts(){
         }
 
         return(<>
-            <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm z-10">
+            <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm">
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                     <Form className="absolute container flex flex-col gap-3 w-1/4 left-1/2 -translate-x-1/2 top-1/3 p-6 rounded-lg border-2 border-blue-400 bg-white">
                         <button className="absolute py-0 px-2 m-0 -right-8 -top-3 border-[2px] rounded-full font-bold hover:text-red-700" type="button" onClick={() => setModal(false)}>x</button>
@@ -171,15 +171,15 @@ export function Layouts(){
 
     return(<>
       {modal && <LModal />}
-      <div className='flex flex-col min-h-[100vh] bg-gradient-to-r from-sky-200 to-indigo-500'>
+      {/* <div className='flex flex-col min-h-[100vh] bg-gradient-to-r from-sky-200 to-indigo-500'> */}
         <TopBar />
-        <button onClick={exportJson} className="relative ml-auto mr-5 my-3 py-2 px-4 w-fit bg-sky-400 rounded-lg hover:text-white hover:bg-sky-500 hover:shadow-md ">Export as Json</button>
         {loading && <div className="flex mx-auto"><Spinner className='mx-2' width='20'/><p className="w-fit text-blue-400">Syncing existing layouts</p></div>}
-        <div id="main" className='items-stretch lg:grid grid-cols-4 gap-3 mx-auto text-center mb-96 w-[80vw]'>
-          {listOfLayouts.map((layout: ILayouts) => <LayoutTile onChange={(layout) => changeHandler(layout)} onDelete={deleteHandler} layout={layout} key={layout.id} />)}
-          <div className="z-10" onClick={() => setModal(true)}><AddTile /></div>
+        <div className="min-h-screen">
+          <button onClick={exportJson} className="absolute right-3 py-2 px-4 w-fit bg-sky-400 rounded-lg hover:text-white hover:bg-sky-500 hover:shadow-md">Export as Json</button>
+          <div id="main" className='items-stretch lg:grid grid-cols-4 gap-3 mx-auto text-center mb-96 w-[80vw]'>
+            {listOfLayouts.map((layout: ILayouts) => <LayoutTile onChange={(layout) => changeHandler(layout)} onDelete={deleteHandler} layout={layout} key={layout.id} />)}
+            <div onClick={() => setModal(true)}><AddTile /></div>
+          </div>
         </div>
-      </div>
-      
     </>)
 }

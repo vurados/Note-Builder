@@ -40,7 +40,7 @@ function App() {
 
 
   return (
-    <div className=' bg-sky-400/30' style={{backgroundImage: `url(${bgWaveSvg}`, backgroundSize: "cover"}}>
+    <div className='flex flex-col gap-10 bg-sky-400/30' style={{backgroundImage: `url(${bgWaveSvg}`, backgroundSize: "cover"}}>
       <RouterProvider router={router} />
       <Footer />
     </div>    

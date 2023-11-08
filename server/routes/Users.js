@@ -39,18 +39,13 @@ router.post('/createUser', async(req, res) => {
     const {salt, hash} = genPassword(user.hashedPassword)
     user.hashedPassword = hash
     user.salt = salt
-    if(req.cookies){console.log('YOU HAVE COOKIE', req.cookies, req.cookie);}
-    try {
-        const newUser = await User.create(user)
-        const jwt = issueJWT(newUser)
-        res.cookie('jwt', jwt, {maxAge:86400000, httpOnly: true})
-        res.cookie('jwtExist', true, {maxAge:86400000})
-        res.status(200).json({success: true, msg:'User successfully signed up', user: newUser})
-    }catch(error){
-        console.error(error)
-        res.status(401).json({success: false, msg: 'Error creating user entity', error: error.message})
-    }
-
+    await User.create(user)
+        .then((newUser) => {
+            const jwt = issueJWT(newUser)
+            res.cookie('jwt', jwt, {maxAge:86400000, httpOnly: true})
+            res.cookie('jwtExist', true, {maxAge:86400000})
+            res.status(200).json({success: true, msg:'User successfully signed up', user: newUser})})
+        .catch((error) => {res.status(401).json({success: false, msg: 'Error creating user entity', error: error.message})})
     // res.send('The error ocurred during creating(posting) user entity into the table')
 });
 

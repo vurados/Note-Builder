@@ -42,14 +42,14 @@ export function Notes(){
     
 
     return(<>
-        <div className='flex flex-col gap-10 min-h-[100vh]'>
             <TopBar />
-            <div id='main' className='items-stretch lg:grid grid-cols-4 gap-3 mx-auto text-center mb-96 w-[80vw]'>
-                {listOfNotes.map((note: INotes) => <NoteTile note={note} lid={lid} key={note.id} />)}
-                {/* модалка нужна но токо для настройки внешнего вида и может быть тайтла */}
-                {/* <div onClick={() => setModal(true)}>Options</div> */}
-                <div onClick={() => navigate(`/editNote/${lid}/0`)}><AddTile /></div>
+            <div className="min-h-screen">
+                <div id='main' className='items-stretch lg:grid grid-cols-4 gap-3 mx-auto text-center mb-96 w-[80vw]'>
+                    {listOfNotes.map((note: INotes) => <NoteTile note={note} lid={lid} key={note.id} />)}
+                    {/* модалка нужна но токо для настройки внешнего вида и может быть тайтла */}
+                    {/* <div onClick={() => setModal(true)}>Options</div> */}
+                    <div onClick={() => navigate(`/editNote/${lid}/0`)}><AddTile /></div>
+                </div>
             </div>
-        </div>
     </>)
 }

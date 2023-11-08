@@ -9,7 +9,7 @@ const { checkOwner } = require('../Authentification/checkOwner');
 router.get('/exportAll', passport.authenticate('jwt', {session: false}), async(req, res) => {
     const userId = req.user.id
     const user = await User.findByPk(userId)
-    const LayoutsWithNotes = await user.getLayout({
+    await user.getLayout({
         include:{
             model: Note,
             as: 'Note',
@@ -20,36 +20,38 @@ router.get('/exportAll', passport.authenticate('jwt', {session: false}), async(r
         attributes: {
             exclude: ["id", "LID", "createdAt", "updatedAt", ]
         }
-    })
-    res.json(LayoutsWithNotes)
+    }).then((LayoutsWithNotes) => {res.json(LayoutsWithNotes)})
+    .catch((err) => {res.status(402).json(err)})
+    
 })
 
 router.get('/getLayouts', passport.authenticate('jwt', {session: false}),async (req, res) => {
-    const userId = req.user.id
     // res.json(userId)
     // console.log('we are in getLayouts');
-    const user = await User.findOne({where: {id: userId}})
-    const listOfLayout = await user.getLayout()
-    res.json(listOfLayout)
+    // const user = await User.findByPk(userId)
+    const user = req.user
+    await user.getLayout()
+        .then((listOfLayout) => {res.json(listOfLayout)})
+            .catch((err) => {res.status(402).json(err)})
 })
 
 router.post('/createLayout', passport.authenticate('jwt', {session: false}),async (req, res) => {
-    const userId = req.user.id
-    // TODO : i need to change LayoutModal request
+    // const userId = req.user.id
+    // TODO : i need to change LayoutModal request add color and bg_image
     const layout = {title: req.body.title, width: req.body.width}
-    const user = await User.findOne({where: {id: userId}})
-    const newLayout = await user.createLayout(layout).
-        then((data) => {res.status(200).json(data)}).
-            catch((err) => res.status(418).send(err))
+    const user = req.user
+    await user.createLayout(layout)
+        .then((data) => res.status(200).json(data))
+            .catch((err) => res.status(418).send(err))
     
 })
 
 router.put('/changeLayout/:id', passport.authenticate('jwt', {session: false}), checkOwner(Layout), async (req, res) => {
     const layout = req.record
     const newLayout = req.body
-    await layout.update(newLayout).
-        then((data) => {res.status(200).json(data)}).
-            catch((err) => res.status(418).send(err))
+    await layout.update(newLayout)
+        .then((data) => {res.status(200).json(data)})
+            .catch((err) => res.status(418).send(err))
 })
 
 router.delete('/deleteLayout/:id', passport.authenticate('jwt', {session: false}),async (req, res) => {

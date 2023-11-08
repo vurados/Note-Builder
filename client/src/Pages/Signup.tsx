@@ -24,7 +24,6 @@ export function Signup(){
             hashedPassword: Yup.string().required()
         })
 
-    // TODO: change data type to IUser(add interface in models)
     const onSubmit = async (data : IUser) => {
         console.log(data)
 

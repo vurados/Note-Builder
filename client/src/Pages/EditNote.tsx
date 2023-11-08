@@ -86,7 +86,7 @@ export function EditNote(){
 
         return(
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-            <Form id="text-editing-area" className='relative mx-auto min-h-[100vh] h-[90vh] min-w-[370px] w-[60vw] rounded-lg'>
+            <Form id="text-editing-area" className='mx-auto min-h-[100vh] h-[90vh] min-w-[370px] w-[60vw] rounded-lg'>
 
                 <ErrorMessage name='title' component='span' className='text-xs text-red-700'/>
                 <Field name='title'  type='text' component={ModalInput} />
@@ -105,17 +105,17 @@ export function EditNote(){
 
     const RenderedMarkdown = () => {
         return(
-        <div className="relative mx-auto min-h-[100vh] min-w-[370px] w-[60vw] border-2 rounded-lg">
-            <Markdown>{note.content}</Markdown>
-            <button type='button' onClick={() => setEdit(true)} className="relative mx-2 px-3 py-1 right-0 border border-gray-500 rounded-lg hover:cursor-pointer">edit</button>
+        <div className="mx-auto h-[100vh] min-w-[370px] w-[60vw] ">
+            <div className="p-3 m-1 w-full h-[95%] border-2 rounded-lg">
+                <Markdown>{note.content}</Markdown> 
+            </div>
+            <button type='button' onClick={() => setEdit(true)} className=" mx-2 px-3 py-1 right-0 border border-gray-500 rounded-lg hover:cursor-pointer">edit</button>
         </div>
         )
     }
 
     return(<>
-        <div className='flex flex-col gap-10 min-h-[100vh]'>
-            <TopBar />
-            {edit ? <RedactNote /> : <RenderedMarkdown />}
-        </div>
+        <TopBar />
+        {edit ? <RedactNote /> : <RenderedMarkdown />}
     </>)
 }

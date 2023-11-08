@@ -26,8 +26,8 @@ router.post('/getNotesByLayoutId/:id', passport.authenticate('jwt', {session: fa
 });
 
 router.post('/getNote/:id', passport.authenticate('jwt', {session: false}), checkOwner(Note), async(req, res) => {
-    const note = req.record
-    res.json(note)
+    // req.record contains note(:id) and gotten from checkOwner middleware
+    res.json(req.record)
 })
 
 router.post('/createNote/:id', passport.authenticate('jwt', {session: false}), async(req, res) => {
@@ -35,11 +35,10 @@ router.post('/createNote/:id', passport.authenticate('jwt', {session: false}), a
     const userId = req.user.id
     const lid = req.params.id
     const layout = await Layout.findByPk(lid)
-    if(layout.dataValues.UID === userId){
-        const newNote = await layout.createNote(note)
-        res.json(newNote)
+    if(layout.UID === userId){
+        await layout.createNote(note).then((newNote) => res.json(newNote)).catch((err) => res.status(402).json('Error ocurred creating Note'))
     }else{
-        res.status(401).send('Erro ocurred creating note')
+        res.status(402).send('You cant create Note in layout you dont own')
     }
 });
 
