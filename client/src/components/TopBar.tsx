@@ -1,4 +1,8 @@
+// import { useContext } from "react"
+// import { TopBarContext } from "../contexts/contexts"
+
 export function TopBar(){
+    // const topBarSearchRequest = useContext(TopBarContext)
     
 
     const topBarElementClassName = 'basis-1/10 px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white'

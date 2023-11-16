@@ -27,7 +27,7 @@ const options = {
 }
 
 const strategy = new Strategy(options, (req, payload, done) => {
-    console.log("🚀 ~ file: pasport_jwt.js:31 ~ strategy ~ payload:", JSON.stringify(payload))
+    console.info("🚀 ~ file: pasport_jwt.js:31 ~ strategy ~ payload:", JSON.stringify(payload))
     User.findByPk(payload.sub).then((user) => {
         if(user){
             req.user = user
@@ -36,7 +36,7 @@ const strategy = new Strategy(options, (req, payload, done) => {
             return done(null, false)
         }
     }).catch((err) => {
-        console.log(err);
+        console.error(err);
         done(err, null)})
 })
 

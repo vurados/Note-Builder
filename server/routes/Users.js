@@ -35,7 +35,7 @@ router.post('/checkUser', async(req, res) => {
 
 router.post('/createUser', async(req, res) => {
     const user = req.body
-    console.log('user=======>',user);
+    console.info('user=======>',user);
     const {salt, hash} = genPassword(user.hashedPassword)
     user.hashedPassword = hash
     user.salt = salt

@@ -48,7 +48,7 @@ const checkOwner = (Model) => async (req, res, next) => {
         
         next()
     } catch (error) {
-        console.log(error);
+        console.error(error)
         res.status(500).send('Server busy handling your problems, so you dont have to')
     }
 }

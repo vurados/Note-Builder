@@ -82,7 +82,7 @@ export function Login(){
                     
                     <div className='h-4 invisible '></div>
                     <div>
-                    <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">{loading ? <Spinner width='20' color='white'/> : 'Login'}</button>
+                    <button type='submit' disabled={loading} className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">{loading ? <Spinner width='20' color='white'/> : 'Login'}</button>
                     <Link to={'/signup'} ><span className='font-bold text-blue-700'>signup</span></Link>
                     </div>
                 </Form>

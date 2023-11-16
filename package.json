@@ -4,9 +4,11 @@
   "description": "new notes project",
   "main": "index.js",
   "scripts": {
-    "start:produciton": "test"
+    "start:produciton": "test",
+    "startclent": "cd ./client  &&  npm start",
+    "startserver": "cd ./server && npm start"
   },
-  "author": "@me",
+  "author": "vurados",
   "license": "MIT",
   "devDependencies": {
     "prettier": "3.0.3"

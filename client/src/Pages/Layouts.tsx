@@ -25,15 +25,16 @@ export function Layouts(){
     const [loading, setLoading] = useState(false)
     const [newFlag, setNewFlag] = useState(true)
 
-    // On start setting flags and onChangeLAyout state 
-    // so modal did not fire when reloading page
+    // On start set flags and onChangeLAyout state 
+    // so modal do not fire after reloading page
     useLayoutEffect(() => {
       setOnChangeLayout(undefined)
       setNewFlag(true)
     }, [])
 
     // On loading we are checking if there is a jwt token exist
-    // If not redirect to login page
+    // If there is token - fetch
+    // If not - redirect to login page
     useEffect(() => {
       const JwtExist =  Cookies.get('jwtExist')
       if (JwtExist){
