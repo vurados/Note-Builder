@@ -1,5 +1,7 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import reactRefresh from "@vitejs/plugin-react";
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -7,6 +9,9 @@ export default defineConfig({
   // comment this out if that isn't relevant for your project
   build: {
     outDir: "../server/build",
+  },
+  test:{
+    environment: 'jsdom'
   },
   server: {
     port: 3000,

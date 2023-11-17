@@ -1,6 +1,3 @@
-import React from 'react';
-// import axios from 'axios';
-// import { useEffect, useState } from 'react';
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from 'react-router-dom'
 
 
@@ -15,7 +12,6 @@ import { Profile } from './Pages/Profile';
 
 import { AuthWrapper } from './auth/AuthWrapper';
 import { Footer } from './components/Footer';
-import { LayoutContext } from './contexts/contexts';
 import bgWaveSvg from './assets/graphic/bgWave.svg'
 
 
