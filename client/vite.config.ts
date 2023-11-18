@@ -11,7 +11,9 @@ export default defineConfig({
     outDir: "../server/build",
   },
   test:{
-    environment: 'jsdom'
+    clearMocks: true,
+    environment: 'jsdom',
+    globals: true
   },
   server: {
     port: 3000,

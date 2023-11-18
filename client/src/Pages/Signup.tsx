@@ -47,26 +47,26 @@ export function Signup(){
         <div>
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
                 <Form className='container flex flex-col gap-3 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm'>
-                    <p className='font-bold text-2xl'>Login</p>
+                    <p className='font-bold text-2xl'>SignUp</p>
                     <hr />
-                    <label className='text-left'>Username</label>
+                    <label id='username-label' className='text-left'>Username</label>
                     {UniqueUsernameError && <div className='text-xs text-red-700'>Username already exist</div>}
                     <ErrorMessage name='username' component='span' className='text-xs text-red-700'/>
-                    <Field testId='username' type='text' placeholder='Username' className={fieldClassName}/>
+                    <Field aria-labelledby='username-label' name='username' type='text' placeholder='Username' className={fieldClassName}/>
                    
 
-                    <label>Email</label>
+                    <label id='email-label'>Email</label>
                     <ErrorMessage name='email' component='span' className='text-xs text-red-700'/>
-                    <Field name='email' type='email' placeholder='Email' className={fieldClassName}/>
+                    <Field aria-labelledby='email-label' name='email' type='email' placeholder='Email' className={fieldClassName}/>
 
-                    <label>Password</label>
+                    <label id='password-label'>Password</label>
                     <ErrorMessage name='password' component='span' className='text-xs text-red-700'/>
-                    <Field name='hashedPassword' type='password' placeholder='Password' className={fieldClassName}/>
+                    <Field aria-labelledby='password-label' name='hashedPassword' type='password' placeholder='Password' className={fieldClassName}/>
                     
                     <div className='block h-4 invisible'></div>
                     <div>
-                    <button name='signup' type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">Signup</button>
-                    <Link id='toLogin' to={'/login'} ><span className='font-bold text-blue-700'>login</span></Link>
+                    <button role='signup-button' type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">Signup</button>
+                    <span onClick={() => navigate("/login")} className='font-bold text-blue-700'>login</span>
                     </div>
                 </Form>
             </Formik>
