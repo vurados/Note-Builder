@@ -24,6 +24,8 @@ app.use(express.urlencoded({extended: true}))
 //Routers 
 // TODO: you know what you should do
 // app.use(require('./routes'))
+app.use('/healthz', (req, res) => {res.status(200).send('OK')})
+
 const userRouter = require('./routes/Users');
 app.use('/api/users', userRouter);
 

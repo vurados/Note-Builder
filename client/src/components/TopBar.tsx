@@ -17,7 +17,7 @@ export function TopBar(){
             <SearchBar/>
             <nav className="font-bald">
                 <ul className='flex flex-row flex-nowrap gap-5 text-lgs'>
-                    <TopBarElement>menu</TopBarElement>
+                    <TopBarElement><svg  /></TopBarElement>
                     <li className='basis-[6%] font-bold hover:text-blue-900 px-4 py-2'>
                         <a  href='/login'>login</a>
                     </li>

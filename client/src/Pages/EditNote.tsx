@@ -62,13 +62,20 @@ export function EditNote(){
             }
         }
 
-        const textAreaField = ({field, ...props}) => {
+        interface IProps{
+            field:{
+                name: string
+            }
+            props: unknown[]
+        }
+
+        const textAreaField = ({field, ...props}:IProps) => {
             return(<>
                 <textarea {...field} {...props} placeholder="write here...." defaultValue={note.content} className="p-3 m-1 w-full h-[90%] resize-none border-2 border-gray-300 outline-blue-400 bg-white/80 rounded-lg" />
             </>)
         }
 
-        const ModalInput = ({field, ...props}) => {
+        const ModalInput = ({field, ...props}:IProps) => {
             return(<>
                 <input {...field} {...props} className="px-4 py-1 mb-2 w-full rounded-full border-2 border-gray-300 outline-blue-400 bg-white/80" defaultValue={note.title} type='text' placeholder="Title" />
             </>)

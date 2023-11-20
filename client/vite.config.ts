@@ -9,6 +9,7 @@ export default defineConfig({
   // comment this out if that isn't relevant for your project
   build: {
     outDir: "../server/build",
+    emptyOutDir: true,
   },
   test:{
     clearMocks: true,
