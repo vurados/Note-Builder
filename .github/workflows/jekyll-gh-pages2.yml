@@ -35,8 +35,18 @@ jobs:
         with:
           source: ./client
           destination: ./_site
+      - name: build
+        run: npm run build
+        working-directory: ./client
+      - name: Install server deps
+        run: npm ci
+        working-directory: ./server
+      - name: Zip client Build
+        run: zip -r client-build.zip .
+        working-directory: ./server/build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
+        
 
   # Deployment job
   deploy:
