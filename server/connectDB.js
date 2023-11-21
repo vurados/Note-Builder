@@ -1,23 +1,31 @@
 const { Sequelize } = require('sequelize')
 
-
+let sequelize
 if (process.env.NODE_ENV === 'production'){
-  console.log('production go brrrrrrrrr');
-  const sequelize = new Sequelize(`${process.env.DB_DATABASE}`, `${process.env.DB_USERNEME}`, `${process.env.DB_PASSWORD}`, {
+  console.info('production DB connect');
+  sequelize = new Sequelize(`${process.env.DB_DATABASE}`, `${process.env.DB_USERNEME}`, `${process.env.DB_PASSWORD}`, {
     host: process.env.DB_HOST, 
     dialect: 'mysql',
     logging: false,
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000
+    }
   });
 }else{
-  console.log('development database initialization');
-  const sequelize = new Sequelize('noteprojectdb', 'root', '05032001', {
+  console.info('development DB connect');
+  sequelize = new Sequelize('noteprojectdb', 'root', '05032001', {
     host: 'localhost', 
     dialect: 'mysql',
     logging: false,
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000
+    }
   });
 }
-
-// TODO: before deployment need to change it to .env variables
 
 const connect = async() => {
     try {
