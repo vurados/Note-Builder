@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
-import { Link, useNavigate} from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import { IUser } from '../models'
 import * as Yup from 'yup'
 
@@ -25,26 +25,26 @@ export function Signup(){
         })
 
     const onSubmit = async (data : IUser) => {
-        console.log(data)
+        // console.log(data)
 
         axios.post('api/users/createUser', data).then((res) => {
-            console.log(res);
-            console.log(res.data.user.id);
+            // console.log(res);
+            // console.log(res.data.user.id);
             
             if (res.data.success){
-                console.log( res.data.msg)
+                // console.log( res.data.msg)
                 setUniqueUsernameError(false)
                 navigate("/login")
             }else {
-                console.log( res.data.msg)
+                // console.log( res.data.msg)
                 setUniqueUsernameError(true)
             }
         })
     }
-            
+
 
     return(<>
-        <div>
+        <div className='min-h-[100vh]'>
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
                 <Form className='container flex flex-col gap-3 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm'>
                     <p className='font-bold text-2xl'>SignUp</p>
