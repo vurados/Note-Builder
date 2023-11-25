@@ -68,9 +68,9 @@ export default function Login(){
         return(
            <div>
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
-                <Form className='container flex flex-col gap-3 w-3/12 min-w-fit mx-auto p-6 rounded-lg border-2 border-blue-400 backdrop-blur-sm drop-shadow-sm '>
+                <Form className='container flex flex-col gap-3 w-3/12 min-w-fit mx-auto p-6 rounded-lg bg-white backdrop-blur-sm drop-shadow-sm '>
                     <p className='font-bold text-2xl '>Login</p>
-                    <hr />
+                    <hr className='w-1/4 h-[2px] bg-gray-400 border-0 rounded'/>
                     {NotExistError && <div className='text-xs text-red-700'>User not exist</div> }
                     <label className='text-left'>Username:</label>
                     <ErrorMessage name='username' component='span' className='text-xs text-red-700'/>
@@ -93,9 +93,9 @@ export default function Login(){
 
     const LoginPrompt = () => {
         return(
-            <div  className='flex flex-col gap-3 w-3/12 min-w-[350px] mx-auto p-6 rounded-lg border-2 border-blue-400 backdrop-blur-md drop-shadow-sm bg-white/20'>
+            <div  className='flex flex-col gap-3 w-3/12 min-w-[350px] mx-auto p-6 rounded-lg border-2  backdrop-blur-md drop-shadow-sm bg-white'>
                 <p className='font-bold text-2xl'>Log in</p>
-                <hr />
+                <hr className='w-1/4 h-[2px] bg-gray-400 border-0 rounded'/>
                 <Link to="/layouts" className='p-3 border-2 border-blue-300 rounded hover:bg-sky-200 hover:cursor-pointer'>
                     <p className='font-bold text-xl'>{user?.username}</p>
                     <p className='text-xs text-blue-700'>{user?.email}</p>
@@ -106,7 +106,7 @@ export default function Login(){
     }
 
     return(<>
-        <div className='relative min-h-[100vh] top-60'>
+        <div className='relative min-h-[100vh] top-[30vh]'>
             {user ? <LoginPrompt /> : <LoginForm />}
         </div>
     </>)
