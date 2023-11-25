@@ -3,7 +3,7 @@ import {fireEvent, render, screen, waitFor} from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
 import  userEvent from '@testing-library/user-event'
 
-import {Signup} from '../Pages/Signup';
+import Signup from '../src/Pages/Signup';
 import axios from 'axios';
 
 // Mock the axios library to prevent actual API calls during testing
