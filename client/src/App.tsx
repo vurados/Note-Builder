@@ -1,46 +1,51 @@
-import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from 'react-router-dom'
+import { Route, Routes} from 'react-router-dom'
+import { lazy, Suspense } from 'react';
 
-
-// import { Root } from './Pages/Root';
-import { Home } from './Pages/Home';
-import { Login } from './Pages/Login';
-import { Signup } from './Pages/Signup';
-import { Layouts } from './Pages/Layouts';
-import { Notes } from './Pages/Notes';
-import { EditNote } from './Pages/EditNote';
-import { Profile } from './Pages/Profile';
+// import  Home  from './Pages/Home';
+// import  Login  from './Pages/Login';
+// import  Signup  from './Pages/Signup';
+// import  Layouts  from './Pages/Layouts';
+// import  Notes  from './Pages/Notes';
+// import  EditNote  from './Pages/EditNote';
+// import  Profile  from './Pages/Profile';
 
 import { AuthWrapper } from './auth/AuthWrapper';
 import { Footer } from './components/Footer';
-import bgWaveSvg from './assets/graphic/bgWave.svg'
+import bgTriImg from './assets/graphic/blueTriBg.webp'
+import { Spinner } from './components/spinner';
 
+
+const Signup = lazy(() => import('./Pages/Signup'))
+const Login = lazy(() => import('./Pages/Login'))
+const Home = lazy(() => import('./Pages/Home'))
+const Profile = lazy(() => import('./Pages/Profile'))
+const Layouts = lazy(() => import('./Pages/Layouts'))
+const Notes = lazy(() => import('./Pages/Notes'))
+const EditNote = lazy(() => import('./Pages/EditNote'))
 
 
 function App() {
 
   
-  const router = createBrowserRouter(
-    createRoutesFromElements(<>
-        <Route index path="/" element={<Home />}/>
-        <Route element={<AuthWrapper/>}>
-          <Route path="/signup" element={<Signup />}/>
-          <Route path="/login" element={<Login />}/>
-          <Route path="/layouts" element={<Layouts />}/>
-          <Route path="/notes/:lid" element={<Notes />}/>
-          <Route path="/editNote/:lid/:nid" element={<EditNote />}/>
-          <Route path="/profile" element={<Profile />}/>
-        </Route>
-      </>
-    )
-  )
 
-
-  return (
-    <div className='flex flex-col gap-10 bg-sky-400/30' style={{backgroundImage: `url(${bgWaveSvg}`, backgroundSize: "cover"}}>
-      <RouterProvider router={router} />
+  return(
+    <div id="App" className='flex flex-col gap-10 bg-sky-100' style={{backgroundImage: `url(${bgTriImg}`, backgroundSize: "cover", backgroundRepeat: "repeat"}}>
+      <Suspense fallback={<div className='h-screen w-screen'><Spinner width='50'/></div>}>
+        <Routes>
+          <Route index path="/" element={<Home />}/>
+          <Route element={<AuthWrapper/>}>
+            <Route path="/signup" element={<Signup />}/>
+            <Route path="/login" element={<Login />}/>
+            <Route path="/layouts" element={<Layouts />}/>
+            <Route path="/notes/:lid" element={<Notes />}/>
+            <Route path="/editNote/:lid/:nid" element={<EditNote />}/>
+            <Route path="/profile" element={<Profile />}/>
+          </Route>
+        </Routes>
+      </Suspense>
       <Footer />
-    </div>    
-  );
+    </div>
+  )
 }
 
 

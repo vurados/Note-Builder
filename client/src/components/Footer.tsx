@@ -2,7 +2,7 @@ export function Footer(){
 
     return(
     <div className="relative w-full bg-blue-200 mt-4 p-[20px] ">
-        <div>
+        <div className="w-[15%]">
             <div>Links</div>
             <hr />
             <ul>

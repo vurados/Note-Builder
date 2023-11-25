@@ -14,7 +14,7 @@ import Cookies from 'js-cookie'
 
 
 
-export function Login(){
+export default function Login(){
 
     const [NotExistError, setNotExistError] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
@@ -83,7 +83,7 @@ export function Login(){
                     <div className='h-4 invisible '></div>
                     <div>
                     <button type='submit' disabled={loading} className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">{loading ? <Spinner width='20' color='white'/> : 'Login'}</button>
-                    <Link to={'/signup'} ><span className='font-bold text-blue-700'>signup</span></Link>
+                    <Link to='/signup' ><span className='font-bold text-blue-700'>signup</span></Link>
                     </div>
                 </Form>
             </Formik>
@@ -93,14 +93,14 @@ export function Login(){
 
     const LoginPrompt = () => {
         return(
-            <div  className='flex flex-col gap-3 w-3/12 min-w-[350px] mx-auto p-6 rounded-lg border-2 border-blue-400 backdrop-blur-sm drop-shadow-sm'>
+            <div  className='flex flex-col gap-3 w-3/12 min-w-[350px] mx-auto p-6 rounded-lg border-2 border-blue-400 backdrop-blur-md drop-shadow-sm bg-white/20'>
                 <p className='font-bold text-2xl'>Log in</p>
                 <hr />
-                <div onClick={() => navigate("/layouts")} className='p-3 border-2 border-blue-300 rounded hover:bg-slate-200 hover:cursor-pointer'>
+                <Link to="/layouts" className='p-3 border-2 border-blue-300 rounded hover:bg-sky-200 hover:cursor-pointer'>
                     <p className='font-bold text-xl'>{user?.username}</p>
-                    <p className='text-xs text-blue-400'>{user?.email}</p>
-                </div>
-                <button onClick={() => setUser(undefined)} className='ml-auto w-fit text-xs hover:cursor-pointer hover:text-blue-400'>Choose another account</button>
+                    <p className='text-xs text-blue-700'>{user?.email}</p>
+                </Link>
+                <button onClick={() => setUser(undefined)} className='ml-auto w-fit text-xs hover:cursor-pointer hover:text-blue-700'>Choose another account</button>
             </div>
         )
     }

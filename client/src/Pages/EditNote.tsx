@@ -13,7 +13,7 @@ interface FormValues {
 }
 
 
-export function EditNote(){
+function EditNote(){
     const {lid, nid } = useParams()
     const [note, setNote] = useState({id: 0, title: '', content: ''})
     const [edit, setEdit] = useState(true)
@@ -126,3 +126,5 @@ export function EditNote(){
         {edit ? <RedactNote /> : <RenderedMarkdown />}
     </>)
 }
+
+export default EditNote

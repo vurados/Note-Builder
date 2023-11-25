@@ -26,3 +26,7 @@ export interface IUser{
     hashedPassword?: string
     salt?: string
 }
+
+export interface SVGIconProps{
+    className?: string | undefined
+}

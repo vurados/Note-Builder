@@ -12,8 +12,9 @@ import { useNavigate } from "react-router-dom"
 import { Formik, Form, ErrorMessage, Field } from "formik"
 import { Spinner } from "../components/spinner"
 
+import '../App.css'
 
-export function Layouts(){
+export default function Layouts(){
     // let {lid} = AuthData()
     // let {lid} = useContext(AuthContext)
     const navigation = useNavigate()
@@ -125,13 +126,15 @@ export function Layouts(){
                   setNewFlag(false)
                   // TODO: change fetch to something else
                   fetchLayouts()
-          })}
+              })
+              setModal(false)
+            }
         }
 
         return(<>
-            <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm">
+            <div id="backdrop" className="z-10 fixed w-full h-full bg-black/60 backdrop-blur-sm">
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                    <Form className="absolute container flex flex-col gap-3 w-1/4 left-1/2 -translate-x-1/2 top-1/3 p-6 rounded-lg border-2 border-blue-400 bg-white">
+                    <Form className="absolute container min-w-fit flex flex-col gap-3 w-1/4 left-1/2 -translate-x-1/2 top-1/3 p-6 rounded-lg border-2 border-blue-400 bg-white">
                         <button className="absolute py-0 px-2 m-0 -right-8 -top-3 border-[2px] rounded-full font-bold hover:text-red-700" type="button" onClick={() => setModal(false)}>x</button>
 
                         <label className="font-bold">Title</label>
@@ -175,9 +178,9 @@ export function Layouts(){
       {/* <div className='flex flex-col min-h-[100vh] bg-gradient-to-r from-sky-200 to-indigo-500'> */}
         <TopBar />
         {loading && <div className="flex mx-auto"><Spinner className='mx-2' width='20'/><p className="w-fit text-blue-400">Syncing existing layouts</p></div>}
-        <div className="min-h-screen">
-          <button onClick={exportJson} className="absolute right-3 py-2 px-4 w-fit bg-sky-400 rounded-lg hover:text-white hover:bg-sky-500 hover:shadow-md">Export as Json</button>
-          <div id="main" className='items-stretch lg:grid grid-cols-4 gap-3 mx-auto text-center mb-96 w-[80vw]'>
+        <div id="main-wrapper" className="min-h-screen">
+          <button id="export-all-as-json-btn" onClick={exportJson} className="absolute min-[1500px]:block hidden right-3 py-2 px-4 w-fit bg-sky-400 rounded-lg hover:text-white hover:bg-sky-500 hover:shadow-md">Export as Json</button>
+          <div id="main" className='items-stretch grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 mx-auto text-center mb-96 w-[98vw] min-[1500px]:w-[80vw]'>
             {listOfLayouts.map((layout: ILayouts) => <LayoutTile onChange={(layout) => changeHandler(layout)} onDelete={deleteHandler} layout={layout} key={layout.id} />)}
             <div onClick={() => setModal(true)}><AddTile /></div>
           </div>

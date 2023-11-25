@@ -29,14 +29,16 @@ router.post('/getNote/:id', passport.authenticate('jwt', {session: false}), chec
 })
 
 router.post('/createNote/:id', passport.authenticate('jwt', {session: false}), async(req, res) => {
-    const note = req.body
+    // FIXME: fix
+    const note = {...req.body, "x": 3, "y": 1, "width": 1, "height": 1}
     const userId = req.user.id
     const lid = req.params.id
     const layout = await Layout.findByPk(lid)
     if(layout.UID === userId){
-        await layout.createNote(note).then((newNote) => res.json(newNote)).catch((err) => res.status(402).json('Error ocurred creating Note'))
+        console.log("🚀 ~ file: Notes.js:33 ~ router.post ~ note:", note)
+        await layout.createNote(note).then((newNote) => res.json(newNote)).catch((err) => res.status(401).json('Error ocurred creating Note'))
     }else{
-        res.status(402).send('You cant create Note in layout you dont own')
+        res.status(401).send('You cant create Note in layout you dont own')
     }
 });
 

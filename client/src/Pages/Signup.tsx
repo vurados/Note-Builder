@@ -5,7 +5,7 @@ import { useNavigate} from 'react-router-dom'
 import { IUser } from '../models'
 import * as Yup from 'yup'
 
-export function Signup(){
+function Signup () {
     const navigate = useNavigate()
     const [UniqueUsernameError, setUniqueUsernameError] = useState(false)
 
@@ -66,10 +66,12 @@ export function Signup(){
                     <div className='block h-4 invisible'></div>
                     <div>
                     <button role='signup-button' type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">Signup</button>
-                    <span onClick={() => navigate("/login")} className='font-bold text-blue-700'>login</span>
+                    <span onClick={() => navigate("/login")} className='font-bold text-blue-700 cursor-pointer'>login</span>
                     </div>
                 </Form>
             </Formik>
         </div>
     </>)
 }
+
+export default Signup

@@ -12,7 +12,7 @@ import { INotes } from "../models"
 
 
 
-export function Notes(){
+export default function Notes(){
     const {lid} = useParams()
     
     const navigate = useNavigate()

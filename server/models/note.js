@@ -10,19 +10,19 @@ module.exports = (sequelize, DataTypes) => {
         },
     x:{
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
     y:{
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
     width:{
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
     height:{
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
     });
 
