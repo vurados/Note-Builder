@@ -1,0 +1,1 @@
+import{j as e}from"./index-f8ce0361.js";function t(){return e.jsx("div",{className:"flex justify-center items-center min-h-[230px] h-[17vw] border p-2 rounded hover:cursor-pointer hover:border-blue-500 hover:text-blue-500 hover:bg-slate-50 hover:shadow-lg",children:e.jsx("p",{className:"lg:text-[250px] text-[100px] -translate-y-[8%]",children:"+"})})}export{t as A};
