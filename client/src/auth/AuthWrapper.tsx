@@ -23,12 +23,12 @@ export const AuthWrapper = () => {
                 }else{
                     reject('Username or password is not correct')
             }})
-        })
+        }).catch((err) => {console.warn(err)})
     }
 
-    const logout = () => {
-        // TODO: change it to clear cookie jwtExist
+    const logout = async() => {
         localStorage.clear()
+        await axios.get('api/users/logout').catch((err) => console.warn(err))
     }
 
     return(

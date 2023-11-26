@@ -14,7 +14,10 @@ export interface ILayouts{
     userId?: number
     width?: number | null
     color?: string
-    title?: string    
+    title?: string
+    Note?:{
+        [title: string]: any
+    } 
 }
 
 export interface IUser{
@@ -23,7 +26,6 @@ export interface IUser{
     email?: string
     password?: string
     isAuthentificated?: boolean
-    hashedPassword?: string
     salt?: string
 }
 

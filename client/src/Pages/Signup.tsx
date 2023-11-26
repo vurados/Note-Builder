@@ -14,46 +14,38 @@ function Signup () {
     const initialValues = {
         username: '', 
         email: '',
-        hashedPassword: ''
-
+        password: ''
     }
 
     const validationSchema = Yup.object().shape({
-            username: Yup.string().min(3).max(20).required(),
-            email: Yup.string().email().required(),
-            hashedPassword: Yup.string().required()
-        })
+        username: Yup.string().min(3).max(20).required(),
+        email: Yup.string().email().required(),
+        password: Yup.string().required()
+    })
 
     const onSubmit = async (data : IUser) => {
-        // console.log(data)
-
-        axios.post('api/users/createUser', data).then((res) => {
-            // console.log(res);
-            // console.log(res.data.user.id);
-            
-            if (res.data.success){
-                // console.log( res.data.msg)
+        axios.post('api/users/createUser', data)
+            .then(() => {
                 setUniqueUsernameError(false)
-                navigate("/login")
-            }else {
-                // console.log( res.data.msg)
+                navigate("/login")})
+            .catch((err) => {
+                console.warn(err.response.data.msg);
                 setUniqueUsernameError(true)
-            }
-        })
+            })
     }
 
 
     return(<>
-        <div className='min-h-[100vh]'>
+        <div className='relative min-h-[100vh] top-[30vh]'>
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
-                <Form className='container flex flex-col gap-3 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm'>
+                <Form className='container flex flex-col gap-3 w-3/12 min-w-fit mx-auto p-6 rounded-lg bg-white backdrop-blur-sm drop-shadow-sm'>
                     <p className='font-bold text-2xl'>SignUp</p>
-                    <hr />
+                    <hr className='w-1/4 h-[2px] bg-gray-400 border-0 rounded'/>
                     <label id='username-label' className='text-left'>Username</label>
                     {UniqueUsernameError && <div className='text-xs text-red-700'>Username already exist</div>}
                     <ErrorMessage name='username' component='span' className='text-xs text-red-700'/>
                     <Field aria-labelledby='username-label' name='username' type='text' placeholder='Username' className={fieldClassName}/>
-                   
+
 
                     <label id='email-label'>Email</label>
                     <ErrorMessage name='email' component='span' className='text-xs text-red-700'/>
@@ -61,7 +53,7 @@ function Signup () {
 
                     <label id='password-label'>Password</label>
                     <ErrorMessage name='password' component='span' className='text-xs text-red-700'/>
-                    <Field aria-labelledby='password-label' name='hashedPassword' type='password' placeholder='Password' className={fieldClassName}/>
+                    <Field aria-labelledby='password-label' name='password' type='password' placeholder='Password' className={fieldClassName}/>
                     
                     <div className='block h-4 invisible'></div>
                     <div>

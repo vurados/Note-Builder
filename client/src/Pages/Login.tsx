@@ -21,16 +21,18 @@ export default function Login(){
     const [user, setUser] = useState<IUser>()
     
     const navigate = useNavigate()
-    const {login} = AuthData()
+    const {login, logout} = AuthData()
 
     const fieldClassName = 'p-2 border-[1px] border-gray-400 rounded-lg outline-blue-200 shadow-lg w-full valid:border-blue-900 invalid:border-red-400'
 
     useEffect(() => {
         const JwtExist =  Cookies.get('jwtExist')
         if (JwtExist){
-            axios.get('/api/users/getUserFromJwt').then((res) => {
-                setUser(res.data.user)
-            })
+            axios.get('/api/users/getUserFromJwt')
+                .then((res) => {
+                    setUser(res.data.user)
+                })
+                .catch((err) => console.warn(err))
         }
     }, [])
     
@@ -100,7 +102,7 @@ export default function Login(){
                     <p className='font-bold text-xl'>{user?.username}</p>
                     <p className='text-xs text-blue-700'>{user?.email}</p>
                 </Link>
-                <button onClick={() => setUser(undefined)} className='ml-auto w-fit text-xs hover:cursor-pointer hover:text-blue-700'>Choose another account</button>
+                <button onClick={() => {logout(); setUser(undefined) }} className='ml-auto w-fit text-xs hover:cursor-pointer hover:text-blue-700'>Choose another account</button>
             </div>
         )
     }

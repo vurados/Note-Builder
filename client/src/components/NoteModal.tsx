@@ -1,28 +1,25 @@
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useState } from "react";
 import * as Yup from 'yup'
 import { INotes } from "../models";
 
 
 
 
-interface LayoutModalProps{
+interface ModalProps{
     onClose: () => void
     onCreate: (note:INotes) => void 
     children: JSX.Element
 }
 
-export function NoteModal({onClose, onCreate, children}: LayoutModalProps, ){
+export function NoteModal({onClose, onCreate, children}: ModalProps, ){
     
     const initialValues = {
-        width:0,
         title:""
     }
 
     const validationSchema = Yup.object().shape({
-        title: Yup.string().min(3).max(20).required(),
-        width: Yup.number().required()
+        title: Yup.string().min(3).max(20).required()
     })
 
     const onSubmit = async (data:INotes) => {
@@ -34,13 +31,12 @@ export function NoteModal({onClose, onCreate, children}: LayoutModalProps, ){
         })
     }
 
-    const [modal, setModal] = useState(false)
     // // const addLayout()
     const Nmodal = () => {
         return(<>
             <div className="fixed w-full h-full bg-black/60 backdrop-blur-sm z-10">
-                {children}
-                <button className="m-0 p-0" onClick={() => setModal(false)}>x</button>
+                {children} 
+                <button className="m-0 p-0" onClick={onClose}>x</button>
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                     <Form className="absolute container flex flex-col gap-3 w-1/4 left-1/2 -translate-x-1/2 top-1/3 p-6 rounded-lg border-2 border-blue-400 bg-white">
                         <label>Title</label>
@@ -49,12 +45,12 @@ export function NoteModal({onClose, onCreate, children}: LayoutModalProps, ){
                         
                         {/* {tgdk && <Lmodal />} */}
 
-                        <label>Color</label>
+                        {/* <label>Color</label>
                         <Field name='color' type='color' />
 
                         <label>Width</label>
                         <ErrorMessage name='width' component='span' className='text-xs text-red-700' />
-                        <Field name='width' type='number' placeholder='{1-10}'/>
+                        <Field name='width' type='number' placeholder='{1-10}'/> */}
                         
                         <div className="invisible h-10"></div>
                         
@@ -67,7 +63,7 @@ export function NoteModal({onClose, onCreate, children}: LayoutModalProps, ){
 
 
     return(<>
-       {modal && <Nmodal />}
+       <Nmodal />
     </>    
     )
 }

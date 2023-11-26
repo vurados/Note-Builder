@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import Cookies from "js-cookie"
 
-import { Footer } from "../components/Footer"
 import { NoteTile } from "../components/NoteTile"
 import { TopBar } from "../components/TopBar"
 import { AddTile } from "../components/addTile"
@@ -44,7 +43,7 @@ export default function Notes(){
     return(<>
             <TopBar />
             <div className="min-h-screen">
-                <div id='main' className='items-stretch lg:grid grid-cols-4 gap-3 mx-auto text-center mb-96 w-[80vw]'>
+                <div id='main' className='items-stretch grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 mx-auto text-center mb-96 w-[98vw] min-[1500px]:w-[80vw]'>
                     {listOfNotes.map((note: INotes) => <NoteTile note={note} lid={lid} key={note.id} />)}
                     {/* модалка нужна но токо для настройки внешнего вида и может быть тайтла */}
                     {/* <div onClick={() => setModal(true)}>Options</div> */}

@@ -8,7 +8,7 @@ interface NoteProps{
 }
 
 export function NoteTile({note, lid}: NoteProps){
-    const noteClassName=[`relative flex flex-col justify-between justify-center  border p-2 rounded col-span-${note.width} row-span-${note.height} hover:cursor-pointer`]
+    const noteClassName=[`relative min-h-[230px] h-[17vw] flex flex-col justify-between justify-center  border p-2 rounded backdrop-blur-sm bg-white/40 col-span-${note.width} row-span-${note.height} hover:bg-white hover:cursor-pointer`]
     const navigate = useNavigate()
     
     

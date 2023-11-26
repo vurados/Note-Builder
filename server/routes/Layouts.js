@@ -30,9 +30,9 @@ router.get('/getLayouts', passport.authenticate('jwt', {session: false}),async (
     // console.log('we are in getLayouts');
     // const user = await User.findByPk(userId)
     const user = req.user
-    await user.getLayout()
+    await user.getLayout({include:{model: Note, as: 'Note', attributes: ['title']}})
         .then((listOfLayout) => {res.json(listOfLayout)})
-            .catch((err) => {res.status(402).json(err)})
+            .catch((err) => {res.status(400).json(err)})
 })
 
 router.post('/createLayout', passport.authenticate('jwt', {session: false}),async (req, res) => {
