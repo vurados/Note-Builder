@@ -1,16 +1,18 @@
 const { Sequelize } = require('sequelize')
+const env = process.env.NODE_ENV || 'development';
+const config = require('./config/config.js')['production'];
 
 let sequelize
 if (process.env.NODE_ENV === 'production'){
-  console.info('production DB connect');
-  sequelize = new Sequelize(`${process.env.DB_DATABASE}`, `${process.env.DB_USERNEME}`, `${process.env.DB_PASSWORD}`, {
-    host: process.env.DB_HOST, 
-    dialect: 'mysql',
+  console.info('production DB connect', config.host, config.database, config.username, config.password);
+  sequelize = new Sequelize(config.database, config.username, config.password, {
+    host: config.host, 
+    dialect: config.dialect,
     logging: false,
     pool: {
       max: 5,
       min: 0,
-      idle: 10000
+      idle: 300
     }
   });
 }else{
