@@ -32,7 +32,7 @@ function App() {
     <div id="App" className='flex flex-col gap-10 bg-sky-100' style={{backgroundImage: `url(${bgTriImg}`, backgroundSize: "cover", backgroundRepeat: "repeat"}}>
       <Suspense fallback={<div className='h-screen w-screen'><Spinner width='50'/></div>}>
         <Routes>
-          <Route index path="/" element={<Home />}/>
+          <Route index path="/home" element={<Home />}/>
           <Route element={<AuthWrapper/>}>
             <Route path="/signup" element={<Signup />}/>
             <Route path="/login" element={<Login />}/>

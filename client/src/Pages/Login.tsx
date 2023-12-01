@@ -1,5 +1,4 @@
-import '../index'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 // import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
