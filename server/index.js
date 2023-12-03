@@ -50,7 +50,7 @@ userRouter.use('/layouts', layoutRouter);
 const noteRouter = require('./routes/Notes');
 layoutRouter.use('/notes', noteRouter);
 
-if(process.env.NODE_ENV === 'development'){
+if(process.env.NODE_ENV === 'production'){
     console.log('production static serve of build');
     app.use(express.static('./build'))
     app.get('*', function (req, res) {
