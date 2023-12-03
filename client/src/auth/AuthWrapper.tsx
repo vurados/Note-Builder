@@ -10,7 +10,7 @@ export const AuthData = () => useContext(AuthContext)
 export const AuthWrapper = () => {
 
     const login = async (data: IUser) => {
-        await axios.post('api/users/checkUser', data).then((res) => {
+        await axios.post('api/users/login', data).then((res) => {
             return new Promise((resolve, reject) => {
                 console.log('one more from login()',res.data, res.data.user.id);
                 

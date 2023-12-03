@@ -13,7 +13,7 @@ router.get('/getUserFromJwt', passport.authenticate('jwt', {session: false}), as
     res.status(200).json({success: true, user: user, msg: 'passport authentification went well, nicuuuuuuuuuuuu'})
 })
 
-router.post('/checkUser', async(req, res) => {
+router.post('/login', async(req, res) => {
     const {username, password} = req.body
     
     await User.findOne({where:{username: username}}).then((user) => {

@@ -32,7 +32,7 @@ export default function Notes(){
 
     const fetchNotes = async () => {
         // console.log(getJwtID())
-        await axios.post(`http://localhost:3000/api/users/layouts/notes/getNotesByLayoutId/${lid}`).then((res) =>{
+        await axios.post(`http://localhost:3000/NoteBuilder/api/users/layouts/notes/getNotesByLayoutId/${lid}`).then((res) =>{
             setListOfNotes(res.data)
             console.log('set list of notes', listOfNotes);
         })

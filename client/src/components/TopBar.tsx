@@ -1,15 +1,20 @@
 // import { useContext } from "react"
 // import { TopBarContext } from "../contexts/contexts"
 
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import LogoIcon from "../icon-svg-components/logo"
 import ProfileIcon from "../icon-svg-components/profile"
 import { SearchIcon } from "../icon-svg-components/search"
 import { useState } from "react"
+import { AuthData } from "../auth/AuthWrapper"
+import { LogoutIcon } from "../icon-svg-components/logout"
 
 export function TopBar(){
     // const topBarSearchRequest = useContext(TopBarContext)
+    const navigate = useNavigate()
     const [dropDown, setDropDown] = useState(false)
+
+    const {logout} = AuthData()
     
     const TopBarElement = (props:any) => <div className='basis-1/10 px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white'><a href={props.href}>{props.children}</a></div>
     const SearchInput = () => {
@@ -21,17 +26,21 @@ export function TopBar(){
         )
     }
 
+    const onLogout = async () => {
+        await logout()
+        navigate('/login')
+    }
+
     const TopBarDropDown = () => {
 
         return(
             <div className="z-20 text-black absolute px-10 py-3 top-[110%] w-[15vw] min-w-[300px] right-0 flex flex-col gap-1 border-[1px] rounded-lg shadow-lg bg-white">
-                <Link to='/profile' className="flex items-center hover:bg-slate-300 p-3 rounded-sm ">Profile</ Link>
+                <Link to='/profile' className="flex items-center hover:bg-slate-300 p-3 rounded-sm "><ProfileIcon />Profile</ Link>
                 <button onClick={() => console.log('settings')} className="flex items-center hover:bg-slate-300 p-3 rounded-sm">Settings</button>
-                <Link to='/login' className="flex items-center hover:bg-slate-300 p-3 rounded-sm">Logout</Link>
+                <button onClick={onLogout} className="flex items-center hover:bg-slate-300 p-3 rounded-sm"><LogoutIcon />Logout</button>
             </div>
         )
     }
-
 
     return(
         <div className='relative flex py-1 min-h-fit w-full gap-x-10 bg-sky-300  '>

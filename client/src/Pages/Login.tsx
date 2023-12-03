@@ -28,7 +28,7 @@ export default function Login(){
     useEffect(() => {
         const JwtExist =  Cookies.get('jwtExist')
         if (JwtExist){
-            axios.get('/api/users/getUserFromJwt')
+            axios.get('/NoteBuilder/api/users/getUserFromJwt')
                 .then((res) => {
                     setUser(res.data.user)
                 })

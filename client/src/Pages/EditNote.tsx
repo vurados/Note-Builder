@@ -38,7 +38,7 @@ function EditNote(){
     // }
 
     const fetchNote = async (NID:string | undefined) => {
-        await axios.post('/api/users/layouts/notes/getNote/'+NID).then((res) => {
+        await axios.post('/NoteBuilder/api/users/layouts/notes/getNote/'+NID).then((res) => {
             setNote(res.data)
             console.log('TTTHEEE NOTE', note);
         })
@@ -51,12 +51,12 @@ function EditNote(){
             console.log("🚀 ~ file: EditNote.tsx:44 ~ onSubmit ~ data:", data)
             // setNote({title:data.title, content:data.content})
             if (note.id === 0){
-                await axios.post(`/api/users/layouts/notes/createNote/${lid}`, data).then(  (res) => {
+                await axios.post(`/NoteBuilder/api/users/layouts/notes/createNote/${lid}`, data).then(  (res) => {
                     setNote(res.data)
                     console.log('response data:',res.data);
                 })
             }else{
-                await axios.put(`/api/users/layouts/notes/changeNote/${nid}`, data).then(  (res) => {
+                await axios.put(`/NoteBuilder/api/users/layouts/notes/changeNote/${nid}`, data).then(  (res) => {
                     setNote(res.data)
                     console.log('response data:',res.data);
                 })

@@ -33,7 +33,6 @@ function App() {
       <Suspense fallback={<div className='h-screen w-screen'><Spinner width='50'/></div>}>
         <Routes>
           <Route index path="/" element={<Home />}/>
-          <Route  path="/home" element={<Home />}/>
           <Route element={<AuthWrapper/>}>
             <Route path="/signup" element={<Signup />}/>
             <Route path="/login" element={<Login />}/>

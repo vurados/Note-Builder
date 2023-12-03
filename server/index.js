@@ -9,6 +9,7 @@ const passport = require('passport')
 const helmet = require('helmet')
 const compression = require('compression')
 
+const path = require('path')
 // connect to database
 require("./connectDB");
 
@@ -41,7 +42,7 @@ app.use('/healthz', (req, res) => {
 })
 
 const userRouter = require('./routes/Users');
-app.use('/api/users', userRouter);
+app.use('/NoteBuilder/api/users', userRouter);
 
 const layoutRouter = require('./routes/Layouts');
 userRouter.use('/layouts', layoutRouter);
@@ -49,9 +50,12 @@ userRouter.use('/layouts', layoutRouter);
 const noteRouter = require('./routes/Notes');
 layoutRouter.use('/notes', noteRouter);
 
-if(process.env.NODE_ENV === 'production'){
+if(process.env.NODE_ENV === 'development'){
     console.log('production static serve of build');
     app.use(express.static('./build'))
+    app.get('*', function (req, res) {
+        res.sendFile(path.join(__dirname, 'build', 'index.html'))
+    })
 }
 
 db.sequelize.sync().then(() => {
