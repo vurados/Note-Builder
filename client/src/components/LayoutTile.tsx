@@ -1,5 +1,5 @@
 import axios from "axios"
-import { ILayouts } from "../models"
+import { ICollection } from "../models"
 import { useNavigate } from "react-router-dom"
 
 import DeleteIcon from "../icon-svg-components/delete"
@@ -10,9 +10,9 @@ import DownloadIcon from "../icon-svg-components/download"
 
 
 interface LayoutProps{
-    layout: ILayouts
+    layout: ICollection
     onDelete: () => void
-    onChange: (layout:ILayouts) => void
+    onChange: (layout:ICollection) => void
 }
 
 export function LayoutTile({layout, onDelete, onChange}: LayoutProps){

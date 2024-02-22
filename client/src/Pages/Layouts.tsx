@@ -1,13 +1,14 @@
 import { useEffect, useLayoutEffect, useState } from "react"
 import axios from "axios"
 import Cookies from "js-cookie"
+import levenshtein from "fast-levenshtein"
 import * as Yup from 'yup'
 
 import { LayoutTile } from "../components/LayoutTile"
 import { TopBar } from "../components/TopBar"
 import { AddTile } from "../components/addTile"
 // import { LayoutModal } from "../components/LayoutModal"
-import { ILayouts } from "../models"
+import { ICollection } from "../models"
 import { useNavigate } from "react-router-dom"
 import { Formik, Form, ErrorMessage, Field } from "formik"
 import { Spinner } from "../components/spinner"
@@ -21,15 +22,16 @@ export default function Layouts(){
 
     // const layoutModalContext = createContext<boolean>(false)
     const [modal, setModal] = useState<boolean>(false)
-    const [onChangeLayout, setOnChangeLayout] = useState<ILayouts>()
-    const [listOfLayouts, setListOfLayouts] = useState<ILayouts[]>([])
+    const [onChangeCollection, setOnChangeCollection] = useState<ICollection>()
+    const [listOfCollections, setListOfCollections] = useState<ICollection[]>([])
+    const [filteredCollections, setFilteredCollections] = useState<ICollection[]>([])
     const [loading, setLoading] = useState(false)
     const [newFlag, setNewFlag] = useState(true)
 
     // On start set flags and onChangeLAyout state 
     // so modal do not fire after reloading page
     useLayoutEffect(() => {
-      setOnChangeLayout(undefined)
+      setOnChangeCollection(undefined)
       setNewFlag(true)
     }, [])
 
@@ -44,21 +46,21 @@ export default function Layouts(){
         navigation("/login")
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(listOfLayouts)])
+    }, [JSON.stringify(listOfCollections)])
 
     const fetchLayouts = async () => {
       // console.log(getJwtID())
       setLoading(true)
       await axios.get("api/users/layouts/getLayouts").then((res) =>{
-        setListOfLayouts(res.data)
+        setListOfCollections(res.data)
         setLoading(false)
-        console.log('set list of layouts', listOfLayouts);
+        console.log('set list of layouts', listOfCollections);
       })
     }
     
-    const createHandler = (layout:ILayouts) => {
-      setListOfLayouts(prev=> {
-        return [...prev, layout]
+    const createHandler = (collection:ICollection) => {
+      setListOfCollections(prev=> {
+        return [...prev, collection]
       })
     }
 
@@ -68,19 +70,20 @@ export default function Layouts(){
     }
 
     // after clicking "edit" on LAyout tile we change newFlag to false and set onChangeLayout to layout we clicking on
-    const changeHandler = async (layout:ILayouts) => {
+    const changeHandler = async (collection:ICollection) => {
       setNewFlag(false)
-      setOnChangeLayout(layout)
+      setOnChangeCollection(collection)
     }
 
     // when we setting onChangeLayout use effect fires and opens modal
     // we need useEffect to wait for onChangeLAyout to set and put Layout information in modal for edit
     useEffect(() => {
-      if (onChangeLayout){
-        console.log('useeffect onchange hadndler', onChangeLayout);
+      if (onChangeCollection){
+        console.log('useeffect onchange hadndler', onChangeCollection);
         setModal(true)
       }
-    }, [onChangeLayout])
+    }, [onChangeCollection])
+
 
     const exportJson = async () => {
       const data = await axios.get('api/users/layouts/exportAll').then((res) => {return res.data}).catch((err) => {console.error(err)})
@@ -93,14 +96,49 @@ export default function Layouts(){
       document.body.appendChild(element); // Required for this to work in FireFox
       element.click();
     }
+
+
+    const searchInputHandler = (inputValue: string) => {
+        console.log('Input value', inputValue)
+        let filteredCollection = wordSearchCollection(inputValue)
+        if (filteredCollection.length === 0) {
+            filteredCollection = levSearchCollections(inputValue)
+        }
+        console.log("filtered: ",filteredCollection);
+        
+        // TODO: при сете сбрасывается инпут в серчбаре
+        setFilteredCollections(filteredCollection)
+    }
+
+    // function that search for exact word in collection title
+    const wordSearchCollection = (searchTerm: string) => {
+        const filteredCollections = listOfCollections.filter(collection =>
+            collection.title?.toLowerCase().includes(searchTerm.toLowerCase()))
+        console.log("wordSearch");
+        
+        return filteredCollections
+    }
+
+    // function that search for title using levenshtein algo and choses ones with distance less tahn 3
+    const levSearchCollections = (searchTerm: string) => {
+        const filteredCollection = listOfCollections.filter(collection =>
+            levenshtein.get(searchTerm, collection.title || '') <= 3)
+        console.log("levSearch");
+    
+        return filteredCollection
+    }
+
+    const resetSearch = () => {
+        setFilteredCollections([])
+    }
     
 
     const LModal = () => {
 
-          const initialValues:ILayouts = {
-              title: onChangeLayout?.title || '',
+          const initialValues:ICollection = {
+              title: onChangeCollection?.title || '',
               color: "#000000",
-              width: onChangeLayout?.width || undefined
+              width: onChangeCollection?.width || undefined
           }
       
 
@@ -111,7 +149,7 @@ export default function Layouts(){
         })
 
         // In on submit function we checking flag newFlag and depend on it sending post or put request
-        const onSubmit = async (data:ILayouts) => {
+        const onSubmit = async (data:ICollection) => {
             console.log('on submit data:',data);
             if(newFlag){
               await axios.post('api/users/layouts/createLayout', data).then(  (res) => {
@@ -121,7 +159,7 @@ export default function Layouts(){
             }else{
               console.log('changing Layout');
               
-              await axios.put(`api/users/layouts/changeLayout/${onChangeLayout?.id}`, data).then(  (res) => {
+              await axios.put(`api/users/layouts/changeLayout/${onChangeCollection?.id}`, data).then(  (res) => {
                   console.log('response data:',res.data)
                   setNewFlag(false)
                   // TODO: change fetch to something else
@@ -139,7 +177,7 @@ export default function Layouts(){
 
                         <label className="font-bold">Title</label>
                         <ErrorMessage name='title' component='span' className='text-xs text-red-700' />
-                        <Field name='title' type='text' defaultValue={onChangeLayout?.title} placeholder='Title' />
+                        <Field name='title' type='text' defaultValue={onChangeCollection?.title} placeholder='Title' />
 
                         <label className="font-bold">Color</label>
                         <ErrorMessage name='color' component='span' className='text-xs text-red-700' />
@@ -176,12 +214,19 @@ export default function Layouts(){
     return(<>
       {modal && <LModal />}
       {/* <div className='flex flex-col min-h-[100vh] bg-gradient-to-r from-sky-200 to-indigo-500'> */}
-        <TopBar />
+        <TopBar onInputChange={searchInputHandler} resetSearch={resetSearch}/>
         {loading && <div className="flex mx-auto"><Spinner className='mx-2' width='20'/><p className="w-fit text-blue-400">Syncing existing layouts</p></div>}
         <div id="main-wrapper" className="min-h-screen">
           <button id="export-all-as-json-btn" onClick={exportJson} className="absolute min-[1500px]:block hidden right-3 py-2 px-4 w-fit bg-sky-400 rounded-lg hover:text-white hover:bg-sky-500 hover:shadow-md">Export as Json</button>
           <div id="main" className='items-stretch grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 mx-auto text-center mb-96 w-[98vw] min-[1500px]:w-[80vw]'>
-            {listOfLayouts.map((layout: ILayouts) => <LayoutTile onChange={(layout) => changeHandler(layout)} onDelete={deleteHandler} layout={layout} key={layout.id} />)}
+            {filteredCollections.length >= 1
+                ? filteredCollections.map((collection: ICollection) => (
+                    <LayoutTile onChange={(collection) => changeHandler(collection)} onDelete={deleteHandler} layout={collection} key={collection.id} />
+                ))
+                : listOfCollections.map((collection: ICollection) => (
+                    <LayoutTile onChange={(collection) => changeHandler(collection)} onDelete={deleteHandler} layout={collection} key={collection.id} />
+                ))
+            }
             <div onClick={() => setModal(true)}><AddTile /></div>
           </div>
         </div>

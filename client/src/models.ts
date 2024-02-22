@@ -9,7 +9,7 @@ export interface INotes{
     height?: number
 }
 
-export interface ILayouts{
+export interface ICollection{
     id?: number
     userId?: number
     width?: number | null
