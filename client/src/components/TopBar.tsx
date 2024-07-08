@@ -23,8 +23,7 @@ export function TopBar({ onInputChange, resetSearch }: TopBarProps) {
 
     const { logout } = AuthData()
 
-    const TopBarElement = (props: any) => <div className='basis-1/10 px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white'><a href={props.href}>{props.children}</a></div>
-
+    const TopBarElement = (props: any ) => <div className='basis-1/10 px-4 py-2 rounded-lg hover:bg-gray-500 hover:text-white'><a href={props.href}>{props.children}</a></div>
 
     
     let searchInputTimer: NodeJS.Timeout | null = null
@@ -35,7 +34,6 @@ export function TopBar({ onInputChange, resetSearch }: TopBarProps) {
         if (searchInputTimer!== null) {
             clearTimeout(searchInputTimer)
         }
-
 
         searchInputTimer = setTimeout(() =>  {
             onInputChange(newValue)
@@ -63,14 +61,14 @@ export function TopBar({ onInputChange, resetSearch }: TopBarProps) {
         <div className='relative flex py-1 min-h-fit w-full gap-x-10 bg-sky-300  '>
             <div className="relative flex flex-grow flex-wrap mx-auto max-w-[1500px]">
                 <Link to="/layouts" className="realtive left-3 mr-auto gap-5 flex items-center">
-                    <LogoIcon className=" w-10 h-10 " />
+                    <LogoIcon className=" w-10 h-10" />
                     <span className="font-bold text-4xl align-bottom">NoteBuilder</span>
                 </Link>
                 <div className="relative flex flex-wrap">
                     <div id="searchInput" className='flex gap-1 px-2 my-2 rounded-full border-2 bg-white'>
                         <SearchIcon />
                         <input id="searchInput" className="border-x-1 outline-none" placeholder="search..." onChange={onChangeHandler} value={inputValue} type="text" />
-                        <button id="reset" onClick={resetSearch}>x</button>
+                        <button id="reset" className="hover:bg-slate-300 rounded-full w-6 h-6 " onClick={resetSearch}>x</button>
                     </div>
                     <nav className=" flex flex-row flex-nowrap gap-5 text-lgs font-bald">
                         <TopBarElement >+</TopBarElement>

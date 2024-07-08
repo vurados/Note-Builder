@@ -28,7 +28,7 @@ export default function Layouts(){
     const [loading, setLoading] = useState(false)
     const [newFlag, setNewFlag] = useState(true)
 
-    // On start set flags and onChangeLAyout state 
+    // On load set flags and onChangeLAyout state 
     // so modal do not fire after reloading page
     useLayoutEffect(() => {
       setOnChangeCollection(undefined)
@@ -38,20 +38,22 @@ export default function Layouts(){
     // On loading we are checking if there is a jwt token exist
     // If there is token - fetch
     // If not - redirect to login page
+    // TODO: change the deps, because its causes the rerender every time you add or delete collection
     useEffect(() => {
-      const JwtExist =  Cookies.get('jwtExist')
-      if (JwtExist){
-        fetchLayouts()
-      }else{  
-        navigation("/login")
-      }
+        const JwtExist =  Cookies.get('jwtExist')
+        if (JwtExist){
+          fetchLayouts()
+        }else{  
+          navigation("/login")
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(listOfCollections)])
+    }, [listOfCollections.length])
 
     const fetchLayouts = async () => {
       // console.log(getJwtID())
       setLoading(true)
-      await axios.get("api/users/layouts/getLayouts").then((res) =>{
+      await axios.get("api/collections/getCollections").then((res) => {
+        console.log('fetched collection ====> ', res.data)
         setListOfCollections(res.data)
         setLoading(false)
         console.log('set list of layouts', listOfCollections);
@@ -64,7 +66,7 @@ export default function Layouts(){
       })
     }
 
-    // TODO:need function {onDeleteHandler} that will not request server data through fetchLayouts and just delete the entry using setListLayouts
+    // TODO:need function {onDeleteHandler} that will do optimistic update and not just request server data through fetchLayouts
     const deleteHandler = () => {
       fetchLayouts()
     }
@@ -86,7 +88,7 @@ export default function Layouts(){
 
 
     const exportJson = async () => {
-      const data = await axios.get('api/users/layouts/exportAll').then((res) => {return res.data}).catch((err) => {console.error(err)})
+      const data = await axios.get('api/collections/exportAll').then((res) => {return res.data}).catch((err) => {console.error(err)})
       const strData = JSON.stringify(data)
       const file = new Blob([strData], {type: 'text/plain'})
       const element = document.createElement("a");
@@ -135,13 +137,12 @@ export default function Layouts(){
 
     const LModal = () => {
 
-          const initialValues:ICollection = {
-              title: onChangeCollection?.title || '',
-              color: "#000000",
-              width: onChangeCollection?.width || undefined
-          }
+        const initialValues:ICollection = {
+            title: onChangeCollection?.title || '',
+            color: "#000000",
+            width: onChangeCollection?.width || undefined
+        }
       
-
         const validationSchema = Yup.object().shape({
             title: Yup.string().min(3).max(20).required("Title required"),
             color: Yup.string().required("Color required"),
@@ -152,14 +153,14 @@ export default function Layouts(){
         const onSubmit = async (data:ICollection) => {
             console.log('on submit data:',data);
             if(newFlag){
-              await axios.post('api/users/layouts/createLayout', data).then(  (res) => {
+              await axios.post('api/collections/createCollection', data).then(  (res) => {
                   console.log('response data:',res.data)
                   createHandler(res.data)
               })
             }else{
               console.log('changing Layout');
               
-              await axios.put(`api/users/layouts/changeLayout/${onChangeCollection?.id}`, data).then(  (res) => {
+              await axios.put(`api/collections/changeCollection/${onChangeCollection?.id}`, data).then(  (res) => {
                   console.log('response data:',res.data)
                   setNewFlag(false)
                   // TODO: change fetch to something else
@@ -217,14 +218,14 @@ export default function Layouts(){
         <TopBar onInputChange={searchInputHandler} resetSearch={resetSearch}/>
         {loading && <div className="flex mx-auto"><Spinner className='mx-2' width='20'/><p className="w-fit text-blue-400">Syncing existing layouts</p></div>}
         <div id="main-wrapper" className="min-h-screen">
-          <button id="export-all-as-json-btn" onClick={exportJson} className="absolute min-[1500px]:block hidden right-3 py-2 px-4 w-fit bg-sky-400 rounded-lg hover:text-white hover:bg-sky-500 hover:shadow-md">Export as Json</button>
+          <button id="export-all-as-json-btn" onClick={exportJson} className="absolute min-[1500px]:block hidden right-3 py-2 px-4 w-fit bg-sky-400 rounded-lg hover:text-white hover:bg-sky-500 hover:shadow-md">Export as JSON</button>
           <div id="main" className='items-stretch grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 mx-auto text-center mb-96 w-[98vw] min-[1500px]:w-[80vw]'>
-            {filteredCollections.length >= 1
+            {filteredCollections.length > 0
                 ? filteredCollections.map((collection: ICollection) => (
-                    <LayoutTile onChange={(collection) => changeHandler(collection)} onDelete={deleteHandler} layout={collection} key={collection.id} />
+                    <LayoutTile onChange={(collection) => changeHandler(collection)} onDelete={deleteHandler} collection={collection} key={collection.id} />
                 ))
                 : listOfCollections.map((collection: ICollection) => (
-                    <LayoutTile onChange={(collection) => changeHandler(collection)} onDelete={deleteHandler} layout={collection} key={collection.id} />
+                    <LayoutTile onChange={(collection) => changeHandler(collection)} onDelete={deleteHandler} collection={collection} key={collection.id} />
                 ))
             }
             <div onClick={() => setModal(true)}><AddTile /></div>

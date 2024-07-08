@@ -19,9 +19,9 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    proxy:{
-      '/NoteBuilder/api': 'http://localhost:3001/'
-    },
+  // proxy:{
+  //   '/NoteBuilder/api': 'http://localhost:3001/'
+  // },
   },
   plugins: [
     reactRefresh(),

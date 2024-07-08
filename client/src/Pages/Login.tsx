@@ -14,6 +14,7 @@ import Cookies from 'js-cookie'
 
 
 
+
 export default function Login(){
 
     const [NotExistError, setNotExistError] = useState<boolean>(false)
@@ -24,6 +25,7 @@ export default function Login(){
     const {login, logout} = AuthData()
 
     const fieldClassName = 'p-2 border-[1px] border-gray-400 rounded-lg outline-blue-200 shadow-lg w-full valid:border-blue-900 invalid:border-red-400'
+
 
     useEffect(() => {
         const JwtExist =  Cookies.get('jwtExist')
@@ -44,26 +46,23 @@ export default function Login(){
 
     const validationSchema = Yup.object().shape({
         username: Yup.string().min(3).max(20).required(),
-        password: Yup.string().required()
+        password: Yup.string().required()   
     })
 
 
     const onSubmit = async(data: IUser) => {
-        try{
-            // console.log('on submit 1')
-            // redirect('/layouts')
-            console.log();
             setLoading(true)
-            await login(data)
-            console.log('user loged in successfully');
-            console.log('user data gotten from login', localStorage.getItem('user'))
-            setLoading(false)
-            navigate("/layouts")
-        }catch (error){
-            console.log('error', error)
-            setLoading(false)
-            setNotExistError(true)
-        }
+            try{
+                await login(data)
+                console.log('user loged in successfully');
+                console.log('user data gotten from login', localStorage.getItem('user'))
+                setLoading(false)
+                navigate("/layouts")
+            }catch (error){
+                console.log('error', error)
+                setLoading(false)
+                setNotExistError(true)
+            }
     }
 
     const LoginForm = () => {
@@ -93,7 +92,7 @@ export default function Login(){
         )
     }
 
-    const LoginPrompt = () => {
+    const QuickLoginPrompt = () => {
         return(
             <div  className='flex flex-col gap-3 w-3/12 min-w-[350px] mx-auto p-6 rounded-lg border-2  backdrop-blur-md drop-shadow-sm bg-white'>
                 <p className='font-bold text-2xl'>Log in</p>
@@ -109,7 +108,7 @@ export default function Login(){
 
     return(<>
         <div className='relative min-h-[100vh] top-[30vh]'>
-            {user ? <LoginPrompt /> : <LoginForm />}
+            {user ? <QuickLoginPrompt /> : <LoginForm />}
         </div>
     </>)
 }

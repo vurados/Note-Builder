@@ -15,8 +15,8 @@ export interface ICollection{
     width?: number | null
     color?: string
     title?: string
-    Note?:{
-        [title: string]: any
+    Note?: {
+        title: string
     } 
 }
 

@@ -27,7 +27,8 @@ export const AuthWrapper = () => {
     }
 
     const logout = async() => {
-        localStorage.clear()
+        localStorage.removeItem('username')
+        localStorage.removeItem('email')
         await axios.get('api/users/logout').catch((err) => console.warn(err))
     }
 
