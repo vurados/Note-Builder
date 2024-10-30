@@ -1,12 +1,11 @@
 import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import { useState } from 'react'
-import { Link, useNavigate} from 'react-router-dom'
-import { Footer } from '../components/Footer'
+import { useNavigate} from 'react-router-dom'
 import { IUser } from '../models'
 import * as Yup from 'yup'
 
-export function Signup(){
+function Signup () {
     const navigate = useNavigate()
     const [UniqueUsernameError, setUniqueUsernameError] = useState(false)
 
@@ -15,70 +14,56 @@ export function Signup(){
     const initialValues = {
         username: '', 
         email: '',
-        hashedPassword: ''
-
+        password: ''
     }
 
     const validationSchema = Yup.object().shape({
-            username: Yup.string().min(3).max(20).required(),
-            email: Yup.string().email().required(),
-            hashedPassword: Yup.string().required()
-        })
+        username: Yup.string().min(3).max(20).required(),
+        email: Yup.string().email().required(),
+        password: Yup.string().required()
+    })
 
-    // TODO: change data type to IUser(add interface in models)
     const onSubmit = async (data : IUser) => {
-        console.log(data)
-
-        axios.post('api/users/createUser', data).then((res) => {
-            console.log(res);
-            console.log(res.data.user.id);
-            
-            if (res.data.success){
-                console.log( res.data.msg)
+        axios.post('api/users/createUser', data)
+            .then(() => {
                 setUniqueUsernameError(false)
-                navigate("/login")
-            }else {
-                console.log( res.data.msg)
+                navigate("/login")})
+            .catch((err) => {
+                console.warn(err.response.data.msg);
                 setUniqueUsernameError(true)
-            }
-        })
+            })
     }
-            
+
 
     return(<>
-        <div>
+        <div className='relative min-h-[100vh] top-[30vh]'>
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
-                <Form className='container flex flex-col gap-3 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm'>
-                    <p className='font-bold text-2xl'>Login</p>
-                    <hr />
-                    <label className='text-left'>Username:</label>
+                <Form className='container flex flex-col gap-3 w-3/12 min-w-fit mx-auto p-6 rounded-lg bg-white backdrop-blur-sm drop-shadow-sm'>
+                    <p className='font-bold text-2xl'>SignUp</p>
+                    <hr className='w-1/4 h-[2px] bg-gray-400 border-0 rounded'/>
+                    <label id='username-label' className='text-left'>Username</label>
                     {UniqueUsernameError && <div className='text-xs text-red-700'>Username already exist</div>}
                     <ErrorMessage name='username' component='span' className='text-xs text-red-700'/>
-                    <Field name='username' type='text' placeholder='Vlados' className={fieldClassName}/>
-                   
+                    <Field aria-labelledby='username-label' name='username' type='text' placeholder='Username' className={fieldClassName}/>
 
-                    <label>Email:</label>
+
+                    <label id='email-label'>Email</label>
                     <ErrorMessage name='email' component='span' className='text-xs text-red-700'/>
-                    <Field name='email' type='email' placeholder='tigidik@examle.com' className={fieldClassName}/>
+                    <Field aria-labelledby='email-label' name='email' type='email' placeholder='Email' className={fieldClassName}/>
 
-                    <label>Password:</label>
+                    <label id='password-label'>Password</label>
                     <ErrorMessage name='password' component='span' className='text-xs text-red-700'/>
-                    <Field name='hashedPassword' type='password' placeholder='Password' className={fieldClassName}/>
+                    <Field aria-labelledby='password-label' name='password' type='password' placeholder='Password' className={fieldClassName}/>
                     
-                    <div className='block h-4 invisible '></div>
+                    <div className='block h-4 invisible'></div>
                     <div>
-                    <button type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">Signup</button>
-                    <Link to={'/login'} ><span className='font-bold text-blue-700'>login</span></Link>
+                    <button role='signup-button' type='submit' className="w-2/4 p-2 mx-12 bg-blue-500 rounded-full hover:bg-blue-700 hover:text-white">Signup</button>
+                    <span onClick={() => navigate("/login")} className='font-bold text-blue-700 cursor-pointer'>login</span>
                     </div>
                 </Form>
             </Formik>
         </div>
-        <Footer />
-        {/* <div className="container flex flex-col items-center gap-6 w-3/12 mx-auto mt-10 p-6 rounded-lg border-2 border-blue-400 drop-shadow-sm">
-            <span className="">Signin</span>
-            <input type="email" name="" id="" placeholder="Username" className=""/>
-            <input type="password" name="" id="" placeholder="Password" className=""/>
-            <button className="p-2 bg-blue-500 rounded-full">Signin</button>
-        </div> */}
     </>)
 }
+
+export default Signup

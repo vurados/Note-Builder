@@ -2,7 +2,6 @@ const {Layout, User, Note} = require('../models')
 
 const checkOwner = (Model) => async (req, res, next) => {
     try {
-        //TODO: if(Model === Note)
         let record
         if(Model === Note){
             record = await Model.findByPk(req.params.id, {
@@ -30,7 +29,6 @@ const checkOwner = (Model) => async (req, res, next) => {
             })
             
         }
-        // TODO: if(Model === Layout)
 
         if(!record){
             return res.status(401).send('resource not found')
@@ -50,7 +48,7 @@ const checkOwner = (Model) => async (req, res, next) => {
         
         next()
     } catch (error) {
-        console.log(error);
+        console.error(error)
         res.status(500).send('Server busy handling your problems, so you dont have to')
     }
 }

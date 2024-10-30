@@ -1,13 +1,12 @@
-import React from "react"
 import { Link } from "react-router-dom"
 
-export const Home = () => {
+export default function Home() {
 
 
 
   return(<> 
     <div className="static h-screen w-screen">
-      <div className="absolute grid grid-cols-1 gap-3 left-1/4 top-1/4 w-1/2 h-1/2 sm:grid-cols-2">
+      <div className="absolute z-10 grid grid-cols-1 gap-3 left-1/4 top-1/4 w-1/2 h-1/2 sm:grid-cols-2">
         <div className="min-w-fit mx-auto col-span-full border-2 rounded-lg w-1/2 h-full hover:border-blue-400 hover:bg-gray-100 hover:text-blue-600 hover:shadow-lg">
           <Link to="/layouts">
             <div className="flex flex-col justify-center h-full">

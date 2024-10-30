@@ -9,12 +9,15 @@ export interface INotes{
     height?: number
 }
 
-export interface ILayouts{
+export interface ICollection{
     id?: number
     userId?: number
     width?: number | null
     color?: string
-    title?: string    
+    title?: string
+    Note?: {
+        title: string
+    } 
 }
 
 export interface IUser{
@@ -23,6 +26,9 @@ export interface IUser{
     email?: string
     password?: string
     isAuthentificated?: boolean
-    hashedPassword?: string
     salt?: string
+}
+
+export interface SVGIconProps{
+    className?: string | undefined
 }

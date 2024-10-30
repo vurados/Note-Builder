@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import Cookies from "js-cookie"
 
-import { Footer } from "../components/Footer"
 import { NoteTile } from "../components/NoteTile"
 import { TopBar } from "../components/TopBar"
 import { AddTile } from "../components/addTile"
@@ -12,7 +11,7 @@ import { INotes } from "../models"
 
 
 
-export function Notes(){
+export default function Notes(){
     const {lid} = useParams()
     
     const navigate = useNavigate()
@@ -33,7 +32,7 @@ export function Notes(){
 
     const fetchNotes = async () => {
         // console.log(getJwtID())
-        await axios.post('http://localhost:3000/api/users/layouts/notes/getNotesByLayoutId/'+lid).then((res) =>{
+        await axios.post(`http://localhost:3000/NoteBuilder/api/users/layouts/notes/getNotesByLayoutId/${lid}`).then((res) =>{
             setListOfNotes(res.data)
             console.log('set list of notes', listOfNotes);
         })
@@ -42,15 +41,14 @@ export function Notes(){
     
 
     return(<>
-        <div className='flex flex-col gap-10 min-h-70'>
             <TopBar />
-            <div id='main' className='items-stretch lg:grid grid-cols-4 gap-3 mx-auto text-center mb-96 w-[80vw]'>
-                {listOfNotes.map((note: INotes) => <NoteTile note={note} key={note.id} />)}
-                {/* модалка нужна но токо для настройки внешнего вида и может быть тайтла */}
-                {/* <div onClick={() => setModal(true)}>Options</div> */}
-                <div onClick={() => navigate('/editNote/0')}><AddTile /></div>
+            <div className="min-h-screen">
+                <div id='main' className='items-stretch grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 mx-auto text-center mb-96 w-[98vw] min-[1500px]:w-[80vw]'>
+                    {listOfNotes.map((note: INotes) => <NoteTile note={note} lid={lid} key={note.id} />)}
+                    {/* модалка нужна но токо для настройки внешнего вида и может быть тайтла */}
+                    {/* <div onClick={() => setModal(true)}>Options</div> */}
+                    <div onClick={() => navigate(`/editNote/${lid}/0`)}><AddTile /></div>
+                </div>
             </div>
-            <Footer />
-        </div>
     </>)
 }
