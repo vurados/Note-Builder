@@ -44,7 +44,7 @@ export function LayoutTile({layout, onDelete, onChange}: LayoutProps){
 
     const LayoutPopUp = () => {
         return(
-            <div className="max-[770px]:hidden z-10 text-black absolute p-3 top-0 right-10 flex flex-col gap-1 rounded-lg border-[1px] bg-gray-200">
+            <div  className="max-[770px]:hidden z-10 text-black absolute p-3 top-0 right-10 flex flex-col gap-1 rounded-lg border-[1px] bg-gray-200">
                 <button onClick={changeLayout} className="flex items-center hover:bg-slate-300 p-3 rounded-sm "><EditIcon className="w-4 h-4 mx-2"/>Edit</ button>
                 <button onClick={deleteLayout} className="flex items-center hover:bg-slate-300 p-3 rounded-sm"><DeleteIcon className="w-4 h-4 mx-2"/>Delete</button>
                 <button className="flex items-center hover:bg-slate-300 p-3 rounded-sm"><DownloadIcon className="w-4 h-4 mx-2"/>Export Layout</button>
@@ -60,7 +60,7 @@ export function LayoutTile({layout, onDelete, onChange}: LayoutProps){
     })
     
     return(<>
-        <div draggable={true} className="realtive min-h-[230px] h-[17vw] flex flex-col gap-3 justify-evenly p-2 rounded backdrop-blur-sm bg-white/40 hover:cursor-pointer hover:border-sky-600 hover:shadow-lg hover:bg-white" onClick={() => navigate(`/notes/${layout.id}`)}>
+        <div onMouseLeave={() => setLayoutPopUp(false)} draggable={true} className="realtive min-h-[230px] h-[17vw] flex flex-col gap-3 justify-evenly p-2 rounded backdrop-blur-sm bg-white/40 hover:cursor-pointer hover:border-sky-600 hover:shadow-lg hover:bg-white" onClick={() => navigate(`/notes/${layout.id}`)}>
             {layoutPopUp && <LayoutPopUp />}
             <button aria-label="menu" onClick={useLayoutPopUp} className="max-[770px]:hidden absolute bg-sky-500 rounded-full right-0 -top-0 m-1 p-1 text-black font-bold hover:text-sky-200"><MenuIcon/></button>
             <button aria-label="delete" onClick={deleteLayout} className="min-[770px]:hidden absolute border bg-red-300 rounded-full right-0 top-0 m-1 p-1 text-black font-bold hover:text-blue-500"><DeleteIcon /></button>
