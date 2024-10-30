@@ -1,13 +1,25 @@
-import { createContext, useContext} from 'react'
-import { Outlet } from 'react-router-dom'
+import { createContext, useContext, useEffect} from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { IUser } from '../models'
+import Cookies from 'js-cookie'
 
 
 const AuthContext = createContext<any | null>(null)
 export const AuthData = () => useContext(AuthContext)
 
 export const AuthWrapper = () => {
+    
+    const jwt = Cookies.get('jwt')
+    const navigation = useNavigate()
+
+    useEffect(() => {
+        const JwtExist =  Cookies.get('jwtExist')
+        if (!JwtExist){
+          navigation("/login")
+        }
+    }, [jwt, navigation])
+    
 
     const login = async (data: IUser) => {
         await axios.post('api/users/login', data).then((res) => {

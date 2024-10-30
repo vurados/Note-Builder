@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useMemo, useState } from "react"
 import axios from "axios"
 import Cookies from "js-cookie"
 import levenshtein from "fast-levenshtein"
@@ -28,28 +28,32 @@ export default function Layouts(){
     const [loading, setLoading] = useState(false)
     const [newFlag, setNewFlag] = useState(true)
 
+
     // On load set flags and onChangeLAyout state 
     // so modal do not fire after reloading page
     useLayoutEffect(() => {
       setOnChangeCollection(undefined)
       setNewFlag(true)
     }, [])
-
+    
+    // const memoCollList = useMemo(() => listOfCollections, [JSON.stringify(listOfCollections)])
+    
     // On loading we are checking if there is a jwt token exist
     // If there is token - fetch
     // If not - redirect to login page
+
     // TODO: change the deps, because its causes the rerender every time you add or delete collection
     useEffect(() => {
-        const JwtExist =  Cookies.get('jwtExist')
-        if (JwtExist){
-          fetchLayouts()
-        }else{  
-          navigation("/login")
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [listOfCollections.length])
+      const JwtExist =  Cookies.get('jwtExist')
+      if (!JwtExist){
+        navigation("/login")
+      }else{
+        fetchCollections()
+      }
+    }, [])
 
-    const fetchLayouts = async () => {
+
+    const fetchCollections = async () => {
       // console.log(getJwtID())
       setLoading(true)
       await axios.get("api/collections/getCollections").then((res) => {
@@ -68,7 +72,7 @@ export default function Layouts(){
 
     // TODO:need function {onDeleteHandler} that will do optimistic update and not just request server data through fetchLayouts
     const deleteHandler = () => {
-      fetchLayouts()
+      fetchCollections()
     }
 
     // after clicking "edit" on LAyout tile we change newFlag to false and set onChangeLayout to layout we clicking on
@@ -93,7 +97,7 @@ export default function Layouts(){
       const file = new Blob([strData], {type: 'text/plain'})
       const element = document.createElement("a");
       element.href = URL.createObjectURL(file);
-      element.download = "Layouts-" + Date.now() + ".txt";
+      element.download = "Collections-" + Date.now() + ".txt";
       // simulate link click
       document.body.appendChild(element); // Required for this to work in FireFox
       element.click();
@@ -164,7 +168,7 @@ export default function Layouts(){
                   console.log('response data:',res.data)
                   setNewFlag(false)
                   // TODO: change fetch to something else
-                  fetchLayouts()
+                  fetchCollections()
               })
               setModal(false)
             }
@@ -216,7 +220,7 @@ export default function Layouts(){
       {modal && <LModal />}
       {/* <div className='flex flex-col min-h-[100vh] bg-gradient-to-r from-sky-200 to-indigo-500'> */}
         <TopBar onInputChange={searchInputHandler} resetSearch={resetSearch}/>
-        {loading && <div className="flex mx-auto"><Spinner className='mx-2' width='20'/><p className="w-fit text-blue-400">Syncing existing layouts</p></div>}
+        {loading ? <div className="flex mx-auto"><Spinner className='mx-2' width='20'/><p className="w-fit text-blue-400">Syncing existing layouts</p></div> : null}
         <div id="main-wrapper" className="min-h-screen">
           <button id="export-all-as-json-btn" onClick={exportJson} className="absolute min-[1500px]:block hidden right-3 py-2 px-4 w-fit bg-sky-400 rounded-lg hover:text-white hover:bg-sky-500 hover:shadow-md">Export as JSON</button>
           <div id="main" className='items-stretch grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 mx-auto text-center mb-96 w-[98vw] min-[1500px]:w-[80vw]'>

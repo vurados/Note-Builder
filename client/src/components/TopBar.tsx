@@ -19,7 +19,7 @@ export function TopBar({ onInputChange, resetSearch }: TopBarProps) {
     // const topBarSearchRequest = useContext(TopBarContext)
     const navigate = useNavigate()
     const [dropDown, setDropDown] = useState(false)
-    const [inputValue, setInputValue] = useState("")
+    const [query, setQuery] = useState("")
 
     const { logout } = AuthData()
 
@@ -29,7 +29,7 @@ export function TopBar({ onInputChange, resetSearch }: TopBarProps) {
     let searchInputTimer: NodeJS.Timeout | null = null
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value
-        setInputValue(newValue)
+        setQuery(newValue)
         
         if (searchInputTimer!== null) {
             clearTimeout(searchInputTimer)
@@ -67,7 +67,7 @@ export function TopBar({ onInputChange, resetSearch }: TopBarProps) {
                 <div className="relative flex flex-wrap">
                     <div id="searchInput" className='flex gap-1 px-2 my-2 rounded-full border-2 bg-white'>
                         <SearchIcon />
-                        <input id="searchInput" className="border-x-1 outline-none" placeholder="search..." onChange={onChangeHandler} value={inputValue} type="text" />
+                        <input id="searchInput" className="border-x-1 outline-none" placeholder="search..." onChange={(e) => onChangeHandler(e)} value={query} type="search" />
                         <button id="reset" className="hover:bg-slate-300 rounded-full w-6 h-6 " onClick={resetSearch}>x</button>
                     </div>
                     <nav className=" flex flex-row flex-nowrap gap-5 text-lgs font-bald">

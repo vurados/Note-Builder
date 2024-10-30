@@ -20,6 +20,7 @@ export function LayoutTile({collection, onDelete, onChange}: CollectionProps){
 
     const [collectionPopUp, setCollectionPopUp] = useState<boolean>(false)
     const noteTitles = collection.Note
+    console.log('noteTitles', noteTitles)
    
     const deleteCollection = async (event: React.MouseEvent) => {
         event.stopPropagation()
@@ -47,7 +48,7 @@ export function LayoutTile({collection, onDelete, onChange}: CollectionProps){
             <div className="max-[770px]:hidden z-10 text-black absolute p-3 top-0 right-10 flex flex-col gap-1 rounded-lg border-[1px] bg-gray-200">
                 <button onClick={changeCollection} className="flex items-center hover:bg-slate-300 p-3 rounded-sm "><EditIcon className="w-4 h-4 mx-2"/>Edit</ button>
                 <button onClick={deleteCollection} className="flex items-center hover:bg-slate-300 p-3 rounded-sm"><DeleteIcon className="w-4 h-4 mx-2"/>Delete</button>
-                <button className="flex items-center hover:bg-slate-300 p-3 rounded-sm"><DownloadIcon className="w-4 h-4 mx-2"/>Export Layout</button>
+                <button className="flex items-center hover:bg-slate-300 p-3 rounded-sm"><DownloadIcon className="w-4 h-4 mx-2"/>Export Collection</button>
             </div>
         )
     }
