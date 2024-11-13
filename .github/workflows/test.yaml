@@ -13,8 +13,10 @@ jobs:
           key: node-modules-${{ hashFiles('**/package-lock.json')}}
       - name: Install deps
         run: npm ci
+        working-directory: ./client
       - name: Test
         run: npm run test
+        working-directory: ./client
   build_and_deply:
     runs-on: ubuntu-latest
     steps:
@@ -27,19 +29,21 @@ jobs:
           key: node-modules-${{ hashFiles('**/package-lock.json')}}
       - name: Install deps
         run: npm ci
+        working-directory: ./client
       - name: build
         run: npm run build
+        working-directory: ./client
       - name: Install server deps
         run: npm ci
-        working-directory: ./Server
+        working-directory: ./server
       - name: Zip Server Build
         run: zip -r server-build.zip .
-        working-directory: ./Server
+        working-directory: ./server
       - name: Upload Server Build
         uses: actions/upload-artifact@v2
         with:
           name: server-build
-          path: Server/server-build.zip
+          path: server/server-build.zip
       - name: Build
         uses: cloudposse/github-action-docker-build-push@main
         with:

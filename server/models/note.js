@@ -5,24 +5,24 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
     content:{
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: true,
         },
     x:{
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
     y:{
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
     width:{
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
     height:{
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
     });
 

@@ -1,4 +1,9 @@
-export function Profile(){
+import React from "react";
 
-    return(<></>)
+export default function Profile(){
+
+    
+    return(<>
+
+    </>)
 }
