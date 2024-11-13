@@ -16,14 +16,13 @@ export function Signup(){
         username: '', 
         email: '',
         hashedPassword: ''
-
     }
 
     const validationSchema = Yup.object().shape({
-            username: Yup.string().min(3).max(20).required(),
-            email: Yup.string().email().required(),
-            hashedPassword: Yup.string().required()
-        })
+        username: Yup.string().min(3).max(20).required(),
+        email: Yup.string().email().required(),
+        hashedPassword: Yup.string().required()
+    })
 
     // TODO: change data type to IUser(add interface in models)
     const onSubmit = async (data :any) => {
