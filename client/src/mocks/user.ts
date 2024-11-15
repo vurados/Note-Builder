@@ -28,11 +28,13 @@ export const userHandlers = [
         console.log('user from mock server', user)
         
         if (user.username && user.email && user.password ){
+            console.log('user&email&password');
+            
             localStorage.setItem('DBusername', user.username)
             localStorage.setItem('DBemail', user.email)
             localStorage.setItem('DBpassword', user.password)
             return HttpResponse.json(
-                {message: 'user was created'},
+                {msg: 'user was created', user:{id: 1, username: user.username, email: user.email}, success: true},
                 {status: 200}
             )
         }

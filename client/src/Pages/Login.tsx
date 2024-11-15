@@ -53,6 +53,8 @@ export default function Login(){
     const onSubmit = async(data: IUser) => {
             setLoading(true)
             try{
+                console.log(data);
+                
                 await login(data)
                 console.log('user loged in successfully');
                 console.log('user data gotten from login', localStorage.getItem('user'))

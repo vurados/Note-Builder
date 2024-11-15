@@ -34,8 +34,8 @@ function App() {
         <Routes>
           <Route index path="/" element={<Home />}/>
             <Route path="/signup" element={<Signup />}/>
-            <Route path="/login" element={<Login />}/>
           <Route element={<AuthWrapper/>}>
+            <Route path="/login" element={<Login />}/>
             <Route path="/layouts" element={<Layouts />}/>
             <Route path="/notes/:lid" element={<Notes />}/>
             <Route path="/editNote/:lid/:nid" element={<EditNote />}/>

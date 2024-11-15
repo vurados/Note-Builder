@@ -2,7 +2,7 @@
   "name": "notes-project-app",
   "private": true,
   "version": "0.0.1",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "start": "vite",
     "host": "vite --host",
